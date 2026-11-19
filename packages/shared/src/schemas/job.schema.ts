@@ -64,7 +64,34 @@ export const BatchDownloadSchema = z.object({
   fileIds: z.array(z.string()).min(1, 'At least one file ID must be specified')
 });
 
+export const ConversionOptionsSchema = z.object({
+  targetFormat: z.string().min(1, 'Target format is required'),
+  quality: z.number().int().min(1).max(100).optional().default(85),
+  compatibilityMode: z.boolean().optional().default(false),
+  preserveMetadata: z.boolean().optional().default(true),
+  ocrEnabled: z.boolean().optional().default(false),
+  ocrLanguage: z.string().optional().default('eng'),
+  pdfPassword: z.string().optional(),
+  pageRange: z.string().regex(/^([0-9]+(-[0-9]+)?)(,\s*[0-9]+(-[0-9]+)?)*$/, 'Invalid page range').optional(),
+  resolution: z
+    .object({
+      width: z.number().int().positive().optional(),
+      height: z.number().int().positive().optional(),
+      scalePercent: z.number().min(10).max(100).optional()
+    })
+    .optional(),
+  codec: z.string().optional(),
+  videoBitrateKbps: z.number().int().min(100).max(50000).optional(),
+  audioBitrateKbps: z.number().int().min(32).max(320).optional(),
+  fps: z.number().int().min(1).max(120).optional(),
+  orientation: z.enum(['0', '90', '180', '270', 'flip_h', 'flip_v']).optional(),
+  password: z.string().optional(),
+  customOutputName: z.string().max(255).optional(),
+  colorDepthBits: z.number().int().min(1).max(32).optional()
+});
+
 export type CreateJobInput = z.infer<typeof CreateJobSchema>;
 export type CompressionOptionsInput = z.infer<typeof CompressionOptionsSchema>;
+export type ConversionOptionsInput = z.infer<typeof ConversionOptionsSchema>;
 export type UrlImportInput = z.infer<typeof UrlImportSchema>;
 export type BatchDownloadInput = z.infer<typeof BatchDownloadSchema>;

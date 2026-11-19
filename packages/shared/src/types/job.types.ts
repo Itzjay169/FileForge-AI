@@ -72,12 +72,64 @@ export interface CompressionOptions {
 
 export interface ConversionOptions {
   targetFormat: string;
-  quality?: number;
+  quality?: number; // 1 - 100
   compatibilityMode?: boolean;
   preserveMetadata?: boolean;
   ocrEnabled?: boolean;
   ocrLanguage?: string;
   pdfPassword?: string;
+  pageRange?: string; // e.g. "1-5,8"
+  resolution?: {
+    width?: number;
+    height?: number;
+    scalePercent?: number;
+  };
+  codec?: string; // e.g. 'h264', 'vp9', 'av1', 'aac', 'mp3', 'flac'
+  videoBitrateKbps?: number;
+  audioBitrateKbps?: number;
+  fps?: number;
+  orientation?: '0' | '90' | '180' | '270' | 'flip_h' | 'flip_v';
+  password?: string;
+  customOutputName?: string;
+  colorDepthBits?: number;
+}
+
+export interface ConversionQueueItem {
+  id: string;
+  file?: File;
+  originalName: string;
+  sizeBytes: number;
+  sourceExtension: string;
+  targetExtension: string;
+  mimeType: string;
+  status: JobStatus;
+  uploadProgress: number;
+  processProgress: number;
+  currentStep: string;
+  error?: string;
+  options: ConversionOptions;
+  isLossy?: boolean;
+  lossWarningTitle?: string;
+  lostAttributes?: string[];
+  lossRecommendation?: string;
+  result?: JobResult;
+  previewDataUrl?: string;
+  createdAt: number;
+}
+
+export interface ConversionHistoryItem {
+  id: string;
+  originalName: string;
+  outputName: string;
+  sourceExtension: string;
+  targetExtension: string;
+  inputSizeBytes: number;
+  outputSizeBytes: number;
+  downloadUrl: string;
+  previewUrl?: string;
+  isLossy: boolean;
+  durationMs: number;
+  convertedAt: number;
 }
 
 export interface JobProgressEvent {
