@@ -1,0 +1,370 @@
+// FileForge AI - Prisma Database Schema
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// ==========================================
+// ENUMS
+// ==========================================
+
+enum UserRole {
+  USER
+  ADMIN
+  MODERATOR
+}
+
+enum PlanTier {
+  FREE
+  PRO_CREATIVE
+  STUDIO_TEAM
+}
+
+enum FileStatus {
+  UPLOADING
+  SCANNING
+  READY
+  PROCESSING
+  QUARANTINED
+  DELETED
+}
+
+enum RiskLevel {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum JobType {
+  COMPRESS
+  CONVERT
+  OPTIMIZE
+  WATERMARK_SCAN
+  WATERMARK_APPLY
+  WATERMARK_REMOVE_OWNED
+  OCR
+  EXTRACT_AUDIO
+  MERGE_PDF
+  SPLIT_PDF
+}
+
+enum JobStatus {
+  QUEUED
+  ANALYZING
+  PROCESSING
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
+enum CreditTxType {
+  INITIAL_GRANT
+  MONTHLY_REFILL
+  PURCHASE
+  JOB_DEDUCT
+  REFUND
+  BONUS
+}
+
+enum TicketStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+}
+
+enum TicketPriority {
+  LOW
+  NORMAL
+  HIGH
+  URGENT
+}
+
+// ==========================================
+// MODELS
+// ==========================================
+
+model User {
+  id                String       @id @default(uuid())
+  email             String       @unique
+  emailVerified     DateTime?
+  passwordHash      String?
+  name              String?
+  avatarUrl         String?
+  role              UserRole     @default(USER)
+  planTier          PlanTier     @default(FREE)
+  creditsBalance    Int          @default(50)
+  storageUsedBytes  BigInt       @default(0)
+  stripeCustomerId  String?      @unique
+  stripeSubId       String?      @unique
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+
+  // Relations
+  accounts          Account[]
+  sessions          Session[]
+  files             File[]
+  jobs              Job[]
+  creditTxs         CreditTransaction[]
+  shareLinks        ShareLink[]
+  auditLogs         AuditLog[]
+  supportTickets    SupportTicket[]
+  watermarkAudits   WatermarkAuditRecord[]
+
+  @@index([email])
+  @@index([planTier])
+  @@map("users")
+}
+
+model Account {
+  id                String   @id @default(uuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?  @db.Text
+  access_token      String?  @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?  @db.Text
+  session_state     String?
+
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(uuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+model Plan {
+  id                    String   @id // e.g. "FREE", "PRO_CREATIVE", "STUDIO_TEAM"
+  name                  String
+  slug                  String   @unique
+  description           String
+  priceMonthlyCents     Int
+  priceYearlyCents      Int
+  fileLimitBytes        BigInt
+  dailyProcessingLimit  Int      // -1 for unlimited
+  concurrentJobsLimit   Int
+  retentionDays         Int
+  featuresJson          Json     // Array of feature bullet points
+  isActive              Boolean  @default(true)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  @@map("plans")
+}
+
+model File {
+  id                String       @id @default(uuid())
+  userId            String?      // Optional for anonymous temporary uploads
+  originalName      String
+  sanitizedName     String
+  storageKey        String       @unique
+  s3Bucket          String
+  mimeType          String
+  extension         String
+  sizeBytes         BigInt
+  sha256Hash        String
+  status            FileStatus   @default(READY)
+  riskLevel         RiskLevel    @default(LOW)
+  isEncrypted       Boolean      @default(false)
+  encryptionKeyHint String?
+  metadataJson      Json?        // Dimensions, codec, duration, pages, etc.
+  expiresAt         DateTime     // Configured retention deadline
+  isDeleted         Boolean      @default(false)
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+
+  // Relations
+  user              User?        @relation(fields: [userId], references: [id], onDelete: SetNull)
+  jobs              Job[]
+  shareLinks        ShareLink[]
+  watermarkAudits   WatermarkAuditRecord[]
+
+  @@index([userId])
+  @@index([sha256Hash])
+  @@index([status])
+  @@index([expiresAt])
+  @@map("files")
+}
+
+model Job {
+  id                String       @id @default(uuid())
+  userId            String?
+  fileId            String
+  type              JobType
+  status            JobStatus    @default(QUEUED)
+  priority          Int          @default(0) // Higher number = higher priority
+  progressPercent   Int          @default(0)
+  currentStep       String       @default("Initialized")
+  inputParamsJson   Json         // CompressionOptions / ConversionOptions
+  outputParamsJson  Json?
+  outputFileKey     String?
+  outputSizeBytes   BigInt?
+  errorMessage      String?      @db.Text
+  retryCount        Int          @default(0)
+  workerId          String?
+  startedAt         DateTime?
+  completedAt       DateTime?
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+
+  // Relations
+  user              User?        @relation(fields: [userId], references: [id], onDelete: SetNull)
+  file              File         @relation(fields: [fileId], references: [id], onDelete: Cascade)
+  conversions       Conversion[]
+
+  @@index([userId])
+  @@index([fileId])
+  @@index([status])
+  @@index([createdAt])
+  @@map("jobs")
+}
+
+model Conversion {
+  id                 String   @id @default(uuid())
+  jobId              String
+  sourceExtension    String
+  targetExtension    String
+  inputSizeBytes     BigInt
+  outputSizeBytes    BigInt
+  compressionRatio   Float    // (1 - (output / input))
+  durationMs         Int
+  createdAt          DateTime @default(now())
+
+  // Relations
+  job                Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  @@index([jobId])
+  @@index([sourceExtension, targetExtension])
+  @@map("conversions")
+}
+
+model CreditTransaction {
+  id            String       @id @default(uuid())
+  userId        String
+  amount        Int          // Positive for grants/purchases, negative for usage
+  balanceAfter  Int
+  type          CreditTxType
+  description   String
+  referenceId   String?      // Job ID or Stripe Payment Intent
+  createdAt     DateTime     @default(now())
+
+  // Relations
+  user          User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([type])
+  @@map("credit_transactions")
+}
+
+model ShareLink {
+  id            String    @id @default(uuid())
+  fileId        String
+  userId        String?
+  code          String    @unique // short 8-12 char random alphanumeric
+  passwordHash  String?
+  maxDownloads  Int?
+  downloadCount Int       @default(0)
+  allowPreview  Boolean   @default(true)
+  expiresAt     DateTime?
+  isRevoked     Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relations
+  file          File      @relation(fields: [fileId], references: [id], onDelete: Cascade)
+  user          User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([code])
+  @@index([fileId])
+  @@index([userId])
+  @@map("share_links")
+}
+
+model AuditLog {
+  id           String   @id @default(uuid())
+  userId       String?
+  action       String   // e.g. "FILE_UPLOAD", "FILE_DOWNLOAD", "WATERMARK_VERIFIED_REMOVAL"
+  ipAddress    String?
+  userAgent    String?  @db.Text
+  resourceType String   // "FILE", "JOB", "SHARE_LINK", "ACCOUNT"
+  resourceId   String?
+  detailsJson  Json?
+  createdAt    DateTime @default(now())
+
+  // Relations
+  user         User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([action])
+  @@index([createdAt])
+  @@map("audit_logs")
+}
+
+model SupportTicket {
+  id            String         @id @default(uuid())
+  userId        String?
+  email         String
+  subject       String
+  message       String         @db.Text
+  status        TicketStatus   @default(OPEN)
+  priority      TicketPriority @default(NORMAL)
+  responseNotes String?        @db.Text
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  // Relations
+  user          User?          @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([status])
+  @@map("support_tickets")
+}
+
+model WatermarkAuditRecord {
+  id                  String   @id @default(uuid())
+  userId              String?
+  fileId              String
+  scanReportJson      Json     // C2PA, EXIF, AI Provenance findings
+  verifiedOwnership   Boolean  @default(false)
+  declarationAccepted Boolean  @default(false)
+  actionTaken         String   // "SCAN_ONLY", "WATERMARK_EMBEDDED", "OWNER_WATERMARK_REMOVED"
+  createdAt           DateTime @default(now())
+
+  // Relations
+  user                User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  file                File     @relation(fields: [fileId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([fileId])
+  @@map("watermark_audit_records")
+}

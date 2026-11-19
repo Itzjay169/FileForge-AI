@@ -1,0 +1,176 @@
+@import "tailwindcss";
+
+/* =============================================
+   FileForge AI — Design System Foundation
+   ============================================= */
+
+:root {
+  /* Core Brand Colors */
+  --forge-bg: #0a0a0f;
+  --forge-bg-elevated: #12121a;
+  --forge-bg-card: #1a1a26;
+  --forge-bg-card-hover: #22222f;
+  --forge-surface: #faf9f7;
+  --forge-surface-muted: #f0eee9;
+
+  /* Violet/Lavender Primary */
+  --forge-primary: #8b5cf6;
+  --forge-primary-hover: #7c3aed;
+  --forge-primary-soft: rgba(139, 92, 246, 0.15);
+  --forge-primary-glow: rgba(139, 92, 246, 0.4);
+
+  /* Pink Accent */
+  --forge-accent: #ec4899;
+  --forge-accent-hover: #db2777;
+  --forge-accent-soft: rgba(236, 72, 153, 0.15);
+
+  /* Typography */
+  --forge-text: #f0eee9;
+  --forge-text-muted: #9ca3af;
+  --forge-text-dim: #6b7280;
+  --forge-text-inverse: #0a0a0f;
+
+  /* Status */
+  --forge-success: #10b981;
+  --forge-warning: #f59e0b;
+  --forge-error: #ef4444;
+  --forge-info: #3b82f6;
+
+  /* Border */
+  --forge-border: rgba(255, 255, 255, 0.1);
+  --forge-border-hover: rgba(255, 255, 255, 0.2);
+
+  /* Shadows */
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.3), 0 4px 16px rgba(0,0,0,0.2);
+  --shadow-card-hover: 0 2px 8px rgba(0,0,0,0.4), 0 8px 32px rgba(0,0,0,0.3);
+  --shadow-glow-violet: 0 0 40px rgba(139, 92, 246, 0.25);
+  --shadow-glow-pink: 0 0 40px rgba(236, 72, 153, 0.2);
+}
+
+/* =============================================
+   BASE & RESET
+   ============================================= */
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: #0a0a0f;
+  color: #f0eee9;
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+}
+
+::selection {
+  background: rgba(139, 92, 246, 0.3);
+  color: #c084fc;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a0f;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #8b5cf6;
+}
+
+/* =============================================
+   SAKUGA-INSPIRED ANIMATION FOUNDATION
+   ============================================= */
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Utility keyframes */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.15); }
+  50% { box-shadow: 0 0 40px rgba(139, 92, 246, 0.4); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Gradient text utility */
+.text-gradient-violet {
+  background: linear-gradient(135deg, #8b5cf6 0%, #c084fc 50%, #ec4899 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-pink {
+  background: linear-gradient(135deg, #ec4899 0%, #f472b6 50%, #c084fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Noise overlay for cinematic feel */
+.noise-overlay::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.015;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 128px 128px;
+}
+
+/* Glass morphism card */
+.card-glass {
+  background: rgba(26, 26, 38, 0.6);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+}
+
+/* Paper card */
+.card-paper {
+  background: #faf9f7;
+  color: #0a0a0f;
+  border-radius: 1rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3), 0 4px 16px rgba(0,0,0,0.2);
+}

@@ -1,0 +1,30 @@
+{
+  "name": "fileforge-ai",
+  "version": "1.0.0",
+  "private": true,
+  "description": "FileForge AI - Next-generation creative file studio for compression, optimization, conversion, preview, and sharing",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:web": "npm run dev --workspace=apps/web",
+    "build:web": "npm run build --workspace=apps/web",
+    "start:web": "npm run start --workspace=apps/web",
+    "lint": "npm run lint --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "db:generate": "npm run generate --workspace=packages/database",
+    "db:seed": "npm run seed --workspace=packages/database"
+  },
+  "keywords": [
+    "file-compression",
+    "file-conversion",
+    "sakuga-vfx",
+    "creative-studio",
+    "nextjs",
+    "tailwind",
+    "framer-motion"
+  ],
+  "author": "FileForge AI Team",
+  "license": "MIT"
+}
