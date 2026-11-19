@@ -1,5 +1,6 @@
 'use client';
 
+import { ForgeButton, forgeToast } from '@/components/sakuga';
 import React, { useState, useRef } from 'react';
 import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/layout/footer';
@@ -8,8 +9,6 @@ import { AiCopilotCard } from '@/components/editor/ai-copilot-card';
 import { ImageEditorModal } from '@/components/editor/image-editor-modal';
 import { PdfStudioModal } from '@/components/editor/pdf-studio-modal';
 import { MediaEditorModal } from '@/components/editor/media-editor-modal';
-import { SakugaButton } from '@/components/ui/sakuga-button';
-import { forgeToast } from '@/components/ui/sakuga-toast';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Wand2,
@@ -151,9 +150,9 @@ export default function EditorPage() {
             <p className="text-xs text-gray-400 max-w-md mx-auto mb-4">
               Supports images (PNG, JPG, WebP), PDFs, videos (MP4, WebM), audio (MP3, WAV), and office documents.
             </p>
-            <SakugaButton variant="secondary" size="sm">
+            <ForgeButton variant="secondary" size="sm">
               Browse From Computer
-            </SakugaButton>
+            </ForgeButton>
           </motion.div>
         ) : (
           <motion.div
@@ -185,8 +184,7 @@ export default function EditorPage() {
               </div>
 
               <div className="flex items-center gap-2">
-                <SakugaButton
-                  variant="outline"
+                <ForgeButton variant="ghost"
                   size="sm"
                   onClick={() => {
                     setActiveFile(null);
@@ -196,7 +194,7 @@ export default function EditorPage() {
                 >
                   <Trash2 className="w-3.5 h-3.5 mr-1" />
                   Change File
-                </SakugaButton>
+                </ForgeButton>
               </div>
             </div>
 
@@ -326,10 +324,10 @@ export default function EditorPage() {
                     download={item.resultName}
                     className="shrink-0"
                   >
-                    <SakugaButton variant="default" size="sm">
+                    <ForgeButton variant="primary" size="sm">
                       <Download className="w-3.5 h-3.5 mr-1.5" />
                       Download
-                    </SakugaButton>
+                    </ForgeButton>
                   </a>
                 </div>
               ))}

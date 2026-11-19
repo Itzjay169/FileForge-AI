@@ -10,8 +10,8 @@ import {
   Files,
 } from 'lucide-react';
 import { useUploadStore } from '@/lib/stores/upload-store';
-import { SakugaButton } from '@/components/ui/sakuga-button';
-import { SakugaProgress } from '@/components/ui/sakuga-progress';
+import { ForgeButton } from '@/components/sakuga/forge-button';
+import { ForgeProgress } from '@/components/sakuga';
 import { formatFileSize, cn } from '@/lib/utils';
 
 export const BatchSummaryBar: React.FC = () => {
@@ -119,7 +119,7 @@ export const BatchSummaryBar: React.FC = () => {
 
           {/* Overall progress */}
           <div className="flex-1 min-w-[120px] max-w-[200px] hidden md:block">
-            <SakugaProgress
+            <ForgeProgress
               value={stats.overallProgress}
               variant={stats.overallProgress >= 100 ? 'success' : 'default'}
               size="sm"
@@ -130,43 +130,42 @@ export const BatchSummaryBar: React.FC = () => {
           {/* Action buttons */}
           <div className="flex items-center gap-2 shrink-0">
             {stats.ready > 0 && (
-              <SakugaButton
-                variant="default"
+              <ForgeButton
+                variant="primary"
                 size="sm"
                 onClick={() => processAll()}
-                isLoading={isProcessingBatch}
+                loading={isProcessingBatch}
                 disabled={isProcessingBatch}
               >
-                <Play className="w-3.5 h-3.5" />
+                <Play className="w-3.5 h-3.5 text-violet-300" />
                 <span>
                   {isProcessingBatch
                     ? 'Processing...'
                     : `Process All (${stats.ready})`}
                 </span>
-              </SakugaButton>
+              </ForgeButton>
             )}
 
             {stats.completed > 0 && (
-              <SakugaButton
-                variant="accent"
+              <ForgeButton
+                variant="success"
                 size="sm"
                 onClick={() => downloadBatchZip()}
-                showSuccessCheck
               >
                 <Download className="w-3.5 h-3.5" />
                 <span>Download ZIP</span>
-              </SakugaButton>
+              </ForgeButton>
             )}
 
             {stats.completed > 0 && (
-              <SakugaButton
+              <ForgeButton
                 variant="ghost"
                 size="sm"
                 onClick={() => clearCompleted()}
               >
                 <Trash2 className="w-3.5 h-3.5" />
                 <span className="hidden sm:inline">Clear Done</span>
-              </SakugaButton>
+              </ForgeButton>
             )}
           </div>
         </div>

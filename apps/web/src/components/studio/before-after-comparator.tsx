@@ -13,7 +13,7 @@ import {
 } from 'lucide-react';
 import { type QueueItem } from '@fileforge/shared';
 import { formatFileSize, cn } from '@/lib/utils';
-import { SakugaButton } from '@/components/ui/sakuga-button';
+import { ForgeButton } from '@/components/sakuga';
 import { useReducedMotion } from '@/lib/hooks';
 
 export interface BeforeAfterComparatorProps {
@@ -142,13 +142,13 @@ export const BeforeAfterComparator: React.FC<BeforeAfterComparatorProps> = ({
                   </p>
                 </div>
               </div>
-              <SakugaButton
+              <ForgeButton
                 variant="ghost"
                 size="icon"
                 onClick={onClose}
               >
                 <X className="w-5 h-5" />
-              </SakugaButton>
+              </ForgeButton>
             </div>
 
             {/* Split comparison view */}

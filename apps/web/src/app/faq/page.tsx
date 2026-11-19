@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { HelpCircle, ChevronDown, Sparkles, MessageCircle } from 'lucide-react';
-import { SakugaButton } from '@/components/ui/sakuga-button';
+import { ForgeButton } from '@/components/sakuga';
 
 export default function FAQPage() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
@@ -117,10 +117,10 @@ export default function FAQPage() {
           </p>
           <div className="mt-6 flex items-center justify-center gap-4">
             <Link href="/contact">
-              <SakugaButton variant="default">Contact Us</SakugaButton>
+              <ForgeButton variant="primary">Contact Us</ForgeButton>
             </Link>
             <Link href="/help">
-              <SakugaButton variant="secondary">Browse Help Center</SakugaButton>
+              <ForgeButton variant="secondary">Browse Help Center</ForgeButton>
             </Link>
           </div>
         </div>

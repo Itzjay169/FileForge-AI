@@ -2,10 +2,10 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Zap,
   Menu,
   X,
   Command,
@@ -18,7 +18,7 @@ import {
   Shield,
   FileCode
 } from 'lucide-react';
-import { SakugaButton } from '@/components/ui/sakuga-button';
+import { ForgeButton } from '@/components/sakuga';
 import { cn } from '@/lib/utils';
 
 export interface NavbarProps {
@@ -42,6 +42,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
   const toggleTheme = () => {
     const nextMode = !isDarkMode;
     setIsDarkMode(nextMode);
+    try {
+      localStorage.setItem('fileforge-theme', nextMode ? 'dark' : 'light');
+    } catch (e) {}
     if (nextMode) {
       document.documentElement.classList.remove('light');
       document.documentElement.classList.add('dark');
@@ -53,6 +56,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
 
   const navLinks = [
     { label: 'Studio', href: '/studio' },
+    { label: 'Queue', href: '/queue' },
     { label: 'Convert', href: '/convert' },
     { label: 'Editor & AI', href: '/editor' },
     { label: 'Transparency', href: '/transparency' },
@@ -75,8 +79,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="relative w-9 h-9 rounded-2xl bg-gradient-to-tr from-violet-600 via-purple-600 to-pink-500 flex items-center justify-center shadow-lg shadow-violet-500/30 group-hover:shadow-pink-500/40 transition-shadow">
-              <Zap className="w-5 h-5 text-white fill-white stroke-none" />
+            <div className="relative w-9 h-9 rounded-2xl overflow-hidden shadow-lg shadow-violet-500/30 group-hover:shadow-pink-500/40 transition-shadow">
+              <Image
+                src="/app-icon.jpg"
+                alt="FileForge AI"
+                width={36}
+                height={36}
+                className="w-full h-full object-cover"
+                priority
+              />
               <div className="absolute inset-0 rounded-2xl bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
             <div className="flex items-center gap-2">
@@ -146,10 +157,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
 
             {/* Launch Studio CTA */}
             <Link href="/studio" className="hidden sm:inline-flex">
-              <SakugaButton variant="default" size="sm">
+              <ForgeButton variant="primary" size="sm">
                 <Sparkles className="w-3.5 h-3.5 text-pink-300" />
                 <span>Launch Studio</span>
-              </SakugaButton>
+              </ForgeButton>
             </Link>
 
             {/* Mobile menu trigger */}
@@ -193,10 +204,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                 onClick={() => setMobileMenuOpen(false)}
                 className="w-full"
               >
-                <SakugaButton variant="default" size="default" className="w-full justify-center">
+                <ForgeButton variant="primary" size="md" className="w-full justify-center">
                   <span>Start Compressing</span>
                   <ArrowRight className="w-4 h-4 ml-1.5" />
-                </SakugaButton>
+                </ForgeButton>
               </Link>
             </div>
           </motion.div>

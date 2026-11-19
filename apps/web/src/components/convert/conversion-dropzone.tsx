@@ -1,5 +1,6 @@
 'use client';
 
+import { ForgeButton, ForgeInput } from '@/components/sakuga';
 import React, { useCallback, useRef, useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -15,8 +16,6 @@ import {
 import { useConversionStore } from '@/lib/stores/conversion-store';
 import { useUploadStore } from '@/lib/stores/upload-store';
 import { useReducedMotion } from '@/lib/hooks';
-import { SakugaButton } from '@/components/ui/sakuga-button';
-import { SakugaInput } from '@/components/ui/sakuga-input';
 import { cn } from '@/lib/utils';
 
 const POPULAR_TARGETS = ['pdf', 'webp', 'png', 'jpg', 'mp4', 'mp3', 'csv', 'json', 'zip'];
@@ -263,32 +262,32 @@ export const ConversionDropzone: React.FC = () => {
 
       {/* Bottom shortcut buttons */}
       <div className="flex flex-wrap items-center justify-center gap-2 mt-4">
-        <SakugaButton
+        <ForgeButton
           variant="ghost"
           size="sm"
           onClick={() => folderInputRef.current?.click()}
         >
           <FolderOpen className="w-4 h-4 mr-1.5" />
           <span>Upload Folder</span>
-        </SakugaButton>
+        </ForgeButton>
 
-        <SakugaButton
+        <ForgeButton
           variant="ghost"
           size="sm"
           onClick={() => cameraInputRef.current?.click()}
         >
           <Camera className="w-4 h-4 mr-1.5" />
           <span>Camera</span>
-        </SakugaButton>
+        </ForgeButton>
 
-        <SakugaButton
+        <ForgeButton
           variant="ghost"
           size="sm"
           onClick={() => setShowUrlModal(true)}
         >
           <Link2 className="w-4 h-4 mr-1.5" />
           <span>Import URL</span>
-        </SakugaButton>
+        </ForgeButton>
       </div>
 
       {/* URL Import Modal */}
@@ -315,7 +314,7 @@ export const ConversionDropzone: React.FC = () => {
             </div>
 
             <div className="flex gap-2">
-              <SakugaInput
+              <ForgeInput
                 value={importUrl}
                 onChange={(e) => setImportUrl(e.target.value)}
                 placeholder="https://example.com/document.docx"
@@ -327,7 +326,7 @@ export const ConversionDropzone: React.FC = () => {
                   }
                 }}
               />
-              <SakugaButton
+              <ForgeButton
                 size="sm"
                 onClick={() => {
                   if (importUrl.trim()) {
@@ -337,7 +336,7 @@ export const ConversionDropzone: React.FC = () => {
                 }}
               >
                 Import
-              </SakugaButton>
+              </ForgeButton>
             </div>
           </motion.div>
         )}

@@ -3,6 +3,8 @@ import { Plus_Jakarta_Sans, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import { ForgeToaster } from '@/components/ui/sakuga-toast';
 import { MobileNav } from '@/components/layout/mobile-nav';
+import { SakugaProvider } from '@/components/providers/sakuga-provider';
+import { ForgeToastProvider } from '@/components/sakuga/forge-toast';
 
 const sansFont = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -32,6 +34,10 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: 'FileForge AI Team' }],
   metadataBase: new URL('https://fileforge.ai'),
+  icons: {
+    icon: '/app-icon.jpg',
+    apple: '/apple-touch-icon.jpg',
+  },
   openGraph: {
     title: 'FileForge AI — Creative File Studio',
     description:
@@ -40,9 +46,9 @@ export const metadata: Metadata = {
     siteName: 'FileForge AI',
     images: [
       {
-        url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&auto=format&fit=crop&q=80',
-        width: 1200,
-        height: 630,
+        url: '/app-icon.jpg',
+        width: 512,
+        height: 512,
         alt: 'FileForge AI Studio'
       }
     ],
@@ -63,11 +69,36 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark scroll-smooth">
+    <html lang="en" className="dark scroll-smooth" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){
+              try {
+                var t = localStorage.getItem('fileforge-theme');
+                if (!t && window.matchMedia('(prefers-color-scheme: light)').matches) {
+                  t = 'light';
+                }
+                if (t === 'light') {
+                  document.documentElement.classList.remove('dark');
+                  document.documentElement.classList.add('light');
+                } else {
+                  document.documentElement.classList.remove('light');
+                  document.documentElement.classList.add('dark');
+                }
+              } catch(e) {}
+            })();`,
+          }}
+        />
+      </head>
       <body className={`${sansFont.variable} ${monoFont.variable} font-sans bg-[var(--color-bg)] text-[var(--color-text)] min-h-screen antialiased selection:bg-pink-500/25 selection:text-pink-300`}>
-        {children}
-        <ForgeToaster />
-        <MobileNav />
+        <SakugaProvider>
+          <ForgeToastProvider>
+            {children}
+            <ForgeToaster />
+            <MobileNav />
+          </ForgeToastProvider>
+        </SakugaProvider>
       </body>
     </html>
   );

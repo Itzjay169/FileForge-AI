@@ -1,5 +1,6 @@
 'use client';
 
+import { ForgeButton, forgeToast } from '@/components/sakuga';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -15,8 +16,6 @@ import {
   Zap
 } from 'lucide-react';
 import { AiAssistantPlan, AiFileContext } from '@fileforge/shared';
-import { SakugaButton } from '@/components/ui/sakuga-button';
-import { forgeToast } from '@/components/ui/sakuga-toast';
 import { useReducedMotion } from '@/lib/hooks';
 import { cn } from '@/lib/utils';
 
@@ -170,9 +169,8 @@ export const AiCopilotCard: React.FC<AiCopilotCardProps> = ({ file, onPlanExecut
           />
         </div>
 
-        <SakugaButton
-          variant="default"
-          size="default"
+        <ForgeButton variant="primary"
+          size="md"
           onClick={() => handleGeneratePlan(query)}
           isLoading={isPlanning}
           disabled={isPlanning || !query.trim()}
@@ -180,7 +178,7 @@ export const AiCopilotCard: React.FC<AiCopilotCardProps> = ({ file, onPlanExecut
         >
           <Send className="w-4 h-4 mr-1.5" />
           <span>Analyze</span>
-        </SakugaButton>
+        </ForgeButton>
       </div>
 
       {/* Formulated Plan Confirmation Card */}
@@ -244,25 +242,23 @@ export const AiCopilotCard: React.FC<AiCopilotCardProps> = ({ file, onPlanExecut
 
             {/* Confirmation Buttons */}
             <div className="flex items-center justify-end gap-3 pt-2">
-              <SakugaButton
+              <ForgeButton
                 variant="ghost"
                 size="sm"
                 onClick={() => setCurrentPlan(null)}
               >
                 <span>Dismiss</span>
-              </SakugaButton>
+              </ForgeButton>
 
-              <SakugaButton
-                variant="default"
+              <ForgeButton variant="primary"
                 size="sm"
                 onClick={handleExecutePlan}
                 isLoading={isExecuting}
                 disabled={isExecuting}
-                showSuccessCheck
               >
                 <CheckCircle2 className="w-4 h-4 mr-1.5" />
                 <span>Confirm & Apply AI Settings</span>
-              </SakugaButton>
+              </ForgeButton>
             </div>
           </motion.div>
         )}

@@ -1,12 +1,9 @@
 'use client';
 
+import { ForgeButton, ForgeInput, forgeToast } from '@/components/sakuga';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AlertOctagon, X, Send, ShieldAlert } from 'lucide-react';
-import { SakugaButton } from '@/components/ui/sakuga-button';
-import { SakugaInput } from '@/components/ui/sakuga-input';
-import { forgeToast } from '@/components/ui/sakuga-toast';
-
 export interface AbuseReportModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -89,7 +86,7 @@ export const AbuseReportModal: React.FC<AbuseReportModalProps> = ({
             <div className="space-y-4 pt-4">
               <div>
                 <label className="text-xs font-semibold text-gray-300 block mb-1">Your Email</label>
-                <SakugaInput
+                <ForgeInput
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -131,10 +128,10 @@ export const AbuseReportModal: React.FC<AbuseReportModalProps> = ({
               </div>
 
               <div className="flex items-center justify-end gap-2 pt-2">
-                <SakugaButton variant="outline" size="sm" onClick={onClose}>
+                <ForgeButton variant="ghost" size="sm" onClick={onClose}>
                   Cancel
-                </SakugaButton>
-                <SakugaButton
+                </ForgeButton>
+                <ForgeButton
                   variant="destructive"
                   size="sm"
                   isLoading={isSubmitting}
@@ -142,7 +139,7 @@ export const AbuseReportModal: React.FC<AbuseReportModalProps> = ({
                 >
                   <Send className="w-3.5 h-3.5 mr-1.5" />
                   Submit Report
-                </SakugaButton>
+                </ForgeButton>
               </div>
             </div>
           </motion.div>

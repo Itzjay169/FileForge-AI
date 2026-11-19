@@ -18,7 +18,7 @@ import {
   Search
 } from 'lucide-react';
 import { MetadataInspectionReport } from '@fileforge/shared';
-import { SakugaButton } from '@/components/ui/sakuga-button';
+import { ForgeButton } from '@/components/sakuga';
 import { formatBytes } from '@fileforge/shared';
 import { cn } from '@/lib/utils';
 
@@ -117,10 +117,10 @@ export const MetadataInspectorCard: React.FC<MetadataInspectorCardProps> = ({
           </p>
         </div>
 
-        <SakugaButton variant="secondary" size="sm" onClick={downloadReportJson}>
+        <ForgeButton variant="secondary" size="sm" onClick={downloadReportJson}>
           <Download className="w-3.5 h-3.5 mr-1.5" />
           Export Report
-        </SakugaButton>
+        </ForgeButton>
       </div>
 
       {/* Tabs */}

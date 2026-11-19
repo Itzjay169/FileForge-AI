@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Sparkles, Tag, Calendar, ArrowRight, GitCommit } from 'lucide-react';
 import { ChangelogEntry } from '@fileforge/shared';
-import { SakugaButton } from '@/components/ui/sakuga-button';
+import { ForgeButton } from '@/components/sakuga';
 
 export default function ChangelogPage() {
   const [changelogs, setChangelogs] = useState<ChangelogEntry[]>([]);
@@ -94,7 +94,7 @@ export default function ChangelogPage() {
           </p>
           <div className="mt-6 flex justify-center">
             <Link href="https://github.com/Itzjay169/FileForge-AI" target="_blank" rel="noopener noreferrer">
-              <SakugaButton variant="default">View GitHub Repository</SakugaButton>
+              <ForgeButton variant="primary">View GitHub Repository</ForgeButton>
             </Link>
           </div>
         </div>

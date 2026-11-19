@@ -5,8 +5,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, Settings2 } from 'lucide-react';
 import { useUploadStore } from '@/lib/stores/upload-store';
 import { useReducedMotion } from '@/lib/hooks';
-import { SakugaSlider } from '@/components/ui/sakuga-slider';
-import { SakugaToggle } from '@/components/ui/sakuga-toggle';
+import { ForgeSlider } from '@/components/sakuga/forge-slider';
+import { ForgeToggle } from '@/components/sakuga/forge-toggle';
+import { ForgeCheckbox } from '@/components/sakuga/forge-checkbox';
 import { cn } from '@/lib/utils';
 
 const OUTPUT_FORMATS = [
@@ -76,22 +77,22 @@ export const CustomControlsPanel: React.FC = () => {
             <div className="px-6 pb-6 pt-2 grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Quality Slider */}
               <div className="space-y-1">
-                <SakugaSlider
-                  label="Quality"
+                <ForgeSlider
+                  label="Compression Quality"
                   value={customOptions.quality}
                   onChange={(val) => updateCustomOptions({ quality: val })}
                   min={1}
                   max={100}
                   step={1}
                   unit="%"
-                  variant="quality"
                 />
               </div>
 
               {/* Target Size */}
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-forge-text flex items-center gap-1.5">
-                  Target Size (MB)
+              <div className="space-y-2 p-4 rounded-2xl bg-[var(--sk-surface)] border border-[var(--sk-border)]">
+                <label className="text-sm font-bold text-[var(--sk-text)] flex items-center justify-between">
+                  <span>Target File Size</span>
+                  <span className="text-xs font-mono text-[var(--sk-text-muted)]">Max 2,048 MB</span>
                 </label>
                 <input
                   type="number"
@@ -111,11 +112,11 @@ export const CustomControlsPanel: React.FC = () => {
                       updateCustomOptions({ targetSizeBytes: undefined });
                     }
                   }}
-                  placeholder="Leave blank for auto"
+                  placeholder="Leave blank for automatic smart size"
                   className={cn(
-                    'w-full h-10 px-3 rounded-xl text-sm font-mono',
-                    'bg-forge-bg-card border border-white/10 text-white placeholder:text-white/30',
-                    'focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/40',
+                    'w-full h-11 px-3 rounded-xl text-sm font-mono',
+                    'bg-[var(--sk-surface-raised)] border border-[var(--sk-border)] text-white placeholder:text-white/30',
+                    'focus:outline-none focus:ring-2 focus:ring-[var(--sk-acc)]',
                     'transition-all',
                   )}
                 />
@@ -123,7 +124,7 @@ export const CustomControlsPanel: React.FC = () => {
 
               {/* Resolution Scale */}
               <div className="space-y-1">
-                <SakugaSlider
+                <ForgeSlider
                   label="Resolution Scale"
                   value={customOptions.resolution?.scalePercent ?? 100}
                   onChange={(val) =>
@@ -139,13 +140,12 @@ export const CustomControlsPanel: React.FC = () => {
                   max={100}
                   step={5}
                   unit="%"
-                  variant="size"
                 />
               </div>
 
               {/* Video Bitrate */}
               <div className="space-y-1">
-                <SakugaSlider
+                <ForgeSlider
                   label="Video Bitrate"
                   value={customOptions.videoBitrateKbps ?? 2500}
                   onChange={(val) => updateCustomOptions({ videoBitrateKbps: val })}
@@ -153,13 +153,12 @@ export const CustomControlsPanel: React.FC = () => {
                   max={10000}
                   step={100}
                   unit="kbps"
-                  variant="default"
                 />
               </div>
 
               {/* Audio Bitrate */}
               <div className="space-y-1">
-                <SakugaSlider
+                <ForgeSlider
                   label="Audio Bitrate"
                   value={customOptions.audioBitrateKbps ?? 128}
                   onChange={(val) => updateCustomOptions({ audioBitrateKbps: val })}
@@ -167,7 +166,6 @@ export const CustomControlsPanel: React.FC = () => {
                   max={320}
                   step={16}
                   unit="kbps"
-                  variant="default"
                 />
               </div>
 
@@ -211,11 +209,11 @@ export const CustomControlsPanel: React.FC = () => {
 
               {/* Strip Metadata Toggle */}
               <div className="flex items-center pt-2">
-                <SakugaToggle
+                <ForgeToggle
                   checked={customOptions.stripMetadata}
                   onChange={(val) => updateCustomOptions({ stripMetadata: val })}
                   label="Strip Metadata"
-                  description="Remove EXIF, GPS, camera info, and embedded thumbnails"
+                  description="Remove EXIF, GPS coordinates, camera specs, and embedded thumbnails"
                 />
               </div>
             </div>

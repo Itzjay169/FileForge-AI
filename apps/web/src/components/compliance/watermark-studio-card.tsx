@@ -1,5 +1,6 @@
 'use client';
 
+import { ForgeButton, ForgeInput, ForgeSlider, forgeToast, ForgeToggle } from '@/components/sakuga';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -22,12 +23,6 @@ import {
   WatermarkPosition,
   AiDisclosureTier
 } from '@fileforge/shared';
-import { SakugaButton } from '@/components/ui/sakuga-button';
-import { SakugaSlider } from '@/components/ui/sakuga-slider';
-import { SakugaToggle } from '@/components/ui/sakuga-toggle';
-import { SakugaInput } from '@/components/ui/sakuga-input';
-import { forgeToast } from '@/components/ui/sakuga-toast';
-
 export interface WatermarkStudioCardProps {
   file: File | null;
   fileHash?: string;
@@ -251,7 +246,7 @@ export const WatermarkStudioCard: React.FC<WatermarkStudioCardProps> = ({
             <label className="text-xs font-semibold text-gray-300 block mb-1.5">
               Watermark Text
             </label>
-            <SakugaInput
+            <ForgeInput
               value={watermarkText}
               onChange={(e) => setWatermarkText(e.target.value)}
               placeholder="e.g. CONFIDENTIAL • DO NOT SHARE"
@@ -282,7 +277,7 @@ export const WatermarkStudioCard: React.FC<WatermarkStudioCardProps> = ({
               <label className="text-xs font-semibold text-gray-300 block mb-1.5">
                 Opacity: {watermarkOpacity}%
               </label>
-              <SakugaSlider
+              <ForgeSlider
                 value={watermarkOpacity}
                 min={5}
                 max={100}
@@ -292,15 +287,14 @@ export const WatermarkStudioCard: React.FC<WatermarkStudioCardProps> = ({
           </div>
 
           <div className="pt-2">
-            <SakugaButton
-              variant="default"
+            <ForgeButton variant="primary"
               isLoading={isProcessing}
               onClick={handleApplyWatermark}
               className="w-full sm:w-auto"
             >
               <Stamp className="w-4 h-4 mr-2" />
               Embed Visible Watermark
-            </SakugaButton>
+            </ForgeButton>
           </div>
         </div>
       )}
@@ -338,7 +332,7 @@ export const WatermarkStudioCard: React.FC<WatermarkStudioCardProps> = ({
             <label className="text-xs font-semibold text-gray-300 block mb-1.5">
               Model or Tool Name
             </label>
-            <SakugaInput
+            <ForgeInput
               value={generatorName}
               onChange={(e) => setGeneratorName(e.target.value)}
               placeholder="e.g. Midjourney v6, Stable Diffusion XL, ChatGPT"
@@ -351,7 +345,7 @@ export const WatermarkStudioCard: React.FC<WatermarkStudioCardProps> = ({
                 <span className="text-xs font-medium text-white block">Embed Visible Corner Badge</span>
                 <span className="text-[11px] text-gray-400">Adds discreet translucent &quot;✨ [AI-DISCLOSED]&quot; tag</span>
               </div>
-              <SakugaToggle checked={embedVisibleBadge} onChange={setEmbedVisibleBadge} />
+              <ForgeToggle checked={embedVisibleBadge} onChange={setEmbedVisibleBadge} />
             </div>
 
             <div className="flex items-center justify-between p-3.5 rounded-xl bg-white/5 border border-white/10">
@@ -359,12 +353,12 @@ export const WatermarkStudioCard: React.FC<WatermarkStudioCardProps> = ({
                 <span className="text-xs font-medium text-white block">Embed IPTC / XMP Provenance Metadata</span>
                 <span className="text-[11px] text-gray-400">Writes standard DigitalSourceType metadata tags</span>
               </div>
-              <SakugaToggle checked={embedXmpMetadata} onChange={setEmbedXmpMetadata} />
+              <ForgeToggle checked={embedXmpMetadata} onChange={setEmbedXmpMetadata} />
             </div>
           </div>
 
           <div className="pt-2">
-            <SakugaButton
+            <ForgeButton
               variant="accent"
               isLoading={isProcessing}
               onClick={handleEmbedAiDisclosure}
@@ -372,7 +366,7 @@ export const WatermarkStudioCard: React.FC<WatermarkStudioCardProps> = ({
             >
               <Sparkles className="w-4 h-4 mr-2" />
               Embed AI Content Label
-            </SakugaButton>
+            </ForgeButton>
           </div>
         </div>
       )}
@@ -445,7 +439,7 @@ export const WatermarkStudioCard: React.FC<WatermarkStudioCardProps> = ({
                 <label className="text-xs font-semibold text-gray-300 block mb-1.5">
                   Supporting Documentation URL (Optional)
                 </label>
-                <SakugaInput
+                <ForgeInput
                   value={proofDocUrl}
                   onChange={(e) => setProofDocUrl(e.target.value)}
                   placeholder="https://... (Invoice, copyright certificate, or agency agreement)"
@@ -470,7 +464,7 @@ export const WatermarkStudioCard: React.FC<WatermarkStudioCardProps> = ({
                   <label className="text-[11px] font-semibold text-gray-400 block mb-1">
                     Signer Full Legal Name (Electronic Signature)
                   </label>
-                  <SakugaInput
+                  <ForgeInput
                     value={declarationSignerName}
                     onChange={(e) => setDeclarationSignerName(e.target.value)}
                     placeholder="e.g. Jane Doe"
@@ -479,15 +473,14 @@ export const WatermarkStudioCard: React.FC<WatermarkStudioCardProps> = ({
               </div>
 
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2">
-                <SakugaButton
-                  variant="default"
+                <ForgeButton variant="primary"
                   isLoading={isProcessing}
                   onClick={handleSubmitOwnershipRequest}
                   className="w-full sm:w-auto bg-amber-600 hover:bg-amber-700 border-amber-500/30"
                 >
                   <ShieldCheck className="w-4 h-4 mr-2" />
                   Submit Verified Ownership Request (10 Credits)
-                </SakugaButton>
+                </ForgeButton>
                 <span className="text-[11px] text-gray-500">
                   Audit trail logged with IP & cryptographic signature.
                 </span>

@@ -1,5 +1,6 @@
 'use client';
 
+import { ForgeButton, forgeToast } from '@/components/sakuga';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -16,8 +17,6 @@ import {
   Download
 } from 'lucide-react';
 import { PdfToolMode, PdfToolOptions } from '@fileforge/shared';
-import { SakugaButton } from '@/components/ui/sakuga-button';
-import { forgeToast } from '@/components/ui/sakuga-toast';
 import { useReducedMotion } from '@/lib/hooks';
 import { cn } from '@/lib/utils';
 
@@ -268,21 +267,19 @@ export const PdfStudioModal: React.FC<PdfStudioModalProps> = ({
 
           {/* Footer Actions */}
           <div className="flex items-center justify-end gap-3 pt-4 border-t border-white/10">
-            <SakugaButton variant="ghost" size="sm" onClick={onClose}>
+            <ForgeButton variant="ghost" size="sm" onClick={onClose}>
               <span>Cancel</span>
-            </SakugaButton>
+            </ForgeButton>
 
-            <SakugaButton
-              variant="default"
+            <ForgeButton variant="primary"
               size="sm"
               onClick={handleExecute}
               isLoading={isProcessing}
               disabled={isProcessing || (activeMode === 'password' && !password.trim())}
-              showSuccessCheck
             >
               <Check className="w-4 h-4 mr-1.5" />
               <span>Apply {MODES.find((m) => m.id === activeMode)?.label}</span>
-            </SakugaButton>
+            </ForgeButton>
           </div>
         </motion.div>
       </div>

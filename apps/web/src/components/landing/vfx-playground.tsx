@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
+import { ForgeButton, ForgeCheckbox, ForgeInput, ForgeProgress, ForgeSlider, ForgeTabs, forgeToast, ForgeToggle } from '@/components/sakuga';
+import React, { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import {
   Sparkles,
@@ -14,20 +15,6 @@ import {
   FileCode,
   Gauge
 } from 'lucide-react';
-import { SakugaButton } from '@/components/ui/sakuga-button';
-import { SakugaSlider } from '@/components/ui/sakuga-slider';
-import { SakugaProgress } from '@/components/ui/sakuga-progress';
-import { SakugaToggle } from '@/components/ui/sakuga-toggle';
-import { SakugaCheckbox } from '@/components/ui/sakuga-checkbox';
-import { SakugaInput } from '@/components/ui/sakuga-input';
-import {
-  SakugaTabs,
-  SakugaTabsList,
-  SakugaTabsTrigger,
-  SakugaTabsContent
-} from '@/components/ui/sakuga-tabs';
-import { forgeToast } from '@/components/ui/sakuga-toast';
-
 export const VFXPlayground: React.FC = () => {
   const [quality, setQuality] = useState(82);
   const [targetSize, setTargetSize] = useState(45);
@@ -37,6 +24,8 @@ export const VFXPlayground: React.FC = () => {
   const [ocrEnabled, setOcrEnabled] = useState(false);
   const [sampleInput, setSampleInput] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
+  const [activeCategory, setActiveCategory] = useState('images');
+  const handleCategoryChange = useCallback((id: string) => setActiveCategory(id), []);
 
   const simulateProcessing = () => {
     setIsProcessing(true);
@@ -104,7 +93,7 @@ export const VFXPlayground: React.FC = () => {
             {/* Sliders Area */}
             <div className="space-y-6">
               <div>
-                <SakugaSlider
+                <ForgeSlider
                   label="Visual Quality Preservation (CRF / Bitrate)"
                   value={quality}
                   onChange={setQuality}
@@ -117,7 +106,7 @@ export const VFXPlayground: React.FC = () => {
               </div>
 
               <div>
-                <SakugaSlider
+                <ForgeSlider
                   label="Target File Size Ceiling"
                   value={targetSize}
                   onChange={setTargetSize}
@@ -128,7 +117,7 @@ export const VFXPlayground: React.FC = () => {
 
               {/* Progress Bar with Simulation */}
               <div className="pt-2">
-                <SakugaProgress
+                <ForgeProgress
                   value={progress}
                   showLabel
                   label={isProcessing ? 'Transcoding Frames in Worker Sandbox...' : 'Queue Buffer Status'}
@@ -138,19 +127,19 @@ export const VFXPlayground: React.FC = () => {
 
               {/* Toggles and Checkboxes */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-white/10">
-                <SakugaToggle
+                <ForgeToggle
                   checked={smartCompress}
                   onChange={setSmartCompress}
                   label="Smart Compress"
                   description="Auto-detect perceptual quality"
                 />
-                <SakugaToggle
+                <ForgeToggle
                   checked={stripMetadata}
                   onChange={setStripMetadata}
                   label="Strip EXIF & Location"
                   description="Enhance privacy & reduce size"
                 />
-                <SakugaCheckbox
+                <ForgeCheckbox
                   checked={ocrEnabled}
                   onChange={setOcrEnabled}
                   label="Enable OCR Text Extraction"
@@ -160,20 +149,18 @@ export const VFXPlayground: React.FC = () => {
 
               {/* Action Buttons */}
               <div className="flex flex-wrap items-center gap-3 pt-6 border-t border-white/10">
-                <SakugaButton
-                  variant="default"
-                  size="default"
+                <ForgeButton variant="primary"
+                  size="md"
                   isLoading={isProcessing}
-                  showSuccessCheck
                   onClick={simulateProcessing}
                 >
                   <Zap className="w-4 h-4 fill-current" />
                   <span>Execute Compress (Squash & Burst)</span>
-                </SakugaButton>
+                </ForgeButton>
 
-                <SakugaButton
+                <ForgeButton
                   variant="secondary"
-                  size="default"
+                  size="md"
                   onClick={() => {
                     setProgress(0);
                     forgeToast.info('Settings Reset', 'Default presets restored');
@@ -181,7 +168,7 @@ export const VFXPlayground: React.FC = () => {
                 >
                   <RefreshCw className="w-3.5 h-3.5" />
                   <span>Reset Sliders</span>
-                </SakugaButton>
+                </ForgeButton>
               </div>
             </div>
           </div>
@@ -195,42 +182,44 @@ export const VFXPlayground: React.FC = () => {
                 Animated Category Tabs
               </h4>
 
-              <SakugaTabs defaultValue="images">
-                <SakugaTabsList className="w-full justify-start overflow-x-auto scrollbar-none">
-                  <SakugaTabsTrigger value="images">Images</SakugaTabsTrigger>
-                  <SakugaTabsTrigger value="video">Video</SakugaTabsTrigger>
-                  <SakugaTabsTrigger value="docs">Docs</SakugaTabsTrigger>
-                  <SakugaTabsTrigger value="3d">3D/CAD</SakugaTabsTrigger>
-                </SakugaTabsList>
+              <ForgeTabs
+                tabs={[
+                  { id: 'images', label: 'Images' },
+                  { id: 'video', label: 'Video' },
+                  { id: 'docs', label: 'Docs' },
+                  { id: '3d', label: '3D/CAD' },
+                ]}
+                activeTab={activeCategory}
+                onChange={handleCategoryChange}
+                ariaLabel="File Format Categories"
+              />
 
-                <SakugaTabsContent value="images" className="mt-4">
+              <div className="mt-4">
+                {activeCategory === 'images' && (
                   <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/10 text-xs text-gray-300 space-y-2">
                     <p className="font-semibold text-white">Sharp Native Image Pipeline</p>
                     <p>Converts HEIC, RAW, AVIF, WebP, PNG, JPG with dynamic color quantization.</p>
                   </div>
-                </SakugaTabsContent>
-
-                <SakugaTabsContent value="video" className="mt-4">
+                )}
+                {activeCategory === 'video' && (
                   <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/10 text-xs text-gray-300 space-y-2">
                     <p className="font-semibold text-white">FFmpeg 2-Pass Rate Control</p>
                     <p>Hardware-accelerated transcoding for MP4, MOV, MKV, ProRes & WebM.</p>
                   </div>
-                </SakugaTabsContent>
-
-                <SakugaTabsContent value="docs" className="mt-4">
+                )}
+                {activeCategory === 'docs' && (
                   <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/10 text-xs text-gray-300 space-y-2">
                     <p className="font-semibold text-white">Ghostscript & LibreOffice Headless</p>
                     <p>Full PDF linearizing, stream compression, and DOCX/ODT conversion.</p>
                   </div>
-                </SakugaTabsContent>
-
-                <SakugaTabsContent value="3d" className="mt-4">
+                )}
+                {activeCategory === '3d' && (
                   <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/10 text-xs text-gray-300 space-y-2">
                     <p className="font-semibold text-white">Three.js & Mesh Simplification</p>
                     <p>Polygon decimation for OBJ, STL, GLTF, and STEP engineering CAD.</p>
                   </div>
-                </SakugaTabsContent>
-              </SakugaTabs>
+                )}
+              </div>
             </div>
 
             {/* Toast Triggers Test Card */}
@@ -244,41 +233,41 @@ export const VFXPlayground: React.FC = () => {
               </p>
 
               <div className="grid grid-cols-2 gap-2.5">
-                <SakugaButton
+                <ForgeButton
                   variant="secondary"
                   size="sm"
                   onClick={() => forgeToast.success('Compression Finished', 'Saved 12.4 MB (64%)')}
                 >
                   Success Toast
-                </SakugaButton>
-                <SakugaButton
+                </ForgeButton>
+                <ForgeButton
                   variant="secondary"
                   size="sm"
                   onClick={() => forgeToast.error('Corrupted Header Detected', 'Please re-upload original file')}
                 >
                   Error Toast
-                </SakugaButton>
-                <SakugaButton
+                </ForgeButton>
+                <ForgeButton
                   variant="secondary"
                   size="sm"
                   onClick={() => forgeToast.warning('Lossy Conversion Warning', 'VBA macros will be stripped')}
                 >
                   Warning Toast
-                </SakugaButton>
-                <SakugaButton
+                </ForgeButton>
+                <ForgeButton
                   variant="secondary"
                   size="sm"
                   onClick={() => forgeToast.info('Worker Scaling Up', 'Processing assigned to Fast-Lane 03')}
                 >
                   Info Toast
-                </SakugaButton>
+                </ForgeButton>
               </div>
             </div>
 
             {/* Input with Electric Glow */}
             <div className="bg-[#141420] border border-white/15 rounded-3xl p-6 shadow-xl">
               <h4 className="text-sm font-bold text-white mb-2">Animated Input Control</h4>
-              <SakugaInput
+              <ForgeInput
                 label="Watermark Text Embedding"
                 placeholder="© 2024 Your Studio Name..."
                 value={sampleInput}

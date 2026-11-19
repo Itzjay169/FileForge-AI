@@ -140,9 +140,70 @@ Open [http://localhost:3000](http://localhost:3000) to view the web studio.
 
 ---
 
-## 📄 License
+## 🎨 Sakuga VFX UI Library Integration & Attribution
+
+FileForge AI proudly integrates the open-source **[Sakuga VFX](https://github.com/finktheartist/sakuga-vfx)** component library created by Justin Finkelman, distributed under the MIT License.
+
+Sakuga VFX infuses standard web controls with the explosive physical kinetics of anime impact frames (*sakuga*): squash-and-stretch button springs, impact bursts, smoke clouds, crystal chips, speed lines, and manga sound-effect lettering (*ドン!*, *ズザッ*, *ポン*, *カチッ*).
+
+### Installed Components (`public/sakuga-vfx/`)
+```bash
+npx shadcn add finktheartist/sakuga-vfx/button
+npx shadcn add finktheartist/sakuga-vfx/toggle
+npx shadcn add finktheartist/sakuga-vfx/slider
+npx shadcn add finktheartist/sakuga-vfx/checkbox
+npx shadcn add finktheartist/sakuga-vfx/radio
+npx shadcn add finktheartist/sakuga-vfx/input
+npx shadcn add finktheartist/sakuga-vfx/tabs
+npx shadcn add finktheartist/sakuga-vfx/progress
+npx shadcn add finktheartist/sakuga-vfx/rating
+npx shadcn add finktheartist/sakuga-vfx/toast
+npx shadcn add finktheartist/sakuga-vfx/tooltip
+```
+
+### Component Architecture & React Wrappers
+All controls are encapsulated into typed, accessible React wrappers in `apps/web/src/components/sakuga/`:
+- `<ForgeButton>`: Squash & rebound with impact burst; imperative `.done()` success checkmark and glint.
+- `<ForgeToggle>`: Smear switch flip with liquid splash crown and settle frame.
+- `<ForgeSlider>`: Spring-lagged teardrop thumb, speed clouds, and live output size / savings estimation.
+- `<ForgeCheckbox>`: Crescent rotation, crystal chips, and animated checkmark with *ズザッ*.
+- `<ForgeRadioGroup>`: Spring dot entrance, radial wedges, and hollow *ポン*.
+- `<ForgeInput>`: Caret dust puffs, corner wedges, and real-time form validation.
+- `<ForgeTabs>`: Sliding stretch tab indicator with speed lines and edge puffs; deep-link URL sync.
+- `<ForgeProgress>`: Storm cloud leading edge with 8 real processing stages and 100% *ドン!* burst.
+- `<ForgeToast>`: Smear streak entrance, dust landing with *ズザッ*, and shrink-to-exit.
+- `<ForgeTooltip>`: Speech bubble spring hint with puff rings and hollow *カチッ*.
+- `<ForgeRating>`: Cascading star pops with 5-star burst for post-job user feedback.
+
+### Theme Variables (`--sk-*`)
+Custom studio theme overrides in `apps/web/src/app/globals.css`:
+```css
+:root {
+  --sk-ink: #f4f1ff;
+  --sk-card: #14121f;
+  --sk-pri: #a78bfa;
+  --sk-acc: #ff5fa2;
+  --sk-line: #6d5ae0;
+  --sk-bg: #0b0913;
+  --sk-surface: #171425;
+  --sk-surface-raised: #1e1a2e;
+  --sk-border: #322b4d;
+  --sk-text: #f6f4ff;
+  --sk-text-muted: #a49cc4;
+  --sk-success: #4ade80;
+  --sk-warning: #fbbf24;
+  --sk-danger: #f87171;
+  --sk-glow: rgba(167, 139, 250, 0.35);
+}
+```
+
+---
+
+## 📄 License & Attribution
 
 Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
+
+Sakuga VFX is Copyright (c) 2026 Justin Finkelman ([finktheartist/sakuga-vfx](https://github.com/finktheartist/sakuga-vfx)), used under the MIT License.
 
 ---
 

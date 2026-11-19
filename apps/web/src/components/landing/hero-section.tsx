@@ -19,7 +19,7 @@ import {
   TrendingDown,
   ShieldCheck
 } from 'lucide-react';
-import { SakugaButton } from '@/components/ui/sakuga-button';
+import { ForgeButton } from '@/components/sakuga';
 import { useReducedMotion } from '@/lib/hooks';
 import { springs } from '@/lib/motion';
 
@@ -39,15 +39,15 @@ interface ActiveFileDemo {
 const DEMO_FILES: ActiveFileDemo[] = [
   {
     id: 'f1',
-    name: 'sakuga-impact-scene-4k.mp4',
+    name: 'cinematic-studio-reel.mp4',
     format: 'MP4',
     category: 'Video',
-    originalSize: '412.5 MB',
-    optimizedSize: '42.8 MB',
-    savings: '-89.6%',
+    originalSize: '48.0 MB',
+    optimizedSize: '8.2 MB',
+    savings: '-82.9%',
     progress: 100,
     stage: 'Web-Optimized AV1 Stream',
-    details: '3840x2160 • 60fps • 8,400 kbps'
+    details: '1920x1080 • 60fps • 2,400 kbps'
   },
   {
     id: 'f2',
@@ -201,17 +201,17 @@ export const HeroSection: React.FC = () => {
           className="flex flex-wrap items-center justify-center gap-4 mb-14"
         >
           <Link href="/studio">
-            <SakugaButton variant="paper" size="lg" className="px-8 shadow-2xl">
-              <Zap className="w-4 h-4 fill-[#09090e] text-[#09090e]" />
-              <span className="font-extrabold text-[#09090e]">Start Compressing</span>
-            </SakugaButton>
+            <ForgeButton variant="primary" size="lg" className="px-8 shadow-2xl">
+              <Zap className="w-4 h-4 text-[var(--sk-acc)] fill-[var(--sk-acc)]" />
+              <span>Start Compressing</span>
+            </ForgeButton>
           </Link>
 
           <Link href="/formats">
-            <SakugaButton variant="secondary" size="lg" className="px-7">
+            <ForgeButton variant="secondary" size="lg" className="px-7">
               <span>Explore Formats</span>
-              <ArrowRight className="w-4 h-4 text-pink-400" />
-            </SakugaButton>
+              <ArrowRight className="w-4 h-4 text-[var(--sk-acc)]" />
+            </ForgeButton>
           </Link>
         </motion.div>
 

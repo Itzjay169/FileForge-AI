@@ -12,7 +12,7 @@ import {
   Shield,
   MessageSquare
 } from 'lucide-react';
-import { SakugaButton } from '@/components/ui/sakuga-button';
+import { ForgeButton } from '@/components/sakuga';
 
 export default function HelpCenterPage() {
   const categories = [
@@ -144,7 +144,7 @@ export default function HelpCenterPage() {
             </div>
           </div>
           <Link href="/contact">
-            <SakugaButton variant="default">Contact Support</SakugaButton>
+            <ForgeButton variant="primary">Contact Support</ForgeButton>
           </Link>
         </div>
       </div>

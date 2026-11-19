@@ -1,5 +1,6 @@
 'use client';
 
+import { ForgeButton, forgeToast } from '@/components/sakuga';
 import React, { useState, useRef } from 'react';
 import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/layout/footer';
@@ -7,8 +8,6 @@ import { CommandPalette } from '@/components/layout/command-palette';
 import { MetadataInspectorCard } from '@/components/compliance/metadata-inspector-card';
 import { WatermarkStudioCard } from '@/components/compliance/watermark-studio-card';
 import { AbuseReportModal } from '@/components/compliance/abuse-report-modal';
-import { SakugaButton } from '@/components/ui/sakuga-button';
-import { forgeToast } from '@/components/ui/sakuga-toast';
 import { MetadataInspectionReport } from '@fileforge/shared';
 import { motion } from 'framer-motion';
 import {
@@ -138,9 +137,9 @@ export default function TransparencyPage() {
             <p className="text-xs text-gray-400 max-w-md mx-auto mb-4">
               Extracts C2PA provenance manifests, EXIF metadata, AI generator signatures, and rights attribution markers.
             </p>
-            <SakugaButton variant="secondary" size="sm">
+            <ForgeButton variant="secondary" size="sm">
               Browse From Computer
-            </SakugaButton>
+            </ForgeButton>
           </motion.div>
         ) : (
           <div className="space-y-8">
@@ -160,8 +159,7 @@ export default function TransparencyPage() {
                 </div>
               </div>
 
-              <SakugaButton
-                variant="outline"
+              <ForgeButton variant="ghost"
                 size="sm"
                 onClick={() => {
                   setActiveFile(null);
@@ -170,7 +168,7 @@ export default function TransparencyPage() {
                 }}
               >
                 Change File
-              </SakugaButton>
+              </ForgeButton>
             </div>
 
             {/* 1. Metadata & Authenticity Inspection Card */}
@@ -203,15 +201,14 @@ export default function TransparencyPage() {
               </p>
             </div>
 
-            <SakugaButton
-              variant="outline"
+            <ForgeButton variant="ghost"
               size="sm"
               onClick={() => setAbuseModalOpen(true)}
               className="text-xs border-red-500/30 text-red-300 hover:bg-red-950/20"
             >
               <AlertOctagon className="w-3.5 h-3.5 mr-1 text-red-400" />
               Report Rights Abuse
-            </SakugaButton>
+            </ForgeButton>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 text-xs text-gray-400">

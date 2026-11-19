@@ -13,7 +13,7 @@ import {
   Clock
 } from 'lucide-react';
 import { SystemStatus } from '@fileforge/shared';
-import { SakugaButton } from '@/components/ui/sakuga-button';
+import { ForgeButton } from '@/components/sakuga';
 
 export default function StatusPage() {
   const [overall, setOverall] = useState<string>('OPERATIONAL');

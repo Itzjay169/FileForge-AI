@@ -14,7 +14,7 @@ import {
 } from 'lucide-react';
 import { useConversionStore } from '@/lib/stores/conversion-store';
 import { fileRegistry } from '@fileforge/file-registry';
-import { SakugaButton } from '@/components/ui/sakuga-button';
+import { ForgeButton } from '@/components/sakuga';
 import { formatFileSize, formatDuration, cn, truncate } from '@/lib/utils';
 
 export const ConversionHistoryList: React.FC = () => {
@@ -44,7 +44,7 @@ export const ConversionHistoryList: React.FC = () => {
           </div>
         </div>
 
-        <SakugaButton
+        <ForgeButton
           variant="ghost"
           size="sm"
           onClick={clearHistory}
@@ -52,7 +52,7 @@ export const ConversionHistoryList: React.FC = () => {
         >
           <Trash2 className="w-3.5 h-3.5 mr-1" />
           <span>Clear</span>
-        </SakugaButton>
+        </ForgeButton>
       </div>
 
       <div className="space-y-2.5 max-h-[380px] overflow-y-auto pr-1 scrollbar-thin">
@@ -89,10 +89,10 @@ export const ConversionHistoryList: React.FC = () => {
                 {/* Re-download button */}
                 {item.downloadUrl && (
                   <a href={item.downloadUrl} download={item.outputName} className="inline-flex">
-                    <SakugaButton variant="secondary" size="sm" className="h-8 px-2.5 text-xs">
+                    <ForgeButton variant="secondary" size="sm" className="h-8 px-2.5 text-xs">
                       <Download className="w-3 h-3 mr-1" />
                       <span>Download</span>
-                    </SakugaButton>
+                    </ForgeButton>
                   </a>
                 )}
 

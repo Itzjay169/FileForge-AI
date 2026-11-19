@@ -1,5 +1,6 @@
 'use client';
 
+import { ForgeButton, ForgeSlider, forgeToast, ForgeToggle } from '@/components/sakuga';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -15,10 +16,6 @@ import {
   Sparkles
 } from 'lucide-react';
 import { VideoEditOptions, AudioEditOptions } from '@fileforge/shared';
-import { SakugaButton } from '@/components/ui/sakuga-button';
-import { SakugaSlider } from '@/components/ui/sakuga-slider';
-import { SakugaToggle } from '@/components/ui/sakuga-toggle';
-import { forgeToast } from '@/components/ui/sakuga-toast';
 import { useReducedMotion } from '@/lib/hooks';
 import { cn } from '@/lib/utils';
 
@@ -148,7 +145,7 @@ export const MediaEditorModal: React.FC<MediaEditorModalProps> = ({
               </div>
 
               <div className="space-y-2">
-                <SakugaSlider
+                <ForgeSlider
                   label="Start Offset"
                   min={0}
                   max={Math.max(0, trimEnd - 1)}
@@ -158,7 +155,7 @@ export const MediaEditorModal: React.FC<MediaEditorModalProps> = ({
                   unit="s"
                 />
 
-                <SakugaSlider
+                <ForgeSlider
                   label="End Timestamp"
                   min={trimStart + 1}
                   max={300}
@@ -178,7 +175,7 @@ export const MediaEditorModal: React.FC<MediaEditorModalProps> = ({
                     <span className="text-xs font-semibold text-white block">Mute Audio Track</span>
                     <span className="text-[11px] text-white/40">Removes sound track completely</span>
                   </div>
-                  <SakugaToggle checked={mute} onChange={(val) => setMute(val)} size="sm" />
+                  <ForgeToggle checked={mute} onChange={(val) => setMute(val)} size="sm" />
                 </div>
 
                 <div className="flex items-center justify-between p-3.5 bg-white/[0.03] border border-white/10 rounded-xl">
@@ -186,7 +183,7 @@ export const MediaEditorModal: React.FC<MediaEditorModalProps> = ({
                     <span className="text-xs font-bold text-pink-300 block">Extract Audio Soundtrack</span>
                     <span className="text-[11px] text-white/40">Exports audio track as MP3</span>
                   </div>
-                  <SakugaToggle
+                  <ForgeToggle
                     checked={extractAudio}
                     onChange={(val) => setExtractAudio(val)}
                     size="sm"
@@ -225,7 +222,7 @@ export const MediaEditorModal: React.FC<MediaEditorModalProps> = ({
                   <span className="text-xs font-semibold text-white block">Normalize Volume</span>
                   <span className="text-[11px] text-white/40">Adjusts peak amplitude to standard -0.5 dB</span>
                 </div>
-                <SakugaToggle
+                <ForgeToggle
                   checked={normalizeAudio}
                   onChange={(val) => setNormalizeAudio(val)}
                   size="sm"
@@ -236,21 +233,19 @@ export const MediaEditorModal: React.FC<MediaEditorModalProps> = ({
 
           {/* Footer Actions */}
           <div className="flex items-center justify-end gap-3 pt-4 border-t border-white/10">
-            <SakugaButton variant="ghost" size="sm" onClick={onClose}>
+            <ForgeButton variant="ghost" size="sm" onClick={onClose}>
               <span>Cancel</span>
-            </SakugaButton>
+            </ForgeButton>
 
-            <SakugaButton
-              variant="default"
+            <ForgeButton variant="primary"
               size="sm"
               onClick={handleExecute}
               isLoading={isProcessing}
               disabled={isProcessing}
-              showSuccessCheck
             >
               <Check className="w-4 h-4 mr-1.5" />
               <span>Apply Changes</span>
-            </SakugaButton>
+            </ForgeButton>
           </div>
         </motion.div>
       </div>

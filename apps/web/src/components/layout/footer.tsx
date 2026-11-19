@@ -1,5 +1,6 @@
 'use client';
 
+import { ForgeButton, forgeToast } from '@/components/sakuga';
 import React, { useState } from 'react';
 import Link from 'next/link';
 import {
@@ -15,9 +16,6 @@ import {
   Smartphone,
   ExternalLink
 } from 'lucide-react';
-import { SakugaButton } from '@/components/ui/sakuga-button';
-import { forgeToast } from '@/components/ui/sakuga-toast';
-
 export const Footer: React.FC = () => {
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
@@ -62,7 +60,7 @@ export const Footer: React.FC = () => {
                 disabled={subscribed}
                 className="flex-1 bg-white/5 border border-white/15 rounded-xl px-4 py-2.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-colors"
               />
-              <SakugaButton variant="default" size="sm" type="submit" disabled={subscribed}>
+              <ForgeButton variant="primary" size="sm" type="submit" disabled={subscribed}>
                 {subscribed ? (
                   <span className="flex items-center gap-1.5 text-emerald-300">
                     <CheckCircle2 className="w-3.5 h-3.5" />
@@ -74,7 +72,7 @@ export const Footer: React.FC = () => {
                     <ArrowRight className="w-3 h-3 ml-1" />
                   </span>
                 )}
-              </SakugaButton>
+              </ForgeButton>
             </form>
           </div>
         </div>

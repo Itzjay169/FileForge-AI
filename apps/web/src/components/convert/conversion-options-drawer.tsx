@@ -1,5 +1,6 @@
 'use client';
 
+import { ForgeSlider, ForgeToggle } from '@/components/sakuga';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -12,8 +13,6 @@ import {
   Sparkles
 } from 'lucide-react';
 import { ConversionOptions } from '@fileforge/shared';
-import { SakugaSlider } from '@/components/ui/sakuga-slider';
-import { SakugaToggle } from '@/components/ui/sakuga-toggle';
 import { useReducedMotion } from '@/lib/hooks';
 import { cn } from '@/lib/utils';
 
@@ -110,7 +109,7 @@ export const ConversionOptionsDrawer: React.FC<ConversionOptionsDrawerProps> = (
               {/* Quality Slider (for raster images & media) */}
               {(isImage || isVideo) && (
                 <div className="space-y-1">
-                  <SakugaSlider
+                  <ForgeSlider
                     label="Output Quality"
                     value={options.quality ?? 85}
                     onChange={(val) => onChange({ quality: val })}
@@ -164,7 +163,7 @@ export const ConversionOptionsDrawer: React.FC<ConversionOptionsDrawerProps> = (
 
               {/* Preserve Metadata Toggle */}
               <div className="flex items-center pt-2">
-                <SakugaToggle
+                <ForgeToggle
                   checked={options.preserveMetadata ?? true}
                   onChange={(val) => onChange({ preserveMetadata: val })}
                   label="Preserve Metadata"

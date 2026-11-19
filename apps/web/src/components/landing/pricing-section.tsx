@@ -1,13 +1,11 @@
 'use client';
 
+import { ForgeButton, forgeToast } from '@/components/sakuga';
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Check, Zap, Sparkles, Shield, Building2, Crown } from 'lucide-react';
-import { SakugaButton } from '@/components/ui/sakuga-button';
 import { PLANS } from '@fileforge/shared';
 import { ScrollReveal } from '@/components/ui/scroll-reveal';
-import { forgeToast } from '@/components/ui/sakuga-toast';
-
 export const PricingSection: React.FC = () => {
   const [isAnnual, setIsAnnual] = useState(true);
 
@@ -102,9 +100,9 @@ export const PricingSection: React.FC = () => {
                     </div>
                   </div>
 
-                  <SakugaButton
+                  <ForgeButton
                     variant={isPopular ? 'default' : 'secondary'}
-                    size="default"
+                    size="md"
                     className="w-full"
                     onClick={() => {
                       if (plan.id === 'FREE') {
@@ -118,7 +116,7 @@ export const PricingSection: React.FC = () => {
                     }}
                   >
                     <span>{plan.id === 'FREE' ? 'Get Started Free' : 'Upgrade to ' + plan.name}</span>
-                  </SakugaButton>
+                  </ForgeButton>
                 </div>
               </ScrollReveal>
             );

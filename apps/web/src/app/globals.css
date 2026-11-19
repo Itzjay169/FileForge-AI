@@ -64,7 +64,37 @@
   --color-warning: #f59e0b;
   --color-danger: #ef4444;
   --color-info: #38bdf8;
-  --color-glow: rgba(139, 92, 246, 0.3);
+  --color-glow: rgba(167, 139, 250, 0.35);
+
+  /* ========================================================================
+     Official Sakuga VFX Design Tokens (FileForge AI Creative Studio Theme)
+     ======================================================================== */
+  --sk-ink: #f4f1ff;
+  --sk-card: #14121f;
+  --sk-pri: #a78bfa;
+  --sk-acc: #ff5fa2;
+  --sk-line: #6d5ae0;
+  --sk-bg: #0b0913;
+  --sk-surface: #171425;
+  --sk-surface-raised: #1e1a2e;
+  --sk-border: #322b4d;
+  --sk-text: #f6f4ff;
+  --sk-text-muted: #a49cc4;
+  --sk-success: #4ade80;
+  --sk-warning: #fbbf24;
+  --sk-danger: #f87171;
+  --sk-glow: rgba(167, 139, 250, 0.35);
+
+  --sk-dim: #79719d;
+  --sk-soft: rgba(167, 139, 250, 0.25);
+  --sk-track: #26213b;
+  --sk-btn-line: #a78bfa;
+  --sk-btn-sh: 4px 5px 0 rgba(109, 90, 224, 0.4);
+  --sk-alt-line: #4a4170;
+  --sk-alt-sh: 4px 5px 0 rgba(0, 0, 0, 0.3);
+  --sk-tick: #ff5fa2;
+  --sk-fill: #ff5fa2;
+  --sk-on-pri: #0b0913;
 
   /* Radii */
   --radius-sm: 8px;
@@ -108,6 +138,34 @@ html.light {
 
   --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.08), 0 0 1px 1px rgba(0, 0, 0, 0.05);
   --shadow-card-hover: 0 12px 36px -4px rgba(124, 58, 237, 0.18);
+
+  /* Sakuga VFX Light Theme Tokens */
+  --sk-ink: #14121f;
+  --sk-card: #ffffff;
+  --sk-pri: #8b5cf6;
+  --sk-acc: #ec4899;
+  --sk-line: #7c3aed;
+  --sk-bg: #f8f7fa;
+  --sk-surface: #ffffff;
+  --sk-surface-raised: #f1eff7;
+  --sk-border: #e2dff0;
+  --sk-text: #14121f;
+  --sk-text-muted: #6b6487;
+  --sk-success: #16a34a;
+  --sk-warning: #d97706;
+  --sk-danger: #dc2626;
+  --sk-glow: rgba(139, 92, 246, 0.25);
+
+  --sk-dim: #8e88ab;
+  --sk-soft: rgba(139, 92, 246, 0.2);
+  --sk-track: #e5e3f0;
+  --sk-btn-line: #7c3aed;
+  --sk-btn-sh: 4px 5px 0 rgba(124, 58, 237, 0.25);
+  --sk-alt-line: #c5bfdb;
+  --sk-alt-sh: 4px 5px 0 rgba(0, 0, 0, 0.08);
+  --sk-tick: #ec4899;
+  --sk-fill: #ec4899;
+  --sk-on-pri: #ffffff;
 }
 
 /* Base Body Setup */

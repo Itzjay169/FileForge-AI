@@ -1,12 +1,11 @@
 'use client';
 
+import { ForgeButton, ForgeInput } from '@/components/sakuga';
 import React, { useCallback, useRef, useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { UploadCloud, FolderOpen, Camera, Link2, X } from 'lucide-react';
 import { useUploadStore } from '@/lib/stores/upload-store';
 import { useReducedMotion } from '@/lib/hooks';
-import { SakugaButton } from '@/components/ui/sakuga-button';
-import { SakugaInput } from '@/components/ui/sakuga-input';
 import { cn } from '@/lib/utils';
 
 // ---------------------------------------------------------------------------
@@ -304,7 +303,7 @@ export const StudioDropzone: React.FC = () => {
 
       {/* ---- Action buttons row ---- */}
       <div className="flex flex-wrap items-center justify-center gap-2 mt-4">
-        <SakugaButton
+        <ForgeButton
           variant="ghost"
           size="sm"
           onClick={() => folderInputRef.current?.click()}
@@ -312,9 +311,9 @@ export const StudioDropzone: React.FC = () => {
         >
           <FolderOpen className="w-4 h-4 mr-1.5" />
           Browse Folder
-        </SakugaButton>
+        </ForgeButton>
 
-        <SakugaButton
+        <ForgeButton
           variant="ghost"
           size="sm"
           onClick={() => cameraInputRef.current?.click()}
@@ -322,9 +321,9 @@ export const StudioDropzone: React.FC = () => {
         >
           <Camera className="w-4 h-4 mr-1.5" />
           Camera
-        </SakugaButton>
+        </ForgeButton>
 
-        <SakugaButton
+        <ForgeButton
           variant="ghost"
           size="sm"
           onClick={() => {
@@ -354,9 +353,9 @@ export const StudioDropzone: React.FC = () => {
         >
           <UploadCloud className="w-4 h-4 mr-1.5" />
           Paste
-        </SakugaButton>
+        </ForgeButton>
 
-        <SakugaButton
+        <ForgeButton
           variant="ghost"
           size="sm"
           onClick={() => setShowUrlModal(true)}
@@ -364,7 +363,7 @@ export const StudioDropzone: React.FC = () => {
         >
           <Link2 className="w-4 h-4 mr-1.5" />
           URL Import
-        </SakugaButton>
+        </ForgeButton>
       </div>
 
       {/* ---- URL import modal ---- */}
@@ -394,7 +393,7 @@ export const StudioDropzone: React.FC = () => {
             </div>
 
             <div className="flex gap-2">
-              <SakugaInput
+              <ForgeInput
                 value={importUrl}
                 onChange={(e) => setImportUrl(e.target.value)}
                 placeholder="https://example.com/file.pdf"
@@ -403,13 +402,13 @@ export const StudioDropzone: React.FC = () => {
                   if (e.key === 'Enter') handleUrlImport();
                 }}
               />
-              <SakugaButton
+              <ForgeButton
                 size="sm"
                 onClick={handleUrlImport}
                 disabled={!importUrl.trim()}
               >
                 Import
-              </SakugaButton>
+              </ForgeButton>
             </div>
           </motion.div>
         )}

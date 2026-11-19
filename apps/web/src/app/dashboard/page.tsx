@@ -1,13 +1,10 @@
 'use client';
 
+import { ForgeButton, ForgeInput, forgeToast, ForgeToggle } from '@/components/sakuga';
 import React, { useState, useEffect } from 'react';
 import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/layout/footer';
 import { CommandPalette } from '@/components/layout/command-palette';
-import { SakugaButton } from '@/components/ui/sakuga-button';
-import { SakugaInput } from '@/components/ui/sakuga-input';
-import { SakugaToggle } from '@/components/ui/sakuga-toggle';
-import { forgeToast } from '@/components/ui/sakuga-toast';
 import {
   UserProfile,
   UserStorageInfo,
@@ -319,10 +316,10 @@ export default function DashboardPage() {
                 Favorites Only
               </button>
 
-              <SakugaButton variant="secondary" size="sm" onClick={() => setNewFolderOpen(true)}>
+              <ForgeButton variant="secondary" size="sm" onClick={() => setNewFolderOpen(true)}>
                 <Plus className="w-3.5 h-3.5 mr-1" />
                 New Folder
-              </SakugaButton>
+              </ForgeButton>
             </div>
           </div>
 
@@ -430,7 +427,7 @@ export default function DashboardPage() {
                   </div>
 
                   <div className="flex items-center gap-2 self-end sm:self-auto">
-                    <SakugaButton
+                    <ForgeButton
                       variant="secondary"
                       size="sm"
                       onClick={() => {
@@ -441,13 +438,13 @@ export default function DashboardPage() {
                     >
                       <Share2 className="w-3.5 h-3.5 mr-1" />
                       Share Link
-                    </SakugaButton>
+                    </ForgeButton>
 
                     <a href={file.downloadUrl} download={file.name}>
-                      <SakugaButton variant="default" size="sm">
+                      <ForgeButton variant="primary" size="sm">
                         <Download className="w-3.5 h-3.5 mr-1" />
                         Download
-                      </SakugaButton>
+                      </ForgeButton>
                     </a>
                   </div>
                 </div>
@@ -501,7 +498,7 @@ export default function DashboardPage() {
                       <label className="text-xs font-semibold text-gray-300 block mb-1">
                         Optional Password Protection
                       </label>
-                      <SakugaInput
+                      <ForgeInput
                         type="password"
                         value={sharePassword}
                         onChange={(e) => setSharePassword(e.target.value)}
@@ -544,18 +541,17 @@ export default function DashboardPage() {
                     </div>
 
                     <div className="pt-2 flex justify-end gap-2">
-                      <SakugaButton variant="outline" size="sm" onClick={() => setShareFile(null)}>
+                      <ForgeButton variant="ghost" size="sm" onClick={() => setShareFile(null)}>
                         Cancel
-                      </SakugaButton>
-                      <SakugaButton
-                        variant="default"
+                      </ForgeButton>
+                      <ForgeButton variant="primary"
                         size="sm"
                         isLoading={isCreatingLink}
                         onClick={handleCreateShareLink}
                       >
                         <Lock className="w-3.5 h-3.5 mr-1" />
                         Generate Link & QR
-                      </SakugaButton>
+                      </ForgeButton>
                     </div>
                   </div>
                 ) : (
@@ -577,7 +573,7 @@ export default function DashboardPage() {
                         value={`https://fileforge.studio/share/${createdShareLink.code}`}
                         className="bg-transparent flex-1 text-xs text-white px-2 focus:outline-none font-mono"
                       />
-                      <SakugaButton
+                      <ForgeButton
                         variant="secondary"
                         size="sm"
                         onClick={() => {
@@ -589,13 +585,13 @@ export default function DashboardPage() {
                         }}
                       >
                         {copiedLink ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-                      </SakugaButton>
+                      </ForgeButton>
                     </div>
 
                     <div className="pt-2">
-                      <SakugaButton variant="outline" size="sm" onClick={() => setShareFile(null)}>
+                      <ForgeButton variant="ghost" size="sm" onClick={() => setShareFile(null)}>
                         Done
-                      </SakugaButton>
+                      </ForgeButton>
                     </div>
                   </div>
                 )}
@@ -614,18 +610,18 @@ export default function DashboardPage() {
               />
               <div className="relative w-full max-w-sm bg-[#12121c] border border-white/20 rounded-3xl p-6 z-10 shadow-2xl">
                 <h3 className="text-base font-bold text-white mb-3">Create New Folder</h3>
-                <SakugaInput
+                <ForgeInput
                   value={newFolderName}
                   onChange={(e) => setNewFolderName(e.target.value)}
                   placeholder="Folder Name (e.g. Design Assets)"
                 />
                 <div className="flex justify-end gap-2 mt-4">
-                  <SakugaButton variant="outline" size="sm" onClick={() => setNewFolderOpen(false)}>
+                  <ForgeButton variant="ghost" size="sm" onClick={() => setNewFolderOpen(false)}>
                     Cancel
-                  </SakugaButton>
-                  <SakugaButton variant="default" size="sm" onClick={handleCreateFolder}>
+                  </ForgeButton>
+                  <ForgeButton variant="primary" size="sm" onClick={handleCreateFolder}>
                     Create
-                  </SakugaButton>
+                  </ForgeButton>
                 </div>
               </div>
             </div>

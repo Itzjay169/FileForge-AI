@@ -28,15 +28,16 @@ import {
 } from 'lucide-react';
 import { fileRegistry } from '@fileforge/file-registry';
 import { FileCategory, FileFormatDefinition } from '@fileforge/shared';
-import { SakugaButton } from '@/components/ui/sakuga-button';
-import { SakugaInput } from '@/components/ui/sakuga-input';
-import { forgeToast } from '@/components/ui/sakuga-toast';
+import { ForgeButton } from '@/components/sakuga/forge-button';
+import { ForgeInput } from '@/components/sakuga/forge-input';
+import { forgeToast } from '@/components/sakuga/forge-toast';
 
 export const FormatExplorer: React.FC<{ initialCategory?: string }> = ({ initialCategory }) => {
   const [search, setSearch] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<FileCategory | 'ALL'>(
     (initialCategory as FileCategory) || 'ALL'
   );
+  const [capabilityFilter, setCapabilityFilter] = useState<'all' | 'compress' | 'convert' | 'preview' | 'premium'>('all');
   const [selectedFormat, setSelectedFormat] = useState<FileFormatDefinition | null>(null);
 
   const allFormats = useMemo(() => fileRegistry.getAllFormats(), []);
@@ -48,6 +49,16 @@ export const FormatExplorer: React.FC<{ initialCategory?: string }> = ({ initial
 
     if (selectedCategory !== 'ALL') {
       result = result.filter((f) => f.category === selectedCategory);
+    }
+
+    if (capabilityFilter === 'compress') {
+      result = result.filter((f) => f.compressionSupported);
+    } else if (capabilityFilter === 'convert') {
+      result = result.filter((f) => f.conversionTargets && f.conversionTargets.length > 0);
+    } else if (capabilityFilter === 'preview') {
+      result = result.filter((f) => f.previewSupported);
+    } else if (capabilityFilter === 'premium') {
+      result = result.filter((f) => f.requiresPremiumWorker || f.riskLevel === 'HIGH' || f.maxFreeSizeBytes < 100 * 1024 * 1024);
     }
 
     if (search.trim()) {
@@ -62,7 +73,7 @@ export const FormatExplorer: React.FC<{ initialCategory?: string }> = ({ initial
     }
 
     return result;
-  }, [allFormats, selectedCategory, search]);
+  }, [allFormats, selectedCategory, capabilityFilter, search]);
 
   const getRiskBadge = (risk: string) => {
     switch (risk) {
@@ -111,14 +122,33 @@ export const FormatExplorer: React.FC<{ initialCategory?: string }> = ({ initial
   return (
     <div className="w-full">
       {/* Search Header Bar */}
-      <div className="mb-8">
-        <SakugaInput
-          variant="search"
-          placeholder="Search by extension (e.g. 'docx', 'mov', 'webp', 'step') or format name..."
+      {/* Search Bar & Filters */}
+      <div className="mb-8 space-y-4">
+        <ForgeInput
+          placeholder="Search by extension (e.g. '.heic', '.mkv', '.docx', '.psd', '.7z', '.glb', '.ttf') or format name..."
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="text-base py-3.5"
+          onChange={(val) => setSearch(val)}
+          type="search"
+          leadingIcon={<Search className="w-4 h-4" />}
         />
+
+        {/* Capability Filters */}
+        <div className="flex items-center gap-2 flex-wrap">
+          <span className="text-xs font-mono font-semibold text-[var(--sk-text-muted)] mr-1">Filter Capabilities:</span>
+          {(['all', 'compress', 'convert', 'preview', 'premium'] as const).map((filterKey) => (
+            <button
+              key={filterKey}
+              onClick={() => setCapabilityFilter(filterKey)}
+              className={`px-3 py-1 rounded-xl text-xs font-mono font-semibold uppercase tracking-wider transition-all cursor-pointer ${
+                capabilityFilter === filterKey
+                  ? 'bg-[var(--sk-acc)] text-white shadow-sm'
+                  : 'bg-white/5 text-[var(--sk-text-muted)] hover:text-white hover:bg-white/10 border border-[var(--sk-border)]'
+              }`}
+            >
+              {filterKey}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Category Pills Scroller */}
@@ -239,16 +269,17 @@ export const FormatExplorer: React.FC<{ initialCategory?: string }> = ({ initial
           <p className="text-xs text-gray-400 mb-6">
             Try searching with another keyword or pick an explicit category tab above.
           </p>
-          <SakugaButton
-            variant="default"
+          <ForgeButton
+            variant="primary"
             size="sm"
             onClick={() => {
               setSearch('');
               setSelectedCategory('ALL');
+              setCapabilityFilter('all');
             }}
           >
             Reset All Filters
-          </SakugaButton>
+          </ForgeButton>
         </div>
       )}
 
@@ -369,17 +400,16 @@ export const FormatExplorer: React.FC<{ initialCategory?: string }> = ({ initial
 
               {/* Action Buttons */}
               <div className="flex flex-wrap items-center justify-end gap-3 pt-6 border-t border-white/10">
-                <SakugaButton
+                <ForgeButton
                   variant="secondary"
-                  size="default"
+                  size="md"
                   onClick={() => setSelectedFormat(null)}
                 >
                   Close
-                </SakugaButton>
-                <SakugaButton
-                  variant="default"
-                  size="default"
-                  showSuccessCheck
+                </ForgeButton>
+                <ForgeButton
+                  variant="primary"
+                  size="md"
                   onClick={() => {
                     forgeToast.success(
                       `Target Ready: .${selectedFormat.extension.toUpperCase()}`,
@@ -389,9 +419,9 @@ export const FormatExplorer: React.FC<{ initialCategory?: string }> = ({ initial
                     window.location.hash = 'playground';
                   }}
                 >
-                  <Zap className="w-4 h-4 fill-current" />
+                  <Zap className="w-4 h-4 fill-current text-[var(--sk-acc)]" />
                   <span>Launch in Studio</span>
-                </SakugaButton>
+                </ForgeButton>
               </div>
             </motion.div>
           </div>

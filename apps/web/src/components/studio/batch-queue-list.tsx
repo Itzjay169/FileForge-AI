@@ -21,8 +21,8 @@ import {
 import { type QueueItem } from '@fileforge/shared';
 import { useUploadStore } from '@/lib/stores/upload-store';
 import { useReducedMotion } from '@/lib/hooks';
-import { SakugaProgress } from '@/components/ui/sakuga-progress';
-import { SakugaButton } from '@/components/ui/sakuga-button';
+import { ForgeProgress } from '@/components/sakuga/forge-progress';
+import { ForgeButton } from '@/components/sakuga/forge-button';
 import { formatFileSize, cn, truncate } from '@/lib/utils';
 
 // ---------------------------------------------------------------------------
@@ -164,13 +164,11 @@ function QueueCard({ item }: { item: QueueItem }) {
 
         {/* Progress bar (only while processing/uploading) */}
         {(isProcessing || item.status === 'UPLOADING') && (
-          <SakugaProgress
-            value={item.processProgress}
-            variant={progressVariant}
-            size="sm"
-            showPercentage
-            showLabel
-            label={item.currentStep}
+          <ForgeProgress
+            label={item.originalName}
+            percentage={item.processProgress}
+            stage={item.currentStep || (isProcessing ? 'Processing' : 'Uploading')}
+            onCancel={() => cancelItem(item.id)}
           />
         )}
 
@@ -184,17 +182,17 @@ function QueueCard({ item }: { item: QueueItem }) {
         {/* Action buttons */}
         <div className="flex items-center gap-1.5 pt-1">
           {isReady && (
-            <SakugaButton variant="ghost" size="sm" onClick={() => removeItem(item.id)}>
+            <ForgeButton variant="ghost" size="sm" onClick={() => removeItem(item.id)}>
               <X className="w-3.5 h-3.5" />
               <span className="text-xs">Remove</span>
-            </SakugaButton>
+            </ForgeButton>
           )}
 
           {isProcessing && (
-            <SakugaButton variant="ghost" size="sm" onClick={() => cancelItem(item.id)}>
+            <ForgeButton variant="ghost" size="sm" onClick={() => cancelItem(item.id)}>
               <X className="w-3.5 h-3.5" />
               <span className="text-xs">Cancel</span>
-            </SakugaButton>
+            </ForgeButton>
           )}
 
           {isCompleted && (
@@ -205,35 +203,35 @@ function QueueCard({ item }: { item: QueueItem }) {
                   download={item.result.outputName}
                   className="inline-flex"
                 >
-                  <SakugaButton variant="secondary" size="sm">
+                  <ForgeButton variant="secondary" size="sm">
                     <Download className="w-3.5 h-3.5" />
                     <span className="text-xs">Download</span>
-                  </SakugaButton>
+                  </ForgeButton>
                 </a>
               )}
-              <SakugaButton
+              <ForgeButton
                 variant="ghost"
                 size="sm"
                 onClick={() => setComparisonItem(item)}
               >
                 <Eye className="w-3.5 h-3.5" />
                 <span className="text-xs">Compare</span>
-              </SakugaButton>
-              <SakugaButton variant="ghost" size="sm" onClick={() => removeItem(item.id)}>
+              </ForgeButton>
+              <ForgeButton variant="ghost" size="sm" onClick={() => removeItem(item.id)}>
                 <X className="w-3.5 h-3.5" />
-              </SakugaButton>
+              </ForgeButton>
             </>
           )}
 
           {isFailed && (
             <>
-              <SakugaButton variant="ghost" size="sm" onClick={() => retryItem(item.id)}>
+              <ForgeButton variant="ghost" size="sm" onClick={() => retryItem(item.id)}>
                 <RotateCcw className="w-3.5 h-3.5" />
                 <span className="text-xs">Retry</span>
-              </SakugaButton>
-              <SakugaButton variant="ghost" size="sm" onClick={() => removeItem(item.id)}>
+              </ForgeButton>
+              <ForgeButton variant="ghost" size="sm" onClick={() => removeItem(item.id)}>
                 <X className="w-3.5 h-3.5" />
-              </SakugaButton>
+              </ForgeButton>
             </>
           )}
         </div>

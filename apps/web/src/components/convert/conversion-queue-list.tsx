@@ -1,5 +1,6 @@
 'use client';
 
+import { ForgeButton, ForgeProgress } from '@/components/sakuga';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -15,8 +16,6 @@ import {
 } from 'lucide-react';
 import { ConversionQueueItem } from '@fileforge/shared';
 import { useConversionStore } from '@/lib/stores/conversion-store';
-import { SakugaProgress } from '@/components/ui/sakuga-progress';
-import { SakugaButton } from '@/components/ui/sakuga-button';
 import { FormatSelectorModal } from './format-selector-modal';
 import { LossyWarningDialog } from './lossy-warning-dialog';
 import { formatFileSize, cn, truncate } from '@/lib/utils';
@@ -67,8 +66,7 @@ export const ConversionQueueList: React.FC = () => {
 
         <div className="flex items-center gap-2">
           {readyCount > 0 && (
-            <SakugaButton
-              variant="default"
+            <ForgeButton variant="primary"
               size="sm"
               onClick={() => processAll()}
               disabled={isProcessingBatch}
@@ -76,18 +74,18 @@ export const ConversionQueueList: React.FC = () => {
             >
               <Play className="w-3.5 h-3.5 fill-current" />
               <span>Convert All ({readyCount})</span>
-            </SakugaButton>
+            </ForgeButton>
           )}
 
           {completedCount > 0 && (
-            <SakugaButton
+            <ForgeButton
               variant="accent"
               size="sm"
               onClick={() => downloadBatchZip()}
             >
               <Download className="w-3.5 h-3.5" />
               <span>Download ZIP</span>
-            </SakugaButton>
+            </ForgeButton>
           )}
         </div>
       </div>
@@ -154,7 +152,7 @@ export const ConversionQueueList: React.FC = () => {
 
                 {/* Progress bar */}
                 {isProcessing && (
-                  <SakugaProgress
+                  <ForgeProgress
                     value={item.processProgress}
                     size="sm"
                     variant="plasma"
@@ -186,13 +184,12 @@ export const ConversionQueueList: React.FC = () => {
               {/* Action Buttons */}
               <div className="flex items-center gap-2 self-end md:self-center shrink-0">
                 {isReady && (
-                  <SakugaButton
-                    variant="default"
+                  <ForgeButton variant="primary"
                     size="sm"
                     onClick={() => processItem(item.id)}
                   >
                     <span>Convert</span>
-                  </SakugaButton>
+                  </ForgeButton>
                 )}
 
                 {isCompleted && item.result?.outputFileUrl && (
@@ -201,32 +198,32 @@ export const ConversionQueueList: React.FC = () => {
                     download={item.result.outputName}
                     className="inline-flex"
                   >
-                    <SakugaButton variant="secondary" size="sm">
+                    <ForgeButton variant="secondary" size="sm">
                       <Download className="w-3.5 h-3.5" />
                       <span>Download</span>
-                    </SakugaButton>
+                    </ForgeButton>
                   </a>
                 )}
 
                 {isFailed && (
-                  <SakugaButton
+                  <ForgeButton
                     variant="ghost"
                     size="sm"
                     onClick={() => processItem(item.id)}
                   >
                     <RotateCcw className="w-3.5 h-3.5" />
                     <span>Retry</span>
-                  </SakugaButton>
+                  </ForgeButton>
                 )}
 
-                <SakugaButton
+                <ForgeButton
                   variant="ghost"
                   size="icon"
                   className="w-8 h-8 rounded-lg text-white/40 hover:text-white"
                   onClick={() => removeItem(item.id)}
                 >
                   <X className="w-4 h-4" />
-                </SakugaButton>
+                </ForgeButton>
               </div>
             </motion.div>
           );

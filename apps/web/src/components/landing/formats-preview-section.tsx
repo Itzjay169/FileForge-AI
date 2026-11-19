@@ -17,7 +17,7 @@ import {
   Database,
   ArrowRight
 } from 'lucide-react';
-import { SakugaButton } from '@/components/ui/sakuga-button';
+import { ForgeButton } from '@/components/sakuga';
 import { ScrollReveal } from '@/components/ui/scroll-reveal';
 
 export const FormatsPreviewSection: React.FC = () => {
@@ -137,10 +137,10 @@ export const FormatsPreviewSection: React.FC = () => {
           </div>
 
           <Link href="/formats">
-            <SakugaButton variant="default" size="default">
+            <ForgeButton variant="primary" size="md">
               <span>Launch Full Formats Explorer</span>
               <ArrowRight className="w-4 h-4 ml-1" />
-            </SakugaButton>
+            </ForgeButton>
           </Link>
         </div>
 

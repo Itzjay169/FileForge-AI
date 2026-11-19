@@ -11,7 +11,7 @@ import {
   CheckCircle2
 } from 'lucide-react';
 import { ConversionQueueItem } from '@fileforge/shared';
-import { SakugaButton } from '@/components/ui/sakuga-button';
+import { ForgeButton } from '@/components/sakuga';
 import { useReducedMotion } from '@/lib/hooks';
 
 export interface LossyWarningDialogProps {
@@ -127,20 +127,18 @@ export const LossyWarningDialog: React.FC<LossyWarningDialogProps> = ({
 
           {/* Action Button Row */}
           <div className="flex items-center justify-end gap-3 pt-2">
-            <SakugaButton variant="ghost" size="default" onClick={onCancel}>
+            <ForgeButton variant="ghost" size="md" onClick={onCancel}>
               <span>Cancel</span>
-            </SakugaButton>
+            </ForgeButton>
 
-            <SakugaButton
-              variant="default"
-              size="default"
+            <ForgeButton variant="primary"
+              size="md"
               onClick={onConfirm}
-              showSuccessCheck
               className="bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 border-amber-400/40 shadow-amber-500/25"
             >
               <CheckCircle2 className="w-4 h-4 mr-1.5" />
               <span>Proceed with Conversion</span>
-            </SakugaButton>
+            </ForgeButton>
           </div>
         </motion.div>
       </div>

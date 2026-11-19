@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Zap, Sparkles, ArrowRight, ShieldCheck } from 'lucide-react';
-import { SakugaButton } from '@/components/ui/sakuga-button';
+import { ForgeButton } from '@/components/sakuga';
 import { ScrollReveal } from '@/components/ui/scroll-reveal';
 
 export const CTASection: React.FC = () => {
@@ -32,17 +32,17 @@ export const CTASection: React.FC = () => {
 
             <div className="flex flex-wrap items-center justify-center gap-4 mb-8">
               <Link href="#playground">
-                <SakugaButton variant="default" size="lg" showSuccessCheck>
+                <ForgeButton variant="primary" size="lg">
                   <Zap className="w-4 h-4 fill-current" />
                   <span>Launch FileForge Studio</span>
-                </SakugaButton>
+                </ForgeButton>
               </Link>
 
               <Link href="/formats">
-                <SakugaButton variant="secondary" size="lg">
+                <ForgeButton variant="secondary" size="lg">
                   <span>Browse 100+ Formats</span>
                   <ArrowRight className="w-4 h-4" />
-                </SakugaButton>
+                </ForgeButton>
               </Link>
             </div>
 

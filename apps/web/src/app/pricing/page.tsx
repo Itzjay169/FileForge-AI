@@ -16,7 +16,7 @@ import {
   ChevronDown
 } from 'lucide-react';
 import { PLANS } from '@fileforge/shared';
-import { SakugaButton } from '@/components/ui/sakuga-button';
+import { ForgeButton } from '@/components/sakuga';
 
 export default function PricingPage() {
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('yearly');
@@ -179,25 +179,25 @@ export default function PricingPage() {
                 <div className="mt-8">
                   {plan.id === 'FREE' ? (
                     <Link href="/studio">
-                      <SakugaButton variant="secondary" className="w-full justify-center">
+                      <ForgeButton variant="secondary" className="w-full justify-center">
                         Start Free
-                      </SakugaButton>
+                      </ForgeButton>
                     </Link>
                   ) : isEnterprise ? (
                     <Link href="/contact">
-                      <SakugaButton variant="secondary" className="w-full justify-center">
+                      <ForgeButton variant="secondary" className="w-full justify-center">
                         Contact Enterprise
-                      </SakugaButton>
+                      </ForgeButton>
                     </Link>
                   ) : (
-                    <SakugaButton
+                    <ForgeButton
                       variant={isPopular ? 'default' : 'secondary'}
                       className="w-full justify-center"
                       disabled={subscribingTier === plan.id}
                       onClick={() => handleSubscribe(plan.id)}
                     >
                       {subscribingTier === plan.id ? 'Processing...' : `Upgrade to ${plan.name}`}
-                    </SakugaButton>
+                    </ForgeButton>
                   )}
                 </div>
               </motion.div>
@@ -221,10 +221,10 @@ export default function PricingPage() {
             </div>
           </div>
           <Link href="/dashboard">
-            <SakugaButton variant="default" className="whitespace-nowrap">
+            <ForgeButton variant="primary" className="whitespace-nowrap">
               <span>View Credit Packs</span>
               <ArrowRight className="w-4 h-4 ml-1.5" />
-            </SakugaButton>
+            </ForgeButton>
           </Link>
         </div>
       </div>

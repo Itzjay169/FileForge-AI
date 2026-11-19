@@ -12,7 +12,7 @@ import {
   ShieldCheck,
   Building2
 } from 'lucide-react';
-import { SakugaButton } from '@/components/ui/sakuga-button';
+import { ForgeButton } from '@/components/sakuga';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -136,7 +136,7 @@ export default function ContactPage() {
                     Reference ID: {submittedTicket.id}
                   </div>
                   <div className="pt-4">
-                    <SakugaButton
+                    <ForgeButton
                       variant="secondary"
                       onClick={() => {
                         setSubmittedTicket(null);
@@ -144,7 +144,7 @@ export default function ContactPage() {
                       }}
                     >
                       Submit Another Inquiry
-                    </SakugaButton>
+                    </ForgeButton>
                   </div>
                 </div>
               ) : (
@@ -223,10 +223,10 @@ export default function ContactPage() {
                   </div>
 
                   <div className="pt-2 flex justify-end">
-                    <SakugaButton variant="default" disabled={loading} className="flex items-center gap-2">
+                    <ForgeButton variant="primary" disabled={loading} className="flex items-center gap-2">
                       <Send className="w-3.5 h-3.5" />
                       <span>{loading ? 'Submitting...' : 'Send Inquiry'}</span>
-                    </SakugaButton>
+                    </ForgeButton>
                   </div>
                 </form>
               )}

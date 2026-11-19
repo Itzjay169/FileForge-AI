@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Sparkles, Calendar, Clock, ArrowRight, BookOpen } from 'lucide-react';
-import { SakugaButton } from '@/components/ui/sakuga-button';
+import { ForgeButton } from '@/components/sakuga';
 
 export default function BlogPage() {
   const posts = [

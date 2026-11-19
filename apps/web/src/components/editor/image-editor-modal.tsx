@@ -1,5 +1,6 @@
 'use client';
 
+import { ForgeButton, ForgeSlider, forgeToast, ForgeToggle } from '@/components/sakuga';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -16,10 +17,6 @@ import {
   Layers
 } from 'lucide-react';
 import { ImageEditOptions } from '@fileforge/shared';
-import { SakugaButton } from '@/components/ui/sakuga-button';
-import { SakugaSlider } from '@/components/ui/sakuga-slider';
-import { SakugaToggle } from '@/components/ui/sakuga-toggle';
-import { forgeToast } from '@/components/ui/sakuga-toast';
 import { useReducedMotion } from '@/lib/hooks';
 import { cn } from '@/lib/utils';
 
@@ -221,7 +218,7 @@ export const ImageEditorModal: React.FC<ImageEditorModalProps> = ({
                     <Wand2 className="w-4 h-4 text-pink-400" />
                     <span className="text-xs font-bold text-pink-200">Remove Background (AI)</span>
                   </div>
-                  <SakugaToggle
+                  <ForgeToggle
                     size="sm"
                     checked={removeBackground}
                     onChange={(val) => {
@@ -296,7 +293,7 @@ export const ImageEditorModal: React.FC<ImageEditorModalProps> = ({
 
               {/* Sliders for Brightness & Quality */}
               <div className="space-y-3 pt-1">
-                <SakugaSlider
+                <ForgeSlider
                   label="Brightness"
                   min={0.5}
                   max={1.5}
@@ -306,7 +303,7 @@ export const ImageEditorModal: React.FC<ImageEditorModalProps> = ({
                   unit=""
                 />
 
-                <SakugaSlider
+                <ForgeSlider
                   label="Export Quality"
                   min={10}
                   max={100}
@@ -341,21 +338,19 @@ export const ImageEditorModal: React.FC<ImageEditorModalProps> = ({
             </div>
 
             <div className="flex items-center gap-3">
-              <SakugaButton variant="ghost" size="sm" onClick={onClose}>
+              <ForgeButton variant="ghost" size="sm" onClick={onClose}>
                 <span>Cancel</span>
-              </SakugaButton>
+              </ForgeButton>
 
-              <SakugaButton
-                variant="default"
+              <ForgeButton variant="primary"
                 size="sm"
                 onClick={handleExecute}
                 isLoading={isProcessing}
                 disabled={isProcessing}
-                showSuccessCheck
               >
                 <Check className="w-4 h-4 mr-1.5" />
                 <span>Save Edits</span>
-              </SakugaButton>
+              </ForgeButton>
             </div>
           </div>
         </motion.div>
