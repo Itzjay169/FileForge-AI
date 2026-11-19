@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import {
   Zap,
@@ -19,6 +20,7 @@ import { useReducedMotion } from '@/lib/hooks';
 export const HeroSection: React.FC = () => {
   const prefersReducedMotion = useReducedMotion();
   const [isHoveringDropzone, setIsHoveringDropzone] = useState(false);
+  const router = useRouter();
 
   return (
     <section className="relative min-h-[92vh] flex items-center justify-center pt-28 pb-16 overflow-hidden">
@@ -98,10 +100,10 @@ export const HeroSection: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="flex flex-wrap items-center justify-center gap-4 mb-14"
         >
-          <Link href="#playground">
+          <Link href="/studio">
             <SakugaButton variant="default" size="lg" showSuccessCheck>
               <Zap className="w-4 h-4 fill-current" />
-              <span>Launch VFX Studio</span>
+              <span>Launch Studio</span>
             </SakugaButton>
           </Link>
 
@@ -118,9 +120,10 @@ export const HeroSection: React.FC = () => {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.7, delay: 0.4 }}
-          className="w-full max-w-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.02] border border-white/15 rounded-3xl p-6 sm:p-8 backdrop-blur-xl shadow-2xl shadow-violet-950/40 relative group overflow-hidden"
+          className="w-full max-w-2xl bg-gradient-to-b from-white/[0.08] to-white/[0.02] border border-white/15 rounded-3xl p-6 sm:p-8 backdrop-blur-xl shadow-2xl shadow-violet-950/40 relative group overflow-hidden cursor-pointer"
           onMouseEnter={() => setIsHoveringDropzone(true)}
           onMouseLeave={() => setIsHoveringDropzone(false)}
+          onClick={() => router.push('/studio')}
         >
           <div className="border-2 border-dashed border-white/20 group-hover:border-violet-400/60 rounded-2xl p-8 sm:p-10 flex flex-col items-center justify-center gap-4 transition-colors cursor-pointer bg-black/20">
             <motion.div

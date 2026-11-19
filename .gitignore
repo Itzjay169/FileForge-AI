@@ -42,3 +42,7 @@ Thumbs.db
 
 # Turbo
 .turbo/
+
+# Local Storage Runtime
+.fileforge_storage/
+apps/web/.fileforge_storage/

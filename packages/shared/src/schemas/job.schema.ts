@@ -2,17 +2,29 @@ import { z } from 'zod';
 
 export const CompressionOptionsSchema = z.object({
   strength: z.enum(['LOW', 'BALANCED', 'HIGH', 'EXTREME', 'CUSTOM']).default('BALANCED'),
-  preset: z.enum(['SMART_COMPRESS', 'MAXIMUM_QUALITY', 'WEB_OPTIMIZED', 'ARCHIVAL']).optional(),
+  preset: z
+    .enum([
+      'SMART_COMPRESS',
+      'WEB_OPTIMIZED',
+      'MAXIMUM_QUALITY',
+      'EMAIL_READY',
+      'WHATSAPP_READY',
+      'INSTAGRAM_READY',
+      'CUSTOM'
+    ])
+    .default('SMART_COMPRESS'),
   quality: z.number().int().min(1).max(100).default(80),
   targetSizeBytes: z.number().positive().optional(),
   targetReductionPercent: z.number().min(1).max(99).optional(),
   targetPlatformPreset: z.enum(['whatsapp', 'email', 'instagram', 'discord', 'web']).optional(),
   stripMetadata: z.boolean().default(true),
+  outputFormat: z.string().optional(),
   resolution: z
     .object({
       width: z.number().int().positive().optional(),
       height: z.number().int().positive().optional(),
-      maintainAspectRatio: z.boolean().default(true)
+      maintainAspectRatio: z.boolean().default(true),
+      scalePercent: z.number().min(10).max(100).optional()
     })
     .optional(),
   audioBitrateKbps: z.number().int().min(32).max(320).optional(),
@@ -23,7 +35,7 @@ export const CompressionOptionsSchema = z.object({
 });
 
 export const CreateJobSchema = z.object({
-  fileId: z.string().uuid(),
+  fileId: z.string().uuid().optional(),
   jobType: z.enum([
     'COMPRESS',
     'CONVERT',
@@ -35,7 +47,7 @@ export const CreateJobSchema = z.object({
     'EXTRACT_AUDIO',
     'MERGE_PDF',
     'SPLIT_PDF'
-  ]),
+  ]).default('COMPRESS'),
   targetFormat: z.string().regex(/^[a-zA-Z0-9]+$/).optional(),
   compressionOptions: CompressionOptionsSchema.optional(),
   ocrLanguage: z.string().default('eng').optional(),
@@ -43,14 +55,16 @@ export const CreateJobSchema = z.object({
   ownershipDeclarationAcknowledged: z.boolean().optional()
 });
 
-export const ShareLinkCreateSchema = z.object({
-  fileId: z.string().uuid(),
-  password: z.string().min(4).max(50).optional(),
-  expiresInHours: z.number().int().min(1).max(720).default(24),
-  maxDownloads: z.number().int().min(1).max(1000).optional(),
-  allowPreview: z.boolean().default(true)
+export const UrlImportSchema = z.object({
+  url: z.string().url('Must be a valid HTTP or HTTPS URL'),
+  filename: z.string().max(255).optional()
+});
+
+export const BatchDownloadSchema = z.object({
+  fileIds: z.array(z.string()).min(1, 'At least one file ID must be specified')
 });
 
 export type CreateJobInput = z.infer<typeof CreateJobSchema>;
 export type CompressionOptionsInput = z.infer<typeof CompressionOptionsSchema>;
-export type ShareLinkCreateInput = z.infer<typeof ShareLinkCreateSchema>;
+export type UrlImportInput = z.infer<typeof UrlImportSchema>;
+export type BatchDownloadInput = z.infer<typeof BatchDownloadSchema>;
