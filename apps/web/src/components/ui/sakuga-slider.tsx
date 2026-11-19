@@ -14,6 +14,7 @@ export interface SakugaSliderProps {
   label?: string;
   showValue?: boolean;
   unit?: string;
+  estimatedSizeLabel?: string;
   variant?: 'default' | 'quality' | 'size' | 'extreme';
   disabled?: boolean;
   className?: string;
@@ -28,6 +29,7 @@ export const SakugaSlider: React.FC<SakugaSliderProps> = ({
   label,
   showValue = true,
   unit = '%',
+  estimatedSizeLabel,
   variant = 'default',
   disabled = false,
   className
@@ -117,18 +119,25 @@ export const SakugaSlider: React.FC<SakugaSliderProps> = ({
 
   return (
     <div className={cn('w-full select-none', className)}>
-      {(label || showValue) && (
+      {(label || showValue || estimatedSizeLabel) && (
         <div className="flex justify-between items-center mb-2.5">
           {label && (
             <span className="text-sm font-medium text-forge-text flex items-center gap-1.5">
               {label}
             </span>
           )}
-          {showValue && (
-            <span className="text-xs font-mono font-bold text-violet-400 bg-violet-500/10 border border-violet-500/20 px-2 py-0.5 rounded-md">
-              {value} {unit}
-            </span>
-          )}
+          <div className="flex items-center gap-2">
+            {estimatedSizeLabel && (
+              <span className="text-[11px] font-mono text-emerald-400 bg-emerald-950/40 border border-emerald-500/20 px-2 py-0.5 rounded-md">
+                Est: {estimatedSizeLabel}
+              </span>
+            )}
+            {showValue && (
+              <span className="text-xs font-mono font-bold text-violet-400 bg-violet-500/10 border border-violet-500/20 px-2 py-0.5 rounded-md">
+                {value} {unit}
+              </span>
+            )}
+          </div>
         </div>
       )}
 

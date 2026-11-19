@@ -1,56 +1,116 @@
 @import "tailwindcss";
 
-/* =============================================
-   FileForge AI — Design System Foundation
-   ============================================= */
+/* ==========================================================================
+   FileForge AI — Cinematic Creative File Studio Design Token System
+   Inspired by Sakuga VFX principles: physical squash, spring overshoot,
+   paper-like tactile cards, dark charcoal environment, lavender & pink energy.
+   ========================================================================== */
 
-:root {
-  /* Core Brand Colors */
-  --forge-bg: #0a0a0f;
-  --forge-bg-elevated: #12121a;
-  --forge-bg-card: #1a1a26;
-  --forge-bg-card-hover: #22222f;
-  --forge-surface: #faf9f7;
-  --forge-surface-muted: #f0eee9;
+@theme {
+  --color-studio-bg: var(--color-bg);
+  --color-studio-surface: var(--color-surface);
+  --color-studio-surface-raised: var(--color-surface-raised);
+  --color-studio-border: var(--color-border);
+  --color-studio-text: var(--color-text);
+  --color-studio-text-muted: var(--color-text-muted);
+  --color-studio-primary: var(--color-primary);
+  --color-studio-primary-hover: var(--color-primary-hover);
+  --color-studio-accent: var(--color-accent);
+  --color-studio-success: var(--color-success);
+  --color-studio-warning: var(--color-warning);
+  --color-studio-danger: var(--color-danger);
 
-  /* Violet/Lavender Primary */
-  --forge-primary: #8b5cf6;
-  --forge-primary-hover: #7c3aed;
-  --forge-primary-soft: rgba(139, 92, 246, 0.15);
-  --forge-primary-glow: rgba(139, 92, 246, 0.4);
+  --color-forge-bg: var(--color-bg);
+  --color-forge-bg-card: var(--color-surface);
+  --color-forge-bg-card-hover: var(--color-surface-raised);
+  --color-forge-border: var(--color-border);
+  --color-forge-border-hover: var(--color-border-hover);
+  --color-forge-text: var(--color-text);
+  --color-forge-text-muted: var(--color-text-muted);
+  --color-forge-primary: var(--color-primary);
+  --color-forge-accent: var(--color-accent);
 
-  /* Pink Accent */
-  --forge-accent: #ec4899;
-  --forge-accent-hover: #db2777;
-  --forge-accent-soft: rgba(236, 72, 153, 0.15);
-
-  /* Typography */
-  --forge-text: #f0eee9;
-  --forge-text-muted: #9ca3af;
-  --forge-text-dim: #6b7280;
-  --forge-text-inverse: #0a0a0f;
-
-  /* Status */
-  --forge-success: #10b981;
-  --forge-warning: #f59e0b;
-  --forge-error: #ef4444;
-  --forge-info: #3b82f6;
-
-  /* Border */
-  --forge-border: rgba(255, 255, 255, 0.1);
-  --forge-border-hover: rgba(255, 255, 255, 0.2);
-
-  /* Shadows */
-  --shadow-card: 0 1px 3px rgba(0,0,0,0.3), 0 4px 16px rgba(0,0,0,0.2);
-  --shadow-card-hover: 0 2px 8px rgba(0,0,0,0.4), 0 8px 32px rgba(0,0,0,0.3);
-  --shadow-glow-violet: 0 0 40px rgba(139, 92, 246, 0.25);
-  --shadow-glow-pink: 0 0 40px rgba(236, 72, 153, 0.2);
+  --font-display: var(--font-sans);
+  --font-mono: var(--font-mono);
 }
 
-/* =============================================
-   BASE & RESET
-   ============================================= */
+:root {
+  /* Default: Creative Studio Dark Mode */
+  --color-bg: #09090e;
+  --color-surface: #12121c;
+  --color-surface-raised: #1a1a28;
+  --color-surface-paper: #faf9f7;
+  --color-border: rgba(167, 139, 250, 0.12);
+  --color-border-hover: rgba(236, 72, 153, 0.35);
 
+  --color-text: #f5f4f0;
+  --color-text-muted: #9aa1b2;
+  --color-text-inverse: #0a0a0f;
+
+  /* Primary Action: Lavender / Violet */
+  --color-primary: #8b5cf6;
+  --color-primary-hover: #7c3aed;
+  --color-primary-soft: rgba(139, 92, 246, 0.14);
+  --color-primary-glow: rgba(139, 92, 246, 0.45);
+
+  /* Impact Accent: Vivid Pink */
+  --color-accent: #ec4899;
+  --color-accent-hover: #db2777;
+  --color-accent-soft: rgba(236, 72, 153, 0.14);
+  --color-accent-glow: rgba(236, 72, 153, 0.45);
+
+  /* Semantic State */
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+  --color-info: #38bdf8;
+  --color-glow: rgba(139, 92, 246, 0.3);
+
+  /* Radii */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-pill: 9999px;
+
+  /* Shadows */
+  --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.6), 0 0 1px 1px rgba(255, 255, 255, 0.05);
+  --shadow-card-hover: 0 10px 32px -4px rgba(139, 92, 246, 0.2), 0 0 1px 1px rgba(167, 139, 250, 0.3);
+  --shadow-paper: 0 8px 30px rgba(0, 0, 0, 0.35), 0 2px 6px rgba(0, 0, 0, 0.2);
+  --shadow-glow: 0 0 35px -5px rgba(139, 92, 246, 0.45);
+  --shadow-impact-pink: 0 0 35px -5px rgba(236, 72, 153, 0.55);
+
+  /* Motion Timing & Physics Constants */
+  --motion-fast: 120ms;
+  --motion-base: 220ms;
+  --motion-slow: 380ms;
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-squash: cubic-bezier(0.2, 0.8, 0.2, 1.2);
+}
+
+/* Light Mode Overrides */
+html.light {
+  --color-bg: #f5f4f0;
+  --color-surface: #ffffff;
+  --color-surface-raised: #eae8e1;
+  --color-surface-paper: #ffffff;
+  --color-border: rgba(139, 92, 246, 0.18);
+  --color-border-hover: rgba(236, 72, 153, 0.4);
+
+  --color-text: #111116;
+  --color-text-muted: #575a68;
+  --color-text-inverse: #f5f4f0;
+
+  --color-primary: #7c3aed;
+  --color-primary-hover: #6d28d9;
+  --color-primary-soft: rgba(124, 58, 237, 0.1);
+  --color-primary-glow: rgba(124, 58, 237, 0.25);
+
+  --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.08), 0 0 1px 1px rgba(0, 0, 0, 0.05);
+  --shadow-card-hover: 0 12px 36px -4px rgba(124, 58, 237, 0.18);
+}
+
+/* Base Body Setup */
 html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
@@ -58,119 +118,134 @@ html {
 }
 
 body {
-  background-color: #0a0a0f;
-  color: #f0eee9;
-  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  overflow-x: hidden;
 }
 
+code, pre, .font-mono {
+  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+/* Selection Color */
 ::selection {
-  background: rgba(139, 92, 246, 0.3);
-  color: #c084fc;
+  background-color: rgba(236, 72, 153, 0.28);
+  color: #f472b6;
 }
 
-/* Scrollbar */
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #0a0a0f;
+  background: var(--color-bg);
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 3px;
+  background: rgba(167, 139, 250, 0.25);
+  border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #8b5cf6;
+  background: var(--color-accent);
 }
 
-/* =============================================
-   SAKUGA-INSPIRED ANIMATION FOUNDATION
-   ============================================= */
+/* ==========================================================================
+   Sakuga VFX Animations & Kinetic Effects
+   ========================================================================== */
 
-/* Respect reduced motion */
+@keyframes pulse-energy {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(139, 92, 246, 0.25), 0 0 30px rgba(236, 72, 153, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(139, 92, 246, 0.5), 0 0 60px rgba(236, 72, 153, 0.35);
+  }
+}
+
+@keyframes scanline-glow {
+  0% { transform: translateY(-100%); opacity: 0; }
+  50% { opacity: 0.8; }
+  100% { transform: translateY(100%); opacity: 0; }
+}
+
+@keyframes border-beam {
+  100% {
+    offset-distance: 100%;
+  }
+}
+
+@keyframes float-gentle {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+
+/* Utility Classes */
+.animate-energy-pulse {
+  animation: pulse-energy 3s infinite ease-in-out;
+}
+
+.animate-float {
+  animation: float-gentle 4s infinite ease-in-out;
+}
+
+/* Paper-Like Tactile Studio Card */
+.studio-card-paper {
+  background: #faf9f7;
+  color: #09090e;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-paper);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* Cinematic Void Card */
+.studio-card-void {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  transition: border-color var(--motion-fast) ease, box-shadow var(--motion-fast) ease, transform var(--motion-fast) var(--ease-spring);
+}
+
+.studio-card-void:hover {
+  border-color: var(--color-border-hover);
+  box-shadow: var(--shadow-card-hover);
+}
+
+/* Gradient Text */
+.text-gradient-sakuga {
+  background: linear-gradient(135deg, #a78bfa 0%, #ec4899 50%, #facc15 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-lavender {
+  background: linear-gradient(135deg, #c4b5fd 0%, #8b5cf6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Subtle Cinematic Film Grain (Non-blocking) */
+.studio-grain::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.02;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Reduced Motion Override */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms !important;
+    animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
-}
-
-/* Utility keyframes */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes shimmer {
-  0% { background-position: -200% center; }
-  100% { background-position: 200% center; }
-}
-
-@keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.15); }
-  50% { box-shadow: 0 0 40px rgba(139, 92, 246, 0.4); }
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
-
-/* Gradient text utility */
-.text-gradient-violet {
-  background: linear-gradient(135deg, #8b5cf6 0%, #c084fc 50%, #ec4899 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.text-gradient-pink {
-  background: linear-gradient(135deg, #ec4899 0%, #f472b6 50%, #c084fc 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Noise overlay for cinematic feel */
-.noise-overlay::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  pointer-events: none;
-  opacity: 0.015;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size: 128px 128px;
-}
-
-/* Glass morphism card */
-.card-glass {
-  background: rgba(26, 26, 38, 0.6);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 1rem;
-}
-
-/* Paper card */
-.card-paper {
-  background: #faf9f7;
-  color: #0a0a0f;
-  border-radius: 1rem;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.3), 0 4px 16px rgba(0,0,0,0.2);
 }

@@ -1,11 +1,19 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Plus_Jakarta_Sans, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import { ForgeToaster } from '@/components/ui/sakuga-toast';
+import { MobileNav } from '@/components/layout/mobile-nav';
 
-const inter = Inter({
+const sansFont = Plus_Jakarta_Sans({
   subsets: ['latin'],
-  variable: '--font-sans'
+  variable: '--font-sans',
+  display: 'swap',
+});
+
+const monoFont = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-mono',
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -56,9 +64,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark scroll-smooth">
-      <body className={`${inter.variable} font-sans bg-[#0a0a0f] text-[#f0eee9] min-h-screen antialiased selection:bg-violet-500/30 selection:text-violet-200`}>
+      <body className={`${sansFont.variable} ${monoFont.variable} font-sans bg-[var(--color-bg)] text-[var(--color-text)] min-h-screen antialiased selection:bg-pink-500/25 selection:text-pink-300`}>
         {children}
         <ForgeToaster />
+        <MobileNav />
       </body>
     </html>
   );

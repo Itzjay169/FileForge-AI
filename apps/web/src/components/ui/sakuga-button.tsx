@@ -12,6 +12,8 @@ export const sakugaButtonVariants = cva(
   {
     variants: {
       variant: {
+        paper:
+          'bg-[#faf9f7] hover:bg-white text-[#09090e] shadow-xl hover:shadow-2xl border border-white/60 font-bold',
         default:
           'bg-gradient-to-r from-violet-600 via-purple-600 to-violet-500 text-white shadow-lg hover:shadow-violet-500/25 border border-violet-400/30',
         secondary:

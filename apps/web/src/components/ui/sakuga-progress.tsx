@@ -11,6 +11,9 @@ export interface SakugaProgressProps {
   size?: 'sm' | 'default' | 'lg';
   showLabel?: boolean;
   label?: string;
+  stage?: 'Uploading' | 'Validating' | 'Queued' | 'Processing' | 'Optimizing' | 'Finalizing' | 'Ready' | string;
+  elapsedSeconds?: number;
+  remainingSeconds?: number;
   animated?: boolean;
   showPercentage?: boolean;
   className?: string;
@@ -22,6 +25,9 @@ export const SakugaProgress: React.FC<SakugaProgressProps> = ({
   size = 'default',
   showLabel = false,
   label,
+  stage,
+  elapsedSeconds,
+  remainingSeconds,
   animated = true,
   showPercentage = true,
   className
@@ -46,19 +52,38 @@ export const SakugaProgress: React.FC<SakugaProgressProps> = ({
 
   return (
     <div className={cn('w-full', className)}>
-      {(showLabel || showPercentage) && (
+      {(showLabel || showPercentage || stage) && (
         <div className="flex justify-between items-center mb-1.5 text-xs font-medium">
-          {showLabel && <span className="text-forge-text">{label || 'Progress'}</span>}
-          {showPercentage && (
-            <span
-              className={cn(
-                'font-mono ml-auto',
-                isComplete ? 'text-emerald-400 font-bold' : 'text-violet-400'
-              )}
-            >
-              {Math.round(clamped)}%
-            </span>
-          )}
+          <div className="flex items-center gap-2">
+            {showLabel && <span className="text-forge-text">{label || 'Progress'}</span>}
+            {stage && (
+              <span className="font-mono text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full bg-violet-950/60 text-violet-300 border border-violet-500/20">
+                {stage}
+              </span>
+            )}
+          </div>
+          <div className="flex items-center gap-3">
+            {elapsedSeconds !== undefined && (
+              <span className="text-[11px] font-mono text-gray-500">
+                {elapsedSeconds}s elapsed
+              </span>
+            )}
+            {remainingSeconds !== undefined && remainingSeconds > 0 && (
+              <span className="text-[11px] font-mono text-pink-400">
+                ~{remainingSeconds}s left
+              </span>
+            )}
+            {showPercentage && (
+              <span
+                className={cn(
+                  'font-mono ml-auto font-bold',
+                  isComplete ? 'text-emerald-400' : 'text-violet-400'
+                )}
+              >
+                {Math.round(clamped)}%
+              </span>
+            )}
+          </div>
         </div>
       )}
 
