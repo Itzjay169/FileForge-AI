@@ -42,8 +42,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
     { label: 'Supported Formats', href: '/formats' },
     { label: 'Capabilities', href: '#features' },
     { label: 'Workflow', href: '#how-it-works' },
-    { label: 'Pricing', href: '#pricing' },
-    { label: 'FAQ', href: '#faq' }
+    { label: 'Pricing', href: '/pricing' },
+    { label: 'FAQ', href: '/faq' }
   ];
 
   return (

@@ -1,6 +1,6 @@
 export type UserRole = 'USER' | 'ADMIN' | 'MODERATOR';
 
-export type PlanTier = 'FREE' | 'PRO_CREATIVE' | 'STUDIO_TEAM';
+export type PlanTier = 'FREE' | 'PRO_CREATIVE' | 'STUDIO_TEAM' | 'ENTERPRISE';
 
 export interface UserProfile {
   id: string;

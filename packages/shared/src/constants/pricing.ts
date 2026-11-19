@@ -67,6 +67,28 @@ export const PLANS: PlanDefinition[] = [
       '90-day extended storage + archival exports',
       '24/7 dedicated engineering SLA support'
     ]
+  },
+  {
+    id: 'ENTERPRISE',
+    name: 'Enterprise Scale',
+    tagline: 'Custom limits, private VPC clusters, custom SLAs, and dedicated compute',
+    priceMonthly: 99,
+    priceYearly: 948, // $79/mo billed annually
+    maxFileSizeBytes: 100 * 1024 * 1024 * 1024, // 100 GB
+    dailyConversions: 'UNLIMITED',
+    concurrentJobs: 200,
+    retentionDays: 365,
+    features: [
+      'Massive 100 GB+ single-file ceiling',
+      'Dedicated isolated GPU/CPU worker cluster',
+      'Unlimited workspace seats & granular RBAC',
+      'Custom webhook integrations, SDKs & REST API keys',
+      'Full compliance audit log & SAML / Okta / Azure AD SSO',
+      'Custom DRM, watermarking & automated provenance signing',
+      'White-label client portal & branded custom domain',
+      '365-day cold archive storage & zero-retention privacy mode',
+      'Dedicated Solutions Architect & 99.99% uptime SLA'
+    ]
   }
 ];
 
@@ -74,8 +96,11 @@ export const SYSTEM_LIMITS = {
   FREE_MAX_FILE_BYTES: 2 * 1024 * 1024 * 1024, // 2GB
   PRO_MAX_FILE_BYTES: 10 * 1024 * 1024 * 1024, // 10GB
   STUDIO_MAX_FILE_BYTES: 50 * 1024 * 1024 * 1024, // 50GB
+  ENTERPRISE_MAX_FILE_BYTES: 100 * 1024 * 1024 * 1024, // 100GB
   MAX_BATCH_FILES_FREE: 5,
   MAX_BATCH_FILES_PRO: 100,
+  MAX_BATCH_FILES_ENTERPRISE: 1000,
   DEFAULT_RETENTION_HOURS_FREE: 24,
-  DEFAULT_RETENTION_HOURS_PRO: 720
+  DEFAULT_RETENTION_HOURS_PRO: 720,
+  DEFAULT_RETENTION_HOURS_ENTERPRISE: 8760
 };
