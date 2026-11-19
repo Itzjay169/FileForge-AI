@@ -132,6 +132,124 @@ export interface ConversionHistoryItem {
   convertedAt: number;
 }
 
+// ---------------------------------------------------------------------------
+// Phase 4: Editors & AI Copilot Types
+// ---------------------------------------------------------------------------
+
+export interface ImageEditOptions {
+  crop?: {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  };
+  resize?: {
+    width?: number;
+    height?: number;
+    scalePercent?: number;
+    fit?: 'cover' | 'contain' | 'inside' | 'fill';
+  };
+  rotate?: number; // 0, 90, 180, 270, or custom angle
+  flipH?: boolean;
+  flipV?: boolean;
+  filters?: {
+    grayscale?: boolean;
+    sepia?: boolean;
+    invert?: boolean;
+    blur?: number; // 0.3 - 100
+    sharpen?: boolean;
+    brightness?: number; // 0.1 - 2.0 (default 1.0)
+    contrast?: number; // 0.1 - 2.0 (default 1.0)
+    saturation?: number; // 0.0 - 3.0 (default 1.0)
+  };
+  removeBackground?: boolean;
+  outputFormat?: 'png' | 'webp' | 'jpg' | 'avif';
+  quality?: number; // 1 - 100
+}
+
+export type PdfToolMode =
+  | 'merge'
+  | 'split'
+  | 'reorder'
+  | 'rotate'
+  | 'delete_pages'
+  | 'compress'
+  | 'extract_images'
+  | 'ocr'
+  | 'page_numbers'
+  | 'password';
+
+export interface PdfToolOptions {
+  mode: PdfToolMode;
+  pageRange?: string; // e.g. "1-3, 5, 8-10"
+  pageOrder?: number[]; // e.g. [3, 1, 2, 4]
+  rotateDegrees?: 90 | 180 | 270;
+  rotatePages?: 'all' | 'odd' | 'even' | string;
+  deletePages?: number[];
+  password?: string;
+  pageNumberPosition?: 'bottom-center' | 'bottom-right' | 'top-right';
+  pageNumberFormat?: 'PAGE_X' | 'PAGE_X_OF_Y';
+  extractFormat?: 'png' | 'jpg';
+  ocrLanguage?: string;
+}
+
+export interface VideoEditOptions {
+  trimStartSec?: number;
+  trimEndSec?: number;
+  mute?: boolean;
+  extractAudio?: boolean;
+  audioTargetFormat?: 'mp3' | 'aac' | 'wav';
+  resolution?: '480p' | '720p' | '1080p' | 'original';
+  videoBitrateKbps?: number;
+  audioBitrateKbps?: number;
+  generateThumbnailAtSec?: number;
+  targetFormat?: 'mp4' | 'webm' | 'gif' | 'mkv';
+  watermarkText?: string;
+}
+
+export interface AudioEditOptions {
+  trimStartSec?: number;
+  trimEndSec?: number;
+  normalize?: boolean;
+  normalizeVolume?: boolean;
+  trimStartSeconds?: number;
+  trimEndSeconds?: number;
+  targetFormat?: 'mp3' | 'wav' | 'aac' | 'flac' | 'ogg';
+  bitrateKbps?: 64 | 128 | 192 | 256 | 320;
+  sampleRateHz?: 44100 | 48000;
+  channels?: 1 | 2; // mono | stereo
+}
+
+export interface AiAssistantPlan {
+  id: string;
+  userQuery: string;
+  intent: 'compress' | 'convert' | 'edit_image' | 'pdf_tool' | 'media_tool' | 'optimize';
+  title: string;
+  explanation: string;
+  appliedSettings: Record<string, any>;
+  targetFormat?: string;
+  estimatedOutputSizeFormatted: string;
+  estimatedSavingsPercent: number;
+  requiresConfirmation: boolean;
+  aiDisclosure: {
+    engine: string;
+    model: string;
+    processingType: 'NEURAL_EDGE_ENHANCEMENT' | 'INTELLIGENT_BITRATE_MAPPING' | 'SEMANTIC_PARSING';
+    disclosureText: string;
+  };
+}
+
+export interface AiFileContext {
+  originalName: string;
+  sizeBytes: number;
+  extension: string;
+  mimeType?: string;
+  width?: number;
+  height?: number;
+  durationSec?: number;
+  pageCount?: number;
+}
+
 export interface JobProgressEvent {
   jobId: string;
   status: JobStatus;

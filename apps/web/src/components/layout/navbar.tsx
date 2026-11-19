@@ -36,6 +36,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
   const navLinks = [
     { label: 'Studio', href: '/studio' },
     { label: 'Convert', href: '/convert' },
+    { label: 'Editor & AI', href: '/editor' },
     { label: 'Supported Formats', href: '/formats' },
     { label: 'Capabilities', href: '#features' },
     { label: 'Workflow', href: '#how-it-works' },
