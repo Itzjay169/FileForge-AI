@@ -17,6 +17,8 @@ import {
   Shield,
   ShieldCheck,
   Scale,
+  Folder,
+  Share2,
   CreditCard,
   HelpCircle,
   Wand2,
@@ -103,6 +105,14 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({ isOpen, onClose 
                 </Command.Empty>
 
                 <Command.Group heading="Studio & Tools" className="text-[11px] font-semibold text-violet-400 uppercase tracking-wider px-2 py-1.5">
+                  <Command.Item
+                    onSelect={() => handleSelect(() => router.push('/dashboard'))}
+                    className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs text-gray-200 hover:bg-violet-600/20 hover:text-white cursor-pointer transition-colors aria-selected:bg-violet-600/30 font-medium"
+                  >
+                    <Folder className="w-4 h-4 text-violet-400" />
+                    <span>User Dashboard & File Library (Storage, Favorites, Share Links)</span>
+                  </Command.Item>
+
                   <Command.Item
                     onSelect={() => handleSelect(() => router.push('/transparency'))}
                     className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs text-gray-200 hover:bg-violet-600/20 hover:text-white cursor-pointer transition-colors aria-selected:bg-violet-600/30 font-medium"

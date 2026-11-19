@@ -10,8 +10,10 @@ export interface UserProfile {
   role: UserRole;
   planTier: PlanTier;
   creditsBalance: number;
+  creditsRemaining?: number;
   storageUsedBytes: number;
   storageLimitBytes: number;
+  activeWorkspaceId?: string;
   createdAt: string;
   updatedAt: string;
 }

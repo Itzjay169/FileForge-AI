@@ -38,6 +38,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
     { label: 'Convert', href: '/convert' },
     { label: 'Editor & AI', href: '/editor' },
     { label: 'Transparency', href: '/transparency' },
+    { label: 'Library', href: '/dashboard' },
     { label: 'Supported Formats', href: '/formats' },
     { label: 'Capabilities', href: '#features' },
     { label: 'Workflow', href: '#how-it-works' },
