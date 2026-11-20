@@ -368,3 +368,66 @@ html.light .text-gray-400 {
 html.light .text-white {
   color: var(--color-text) !important;
 }
+
+/* ==========================================================================
+   Component Sizing & Proportion Normalization
+   ========================================================================== */
+
+/* Sakuga button sizing overrides */
+sakuga-button {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+sakuga-button::part(button) {
+  font-size: 14px !important;
+  padding: 8px 18px !important;
+  letter-spacing: -0.01em !important;
+  line-height: 1.25 !important;
+}
+
+.btn-sm sakuga-button::part(button),
+sakuga-button.btn-sm::part(button),
+[data-size="sm"] sakuga-button::part(button) {
+  font-size: 12px !important;
+  padding: 5px 12px !important;
+  border-width: 1.5px !important;
+  border-radius: 10px !important;
+  box-shadow: 2px 3px 0 var(--sk-btn-line) !important;
+  min-height: 32px !important;
+}
+
+.btn-md sakuga-button::part(button),
+sakuga-button.btn-md::part(button) {
+  font-size: 13.5px !important;
+  padding: 8px 16px !important;
+  min-height: 38px !important;
+}
+
+.btn-lg sakuga-button::part(button),
+sakuga-button.btn-lg::part(button) {
+  font-size: 15px !important;
+  padding: 12px 24px !important;
+  min-height: 46px !important;
+}
+
+/* Sakuga input sizing normalization */
+sakuga-input {
+  display: block;
+  width: 100%;
+  --sk-input-width: 100%;
+}
+
+sakuga-input::part(input) {
+  width: 100% !important;
+  box-sizing: border-box !important;
+  font-size: 13px !important;
+  padding: 9px 14px !important;
+  border-radius: 12px !important;
+}
+
+/* Textarea sizing & typography normalization */
+textarea {
+  font-size: 13px !important;
+  line-height: 1.5 !important;
+}

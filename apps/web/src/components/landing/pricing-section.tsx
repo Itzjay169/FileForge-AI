@@ -6,6 +6,13 @@ import { PLANS } from '@fileforge/shared';
 import { ScrollReveal } from '@/components/ui/scroll-reveal';
 import { ForgeButton, ForgeToggle, forgeToast } from '@/components/sakuga';
 
+const INR_PLAN_PRICES: Record<string, { monthly: number; yearly: number }> = {
+  FREE: { monthly: 0, yearly: 0 },
+  PRO_CREATIVE: { monthly: 999, yearly: 849 * 12 },
+  STUDIO_TEAM: { monthly: 2999, yearly: 2499 * 12 },
+  ENTERPRISE: { monthly: 7999, yearly: 6499 * 12 }
+};
+
 export const PricingSection: React.FC = () => {
   const [isAnnual, setIsAnnual] = useState(true);
 
@@ -27,6 +34,10 @@ export const PricingSection: React.FC = () => {
           <p className="mt-4 text-sm sm:text-base text-[var(--sk-text-muted)] font-medium">
             Never pay for everyday optimization. Upgrade only when you need massive multi-threaded batch queues, team workspaces, or dedicated GPU priority.
           </p>
+
+          <div className="mt-4 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-xs font-mono font-bold text-emerald-400">
+            <span>🇮🇳 Indian Rupee (INR ₹) · Built & Localized for India & Global Creators</span>
+          </div>
 
           {/* Billing Switcher with Real Sakuga VFX Toggle */}
           <div className="mt-8 inline-flex items-center gap-3 p-3 rounded-2xl bg-[var(--sk-card)] border-2 border-[var(--sk-line)] shadow-[4px_6px_0_rgba(109,90,224,0.35)]">
@@ -50,9 +61,10 @@ export const PricingSection: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
           {PLANS.map((plan, idx) => {
             const isPopular = plan.isPopular;
+            const inrData = INR_PLAN_PRICES[plan.id] || { monthly: plan.priceMonthly * 85, yearly: plan.priceYearly * 85 };
             const price = isAnnual
-              ? Math.round(plan.priceYearly / 12)
-              : plan.priceMonthly;
+              ? Math.round(inrData.yearly / 12)
+              : inrData.monthly;
 
             return (
               <ScrollReveal key={plan.id} delay={idx * 0.1}>
@@ -80,14 +92,25 @@ export const PricingSection: React.FC = () => {
                       {plan.tagline}
                     </p>
 
-                    <div className="flex items-baseline gap-1.5 mb-6">
+                    <div className="flex items-baseline gap-1.5 mb-2">
                       <span className="text-4xl sm:text-5xl font-black text-white font-mono">
-                        ${price}
+                        {price === 0 ? '₹0' : `₹${price.toLocaleString('en-IN')}`}
                       </span>
                       <span className="text-xs text-[var(--sk-text-muted)] font-mono">
-                        {plan.priceMonthly === 0 ? 'forever' : '/month'}
+                        {inrData.monthly === 0 ? 'forever' : '/month'}
                       </span>
                     </div>
+                    {isAnnual && inrData.monthly > 0 && (
+                      <p className="text-[11px] font-mono text-[var(--sk-acc)] mb-5 font-bold">
+                        Billed annually (₹{inrData.yearly.toLocaleString('en-IN')}/yr)
+                      </p>
+                    )}
+                    {!isAnnual && inrData.monthly > 0 && (
+                      <p className="text-[11px] font-mono text-gray-400 mb-5">
+                        Billed monthly in INR (₹)
+                      </p>
+                    )}
+                    {inrData.monthly === 0 && <div className="mb-5" />}
 
                     <div className="space-y-3 mb-8 pt-6 border-t-2 border-[var(--sk-border)]">
                       {plan.features.map((feat) => (

@@ -172,8 +172,8 @@ export function AboutClient() {
             {/* Header: Vexora Technology */}
             <div className="relative z-10 space-y-4 border-b border-white/10 pb-8">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-pink-500/10 border border-pink-500/25 text-pink-300 text-xs font-mono font-bold">
-                <Cpu className="w-3.5 h-3.5" />
-                <span>MEET THE CREATOR</span>
+                <span>🇮🇳</span>
+                <span>BASED IN INDIA · MEET THE CREATOR</span>
               </div>
 
               <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
@@ -184,7 +184,7 @@ export function AboutClient() {
               </h3>
 
               <p className="text-sm sm:text-base text-gray-300 leading-relaxed max-w-3xl">
-                Vexora Technology is a technology-driven software development company focused on creating innovative digital products and smart software solutions. We transform ideas into practical, reliable, and user-friendly digital experiences.
+                Based in India, Vexora Technology is a technology-driven software development company focused on creating innovative digital products and smart software solutions. We transform ideas into practical, reliable, and user-friendly digital experiences.
               </p>
               <p className="text-sm sm:text-base text-gray-400 leading-relaxed max-w-3xl">
                 We believe technology should do more than solve problems — it should create opportunities, simplify everyday life, and shape a smarter future.
@@ -278,7 +278,7 @@ export function AboutClient() {
                     Lead Software Developer
                   </p>
                   <p className="text-xs text-gray-400 max-w-xl">
-                    Passionate about software development, full-stack technologies, AI-powered applications, and building practical digital solutions.
+                    Based in India. Passionate about software development, full-stack technologies, AI-powered applications, and building practical digital solutions.
                   </p>
                 </div>
               </div>

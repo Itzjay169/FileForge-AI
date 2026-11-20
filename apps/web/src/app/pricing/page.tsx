@@ -16,6 +16,13 @@ import {
   ChevronDown
 } from 'lucide-react';
 import { PLANS } from '@fileforge/shared';
+
+const INR_PLAN_PRICES: Record<string, { monthly: number; yearly: number }> = {
+  FREE: { monthly: 0, yearly: 0 },
+  PRO_CREATIVE: { monthly: 999, yearly: 849 * 12 },
+  STUDIO_TEAM: { monthly: 2999, yearly: 2499 * 12 },
+  ENTERPRISE: { monthly: 7999, yearly: 6499 * 12 }
+};
 import { ForgeButton } from '@/components/sakuga';
 import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/layout/footer';
@@ -88,6 +95,10 @@ export default function PricingPage() {
           From solo artists to global multimedia studios. High-throughput lossless compression, universal conversions, and AI transparency built for scale.
         </p>
 
+        <div className="mt-4 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-xs font-mono font-bold text-emerald-400">
+          <span>🇮🇳 Indian Rupee (INR ₹) · Localized for Creators in India & Global Studios</span>
+        </div>
+
         {/* Billing Cycle Toggle */}
         <div className="mt-8 inline-flex items-center gap-3 p-1.5 rounded-2xl bg-[#12121c] border border-white/10 shadow-2xl">
           <button
@@ -122,7 +133,8 @@ export default function PricingPage() {
           {PLANS.map((plan) => {
             const isPopular = plan.id === 'PRO_CREATIVE';
             const isEnterprise = plan.id === 'ENTERPRISE';
-            const price = billingCycle === 'yearly' ? Math.round(plan.priceYearly / 12) : plan.priceMonthly;
+            const inrData = INR_PLAN_PRICES[plan.id] || { monthly: plan.priceMonthly * 85, yearly: plan.priceYearly * 85 };
+            const price = billingCycle === 'yearly' ? Math.round(inrData.yearly / 12) : inrData.monthly;
 
             return (
               <motion.div
@@ -153,16 +165,16 @@ export default function PricingPage() {
                   </div>
                   <p className="mt-2 text-xs text-gray-400 min-h-[32px]">{plan.tagline}</p>
 
-                  {/* Price */}
+                  {/* Price in INR */}
                   <div className="mt-6 flex items-baseline gap-1">
-                    <span className="text-4xl font-extrabold tracking-tight text-white">
-                      ${price}
+                    <span className="text-4xl font-extrabold tracking-tight text-white font-mono">
+                      {price === 0 ? '₹0' : `₹${price.toLocaleString('en-IN')}`}
                     </span>
                     <span className="text-xs text-gray-400 font-medium">/ month</span>
                   </div>
-                  {billingCycle === 'yearly' && plan.priceMonthly > 0 && (
-                    <p className="text-[11px] text-pink-400 mt-1 font-medium">
-                      Billed ${plan.priceYearly}/year
+                  {billingCycle === 'yearly' && inrData.monthly > 0 && (
+                    <p className="text-[11px] text-pink-400 mt-1 font-medium font-mono">
+                      Billed ₹{inrData.yearly.toLocaleString('en-IN')}/year
                     </p>
                   )}
 

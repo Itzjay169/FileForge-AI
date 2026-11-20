@@ -26,9 +26,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(() => {
-    if (typeof window === 'undefined') return true;
+    if (typeof window === 'undefined') return false;
     return document.documentElement.classList.contains('dark') ||
-      (!document.documentElement.classList.contains('light') && localStorage.getItem('fileforge-theme') !== 'light');
+      (localStorage.getItem('fileforge-theme') === 'dark');
   });
   const pathname = usePathname();
 
@@ -36,7 +36,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
   useEffect(() => {
     const frame = requestAnimationFrame(() => {
       const isDark = document.documentElement.classList.contains('dark') ||
-        (!document.documentElement.classList.contains('light') && localStorage.getItem('fileforge-theme') !== 'light');
+        (localStorage.getItem('fileforge-theme') === 'dark');
       setIsDarkMode(isDark);
     });
     return () => cancelAnimationFrame(frame);
@@ -114,7 +114,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-1 bg-[var(--sk-surface)]/80 border border-[var(--sk-border)] px-3 py-1.5 rounded-full backdrop-blur-xl shadow-lg">
+          <nav className="hidden lg:flex items-center gap-1 bg-[var(--sk-surface)]/80 border border-[var(--sk-border)] px-2.5 py-1 rounded-full backdrop-blur-xl shadow-md">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
@@ -122,7 +122,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                   key={link.label}
                   href={link.href}
                   className={cn(
-                    'px-3.5 py-1.5 text-xs font-semibold rounded-full transition-all',
+                    'px-3 py-1 text-xs font-semibold rounded-full transition-all',
                     isActive
                       ? 'bg-gradient-to-r from-violet-600 to-pink-600 text-white shadow-md shadow-violet-950/60'
                       : 'text-[var(--sk-text-muted)] hover:text-[var(--sk-text)] hover:bg-[var(--sk-surface-raised)]'
@@ -135,16 +135,16 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
           </nav>
 
           {/* Right Action Buttons */}
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-2">
             {/* Command Palette Trigger */}
             <button
               onClick={onOpenCommandPalette}
               aria-label="Open Command Palette"
-              className="hidden md:flex items-center gap-2 px-3 py-1.5 text-xs text-[var(--sk-text-muted)] bg-[var(--sk-surface)] hover:bg-[var(--sk-surface-raised)] border border-[var(--sk-border)] rounded-xl transition-colors cursor-pointer group shadow-sm"
+              className="hidden md:flex items-center gap-1.5 h-[34px] px-2.5 text-xs text-[var(--sk-text-muted)] bg-[var(--sk-surface)] hover:bg-[var(--sk-surface-raised)] border border-[var(--sk-border)] rounded-xl transition-colors cursor-pointer group shadow-sm"
             >
               <Command className="w-3.5 h-3.5 text-violet-400" />
-              <span className="hidden xl:inline">Search studio...</span>
-              <kbd className="font-mono text-[10px] bg-white/10 px-1.5 py-0.5 rounded text-[var(--sk-text-muted)]">
+              <span className="hidden xl:inline text-[11px]">Search...</span>
+              <kbd className="font-mono text-[9px] bg-black/15 dark:bg-white/10 px-1.5 py-0.5 rounded text-[var(--sk-text-muted)]">
                 ⌘K
               </kbd>
             </button>
@@ -154,7 +154,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
               onClick={toggleTheme}
               aria-label="Toggle theme mode"
               title={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
-              className="p-2 rounded-xl bg-[var(--sk-surface)] hover:bg-[var(--sk-surface-raised)] border border-[var(--sk-border)] text-[var(--sk-text)] transition-all cursor-pointer shadow-sm hover:scale-105 active:scale-95"
+              className="w-[34px] h-[34px] flex items-center justify-center rounded-xl bg-[var(--sk-surface)] hover:bg-[var(--sk-surface-raised)] border border-[var(--sk-border)] text-[var(--sk-text)] transition-all cursor-pointer shadow-sm hover:scale-105 active:scale-95"
             >
               {isDarkMode ? (
                 <Sun className="w-4 h-4 text-amber-400 rotate-0 transition-transform hover:rotate-45" />
@@ -167,7 +167,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
             <Link href="/dashboard" className="hidden sm:inline-flex">
               <button
                 aria-label="User Workspace"
-                className="p-2 rounded-xl bg-[var(--sk-surface)] hover:bg-[var(--sk-surface-raised)] border border-[var(--sk-border)] text-[var(--sk-text)] transition-colors cursor-pointer shadow-sm"
+                className="w-[34px] h-[34px] flex items-center justify-center rounded-xl bg-[var(--sk-surface)] hover:bg-[var(--sk-surface-raised)] border border-[var(--sk-border)] text-[var(--sk-text)] transition-colors cursor-pointer shadow-sm"
               >
                 <User className="w-4 h-4 text-pink-400" />
               </button>
@@ -175,19 +175,19 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
 
             {/* Launch Studio CTA */}
             <Link href="/studio" className="hidden sm:inline-flex">
-              <ForgeButton variant="primary" size="sm">
-                <Sparkles className="w-3.5 h-3.5 text-pink-300" />
-                <span>Launch Studio</span>
+              <ForgeButton variant="primary" size="sm" className="btn-sm">
+                <Sparkles className="w-3 h-3 text-pink-300" />
+                <span className="text-xs">Launch Studio</span>
               </ForgeButton>
             </Link>
 
             {/* Mobile menu trigger */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 text-[var(--sk-text-muted)] hover:text-[var(--sk-text)] bg-[var(--sk-surface)] rounded-xl border border-[var(--sk-border)] cursor-pointer"
+              className="lg:hidden w-[34px] h-[34px] flex items-center justify-center text-[var(--sk-text-muted)] hover:text-[var(--sk-text)] bg-[var(--sk-surface)] rounded-xl border border-[var(--sk-border)] cursor-pointer"
               aria-label="Toggle menu"
             >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
             </button>
           </div>
         </div>

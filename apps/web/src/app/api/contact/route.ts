@@ -12,6 +12,36 @@ export async function POST(req: NextRequest) {
 
     const { name, email, subject, message, category } = parsed.data;
 
+    // Dispatch via Webform API if configured
+    const webformKey =
+      process.env.WEBFORM_API_KEY ||
+      process.env.WEB3FORMS_ACCESS_KEY ||
+      process.env.WEBFORM_ACCESS_KEY ||
+      process.env.WEB3FORMS_KEY;
+
+    if (webformKey) {
+      try {
+        await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json'
+          },
+          body: JSON.stringify({
+            access_key: webformKey,
+            subject: `[FileForge AI Contact] [${category}] ${subject}`,
+            from_name: 'FileForge AI Contact Desk',
+            name: `${name}`,
+            email: email,
+            category: category,
+            message: `New Inquiry via FileForge AI Contact Form\n\nCategory: ${category}\nFrom: ${name} <${email}>\nSubject: ${subject}\n\nMessage:\n${message}`
+          })
+        });
+      } catch (wfErr) {
+        console.warn('[Webform API] Contact form dispatch error:', wfErr);
+      }
+    }
+
     const ticket = AdminService.getInstance().createSupportTicket({
       userId: `guest_${email.split('@')[0]}`,
       userEmail: email,

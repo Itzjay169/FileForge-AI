@@ -78,10 +78,10 @@ export const ForgeButton = forwardRef<ForgeButtonRef, ForgeButtonProps>(
 
     // Size styling
     const sizeMap: Record<string, string> = {
-      sm: 'px-3 py-1.5 text-xs rounded-xl min-h-[34px]',
-      md: 'px-5 py-2.5 text-sm rounded-2xl min-h-[44px]',
-      lg: 'px-7 py-3 text-base rounded-2xl min-h-[52px]',
-      icon: 'w-10 h-10 p-0 flex items-center justify-center rounded-xl min-h-[40px]',
+      sm: 'px-3 py-1 text-xs rounded-xl min-h-[32px] max-h-[34px] [&>sakuga-button::part(button)]:!py-1.5 [&>sakuga-button::part(button)]:!px-3 [&>sakuga-button::part(button)]:!text-xs [&>sakuga-button::part(button)]:!font-bold [&>sakuga-button::part(button)]:!min-h-[32px] [&>sakuga-button::part(button)]:!tracking-normal',
+      md: 'px-4 py-2 text-sm rounded-xl min-h-[38px] max-h-[42px] [&>sakuga-button::part(button)]:!py-2 [&>sakuga-button::part(button)]:!px-4 [&>sakuga-button::part(button)]:!text-sm [&>sakuga-button::part(button)]:!min-h-[38px]',
+      lg: 'px-6 py-2.5 text-base rounded-2xl min-h-[46px] [&>sakuga-button::part(button)]:!py-2.5 [&>sakuga-button::part(button)]:!px-6 [&>sakuga-button::part(button)]:!text-base [&>sakuga-button::part(button)]:!min-h-[46px]',
+      icon: 'w-8 h-8 p-0 flex items-center justify-center rounded-xl min-h-[32px] max-h-[34px]',
     };
     const sizeClasses = sizeMap[size as string] || sizeMap.md;
 

@@ -171,7 +171,44 @@ export async function POST(req: NextRequest) {
       </div>
     `;
 
-    // 6. Dispatch Email
+    // 6. Dispatch Email via Webform API or SMTP
+    const webformKey =
+      process.env.WEBFORM_API_KEY ||
+      process.env.WEB3FORMS_ACCESS_KEY ||
+      process.env.WEBFORM_ACCESS_KEY ||
+      process.env.WEB3FORMS_KEY;
+
+    let webformDispatched = false;
+    if (webformKey) {
+      try {
+        const webformRes = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json'
+          },
+          body: JSON.stringify({
+            access_key: webformKey,
+            subject: emailSubject,
+            from_name: 'FileForge AI Bug Desk',
+            name: `${name} (FileForge Reporter)`,
+            email: email,
+            category: bugType,
+            tool: tool,
+            report_id: reportId,
+            page_url: pageUrl,
+            browser_info: browserInfo,
+            message: `FileForge AI Incident Report\n\nReport ID: ${reportId}\nCategory: ${bugType}\nTool: ${tool}\nReporter: ${name} <${email}>\nDevice: ${browserInfo}\nPage URL: ${pageUrl}\n\nDescription:\n${description}\n\nSteps to Reproduce:\n${stepsToReproduce || 'None provided'}\n\nExpected Result:\n${expectedResult || 'N/A'}\n\nActual Result:\n${actualResult || 'N/A'}\n\nFollow-up Consent: ${consent ? 'Yes' : 'No'}`
+          })
+        });
+        const webformData = await webformRes.json();
+        webformDispatched = true;
+        console.log(`[Webform API] Incident report ${reportId} dispatched via webform:`, webformData.message || 'Success');
+      } catch (wfErr) {
+        console.warn('[Webform API] Outbound dispatch error:', wfErr);
+      }
+    }
+
     const smtpHost = process.env.SMTP_HOST;
     const smtpUser = process.env.SMTP_USER;
     const smtpPass = process.env.SMTP_PASS;
@@ -216,14 +253,14 @@ export async function POST(req: NextRequest) {
           console.warn('Failed to send confirmation ack email to reporter:', (ackErr as Error).message);
         });
       }
-    } else {
-      // In development or when SMTP is unconfigured, log the structured report
+    } else if (!webformDispatched) {
+      // In development or when neither Webform nor SMTP is configured, log the structured report
       console.log(`\n============================================================`);
       console.log(`[BUG REPORT LOGGED] ID: ${reportId}`);
       console.log(`From: ${name} <${email}>`);
       console.log(`Category: ${bugType} | Tool: ${tool}`);
       console.log(`Description: ${description}`);
-      console.log(`Notice: To deliver directly to your inbox, set SMTP_HOST, SMTP_USER, SMTP_PASS, OWNER_EMAIL in .env`);
+      console.log(`Notice: To deliver directly to your inbox, set WEBFORM_API_KEY / WEB3FORMS_ACCESS_KEY or SMTP credentials in .env`);
       console.log(`============================================================\n`);
     }
 

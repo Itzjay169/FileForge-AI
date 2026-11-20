@@ -207,9 +207,10 @@ export const Footer: React.FC = () => {
 
           <div className="flex items-center gap-3">
             <span className="text-[11px] font-mono text-gray-500">v2.1.0-production</span>
-            <div className="flex items-center gap-1 bg-white/5 px-2.5 py-1 rounded-lg border border-white/10 text-gray-300 text-[11px]">
+            <div className="flex items-center gap-1.5 bg-white/5 px-2.5 py-1 rounded-lg border border-white/10 text-gray-300 text-[11px]">
+              <span className="text-xs">🇮🇳</span>
               <Globe className="w-3 h-3 text-violet-400" />
-              <span>English (US)</span>
+              <span>India · English (IN)</span>
             </div>
           </div>
         </div>

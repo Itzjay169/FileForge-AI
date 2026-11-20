@@ -78,7 +78,7 @@ export default function TermsOfServicePage() {
           <section className="space-y-3">
             <h2 className="text-base font-bold text-white">9. Governing Law & Dispute Resolution</h2>
             <p>
-              These Terms shall be governed by and construed in accordance with the laws of the State of Delaware, United States, without regard to conflict of law principles. Any legal disputes arising under these Terms shall be resolved exclusively in the state or federal courts located in Delaware.
+              These Terms shall be governed by and construed in accordance with the laws of India, without regard to conflict of law principles. Any legal disputes arising under these Terms shall be subject to the exclusive jurisdiction of the competent courts located in India.
             </p>
           </section>
 

@@ -69,7 +69,7 @@ export const metadata: Metadata = {
         alt: 'FileForge AI Studio'
       }
     ],
-    locale: 'en_US',
+    locale: 'en_IN',
     type: 'website'
   },
   twitter: {
@@ -86,7 +86,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark scroll-smooth" suppressHydrationWarning>
+    <html lang="en" className="light scroll-smooth" suppressHydrationWarning>
       <body
         className={`${sansFont.variable} ${monoFont.variable} font-sans bg-[var(--color-bg)] text-[var(--color-text)] min-h-screen antialiased selection:bg-pink-500/25 selection:text-pink-300`}
         suppressHydrationWarning
@@ -94,7 +94,7 @@ export default function RootLayout({
         <script
           id="theme-initializer"
           dangerouslySetInnerHTML={{
-            __html: `try{var t=localStorage.getItem('fileforge-theme')||'dark';if(t==='light'){document.documentElement.classList.remove('dark');document.documentElement.classList.add('light');}}catch(e){}`,
+            __html: `try{var t=localStorage.getItem('fileforge-theme')||'light';if(t==='dark'){document.documentElement.classList.remove('light');document.documentElement.classList.add('dark');}else{document.documentElement.classList.remove('dark');document.documentElement.classList.add('light');}}catch(e){}`,
           }}
         />
         <SakugaProvider>
