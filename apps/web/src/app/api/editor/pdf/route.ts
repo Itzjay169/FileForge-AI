@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
     let filename: string;
     let mimeType: string;
     let options: PdfToolOptions;
-    let additionalBuffers: Buffer[] = [];
+    const additionalBuffers: Buffer[] = [];
 
     if (contentType.includes('multipart/form-data')) {
       const formData = await request.formData();
@@ -95,9 +95,9 @@ export async function POST(request: NextRequest) {
     };
 
     return NextResponse.json(response);
-  } catch (err: any) {
+  } catch (err: unknown) {
     return NextResponse.json(
-      { success: false, error: { code: 'PDF_TOOL_FAILED', message: err.message || 'PDF processing failed.' } },
+      { success: false, error: { code: 'PDF_TOOL_FAILED', message: (err as Error).message || 'PDF processing failed.' } },
       { status: 500 }
     );
   }

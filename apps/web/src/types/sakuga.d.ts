@@ -176,23 +176,112 @@ declare module 'react' {
 
 declare global {
   interface Window {
-    SakugaFX?: any;
+    SakugaFX?: Record<string, unknown>;
     __sakuga_loaded__?: Set<string>;
   }
 
   namespace JSX {
     interface IntrinsicElements {
-      'sakuga-button': any;
-      'sakuga-toggle': any;
-      'sakuga-slider': any;
-      'sakuga-checkbox': any;
-      'sakuga-radio': any;
-      'sakuga-input': any;
-      'sakuga-tabs': any;
-      'sakuga-progress': any;
-      'sakuga-rating': any;
-      'sakuga-toast': any;
-      'sakuga-tooltip': any;
+      'sakuga-button': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & {
+          variant?: 'primary' | 'secondary';
+          disabled?: boolean;
+          type?: string;
+          class?: string;
+        },
+        SakugaButtonElement
+      >;
+      'sakuga-toggle': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & {
+          label?: string;
+          checked?: boolean;
+          disabled?: boolean;
+          name?: string;
+          class?: string;
+        },
+        SakugaToggleElement
+      >;
+      'sakuga-slider': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & {
+          value?: number | string;
+          min?: number | string;
+          max?: number | string;
+          step?: number | string;
+          label?: string;
+          name?: string;
+          disabled?: boolean;
+          class?: string;
+        },
+        SakugaSliderElement
+      >;
+      'sakuga-checkbox': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & {
+          checked?: boolean;
+          disabled?: boolean;
+          name?: string;
+          class?: string;
+        },
+        SakugaCheckboxElement
+      >;
+      'sakuga-radio': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & {
+          label?: string;
+          name?: string;
+          disabled?: boolean;
+          class?: string;
+        },
+        SakugaRadioElement
+      >;
+      'sakuga-input': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & {
+          label?: string;
+          placeholder?: string;
+          value?: string;
+          type?: string;
+          name?: string;
+          disabled?: boolean;
+          class?: string;
+        },
+        SakugaInputElement
+      >;
+      'sakuga-tabs': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & {
+          label?: string;
+          class?: string;
+        },
+        SakugaTabsElement
+      >;
+      'sakuga-progress': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & {
+          label?: string;
+          demo?: boolean;
+          class?: string;
+        },
+        SakugaProgressElement
+      >;
+      'sakuga-rating': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & {
+          label?: string;
+          value?: number | string;
+          name?: string;
+          disabled?: boolean;
+          class?: string;
+        },
+        SakugaRatingElement
+      >;
+      'sakuga-toast': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & {
+          class?: string;
+        },
+        SakugaToastElement
+      >;
+      'sakuga-tooltip': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & {
+          text?: string;
+          class?: string;
+        },
+        SakugaTooltipElement
+      >;
     }
   }
 }

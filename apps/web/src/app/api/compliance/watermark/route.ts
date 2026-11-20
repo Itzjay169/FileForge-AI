@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
     const contentType = req.headers.get('content-type') || '';
     let buffer: Buffer;
     let filename: string;
-    let rawOptions: any;
+    let rawOptions: unknown;
 
     if (contentType.includes('multipart/form-data')) {
       const formData = await req.formData();
@@ -63,8 +63,8 @@ export async function POST(req: NextRequest) {
       url: downloadUrl,
       auditRecordId: result.auditRecordId
     });
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error('Watermark API error:', err);
-    return NextResponse.json({ error: err.message || 'Watermarking failed' }, { status: 500 });
+    return NextResponse.json({ error: (err as Error).message || 'Watermarking failed' }, { status: 500 });
   }
 }

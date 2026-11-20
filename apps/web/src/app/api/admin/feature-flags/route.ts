@@ -6,8 +6,8 @@ export async function GET() {
   try {
     const flags = AdminService.getInstance().listFeatureFlags();
     return NextResponse.json({ success: true, flags });
-  } catch (error: any) {
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    return NextResponse.json({ success: false, error: (error as Error).message }, { status: 500 });
   }
 }
 
@@ -26,7 +26,7 @@ export async function PUT(req: NextRequest) {
 
     const updated = AdminService.getInstance().updateFeatureFlag(id, parsed.data);
     return NextResponse.json({ success: true, flag: updated });
-  } catch (error: any) {
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    return NextResponse.json({ success: false, error: (error as Error).message }, { status: 500 });
   }
 }

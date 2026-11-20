@@ -6,15 +6,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   FileText,
   X,
-  Layers,
-  Scissors,
   RotateCw,
   Hash,
   Lock,
   FileSearch,
   Minimize2,
-  Check,
-  Download
+  Check
 } from 'lucide-react';
 import { PdfToolMode, PdfToolOptions } from '@fileforge/shared';
 import { useReducedMotion } from '@/lib/hooks';
@@ -24,10 +21,10 @@ export interface PdfStudioModalProps {
   isOpen: boolean;
   onClose: () => void;
   file: File | null;
-  onSaved?: (result: any) => void;
+  onSaved?: (result: unknown) => void;
 }
 
-const MODES: Array<{ id: PdfToolMode; label: string; icon: any; desc: string }> = [
+const MODES: Array<{ id: PdfToolMode; label: string; icon: React.ComponentType<{ className?: string }>; desc: string }> = [
   { id: 'compress', label: 'Compress', icon: Minimize2, desc: 'Optimize streams & strip redundant objects' },
   { id: 'rotate', label: 'Rotate', icon: RotateCw, desc: 'Rotate pages 90°, 180°, or 270°' },
   { id: 'page_numbers', label: 'Numbering', icon: Hash, desc: 'Stamp "Page X of Y" footer' },
@@ -83,8 +80,8 @@ export const PdfStudioModal: React.FC<PdfStudioModalProps> = ({
         onSaved?.(json.data);
         onClose();
       }
-    } catch (err: any) {
-      forgeToast.error('PDF Operation Failed', err.message);
+    } catch (err: unknown) {
+      forgeToast.error('PDF Operation Failed', (err as Error).message);
     } finally {
       setIsProcessing(false);
     }

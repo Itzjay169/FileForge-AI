@@ -32,9 +32,9 @@ export default function ErrorBoundary({
           </p>
         </div>
 
-        {error.message && (
+        {(error as Error).message && (
           <div className="p-3.5 rounded-xl bg-black/40 border border-white/5 text-[11px] font-mono text-rose-300 text-left overflow-x-auto">
-            {error.message}
+            {(error as Error).message}
           </div>
         )}
 

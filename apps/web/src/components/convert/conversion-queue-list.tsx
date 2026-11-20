@@ -10,7 +10,6 @@ import {
   X,
   AlertTriangle,
   Play,
-  FileCheck,
   FileQuestion,
   ChevronDown
 } from 'lucide-react';

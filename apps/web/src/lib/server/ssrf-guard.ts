@@ -152,10 +152,10 @@ export async function validateUrlForSsrf(urlString: string): Promise<SsrfValidat
       sanitizedUrl: parsed,
       resolvedIp: lookup[0].address
     };
-  } catch (err: any) {
+  } catch (err: unknown) {
     return {
       isValid: false,
-      error: `DNS resolution failed for ${hostname}: ${err.message || 'Host not found'}`
+      error: `DNS resolution failed for ${hostname}: ${(err as Error).message || 'Host not found'}`
     };
   }
 }

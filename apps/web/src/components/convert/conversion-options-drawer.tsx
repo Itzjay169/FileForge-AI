@@ -9,12 +9,10 @@ import {
   Lock,
   RotateCw,
   Tag,
-  FileType,
-  Sparkles
+  FileType
 } from 'lucide-react';
 import { ConversionOptions } from '@fileforge/shared';
 import { useReducedMotion } from '@/lib/hooks';
-import { cn } from '@/lib/utils';
 
 export interface ConversionOptionsDrawerProps {
   options: ConversionOptions;
@@ -33,8 +31,7 @@ export const ConversionOptionsDrawer: React.FC<ConversionOptionsDrawerProps> = (
   const t = targetFormat.toLowerCase();
   const isImage = ['webp', 'jpg', 'jpeg', 'png', 'avif', 'tiff', 'ico'].includes(t);
   const isVideo = ['mp4', 'mkv', 'mov', 'webm', 'avi', 'flv'].includes(t);
-  const isAudio = ['mp3', 'wav', 'aac', 'flac', 'm4a', 'ogg'].includes(t);
-  const isDocument = ['pdf', 'docx', 'txt', 'html'].includes(t);
+    const isDocument = ['pdf', 'docx', 'txt', 'html'].includes(t);
 
   return (
     <div className="bg-white/[0.04] border border-white/10 rounded-2xl overflow-hidden mb-6">
@@ -131,7 +128,7 @@ export const ConversionOptionsDrawer: React.FC<ConversionOptionsDrawerProps> = (
                   </label>
                   <select
                     value={options.orientation || '0'}
-                    onChange={(e) => onChange({ orientation: (e.target.value as any) || undefined })}
+                    onChange={(e) => onChange({ orientation: (e.target.value as '0' | '90' | '180' | '270' | 'flip_h' | 'flip_v') || undefined })}
                     className="w-full h-10 px-3 rounded-xl text-sm bg-forge-bg-card border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-violet-500/50 cursor-pointer"
                   >
                     <option value="0" className="bg-[#12121a]">Original (0°)</option>

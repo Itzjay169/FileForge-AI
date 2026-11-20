@@ -27,8 +27,8 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json({ success: true, link }, { status: 201 });
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error('Create Share Link API error:', err);
-    return NextResponse.json({ error: err.message || 'Failed to create share link' }, { status: 500 });
+    return NextResponse.json({ error: (err as Error).message || 'Failed to create share link' }, { status: 500 });
   }
 }

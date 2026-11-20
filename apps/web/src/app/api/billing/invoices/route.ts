@@ -8,8 +8,8 @@ export async function GET() {
   try {
     const invoices = BillingService.getInstance().getInvoices(DEFAULT_USER_ID);
     return NextResponse.json({ success: true, invoices });
-  } catch (error: any) {
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    return NextResponse.json({ success: false, error: (error as Error).message }, { status: 500 });
   }
 }
 
@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
     const invoice = billingService.refundInvoice(parsed.data.invoiceId, parsed.data.reason);
 
     return NextResponse.json({ success: true, invoice });
-  } catch (error: any) {
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    return NextResponse.json({ success: false, error: (error as Error).message }, { status: 500 });
   }
 }

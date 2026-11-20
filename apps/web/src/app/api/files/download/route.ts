@@ -34,7 +34,7 @@ export async function GET(request: NextRequest) {
     const format = fileRegistry.getFormat(ext);
     const contentType = format?.mimeTypes[0] || 'application/octet-stream';
 
-    return new NextResponse(buffer as any, {
+    return new NextResponse(new Uint8Array(buffer), {
       status: 200,
       headers: {
         'Content-Type': contentType,
@@ -43,9 +43,9 @@ export async function GET(request: NextRequest) {
         'Cache-Control': 'private, max-age=3600'
       }
     });
-  } catch (err: any) {
+  } catch (err: unknown) {
     return NextResponse.json(
-      { error: `File not found or storage unreadable: ${err.message}` },
+      { error: `File not found or storage unreadable: ${(err as Error).message}` },
       { status: 404 }
     );
   }

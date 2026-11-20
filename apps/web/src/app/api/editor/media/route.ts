@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { mediaEditorEngine } from '@/lib/server/media-editor-engine';
+import { VideoEditOptions, AudioEditOptions } from '@fileforge/shared';
 import { storageService } from '@/lib/server/storage-service';
 import { validateFileBuffer } from '@/lib/server/file-validator';
 import { ApiResponse } from '@fileforge/shared';
@@ -15,7 +16,7 @@ export async function POST(request: NextRequest) {
     let filename: string;
     let mimeType: string;
     let mediaType: 'video' | 'audio' = 'video';
-    let options: any;
+    let options: unknown;
 
     if (contentType.includes('multipart/form-data')) {
       const formData = await request.formData();
@@ -63,8 +64,8 @@ export async function POST(request: NextRequest) {
     }
 
     const result = mediaType === 'audio'
-      ? await mediaEditorEngine.editAudio(buffer, validation.sanitizedName, options)
-      : await mediaEditorEngine.editVideo(buffer, validation.sanitizedName, options);
+      ? await mediaEditorEngine.editAudio(buffer, validation.sanitizedName, options as AudioEditOptions)
+      : await mediaEditorEngine.editVideo(buffer, validation.sanitizedName, options as VideoEditOptions);
 
     const saved = await storageService.saveFile(result.buffer, result.outputName, result.format);
     const signedDownloadUrl = storageService.generateSignedDownloadUrl(saved.storageKey, 3600 * 24);
@@ -84,9 +85,9 @@ export async function POST(request: NextRequest) {
     };
 
     return NextResponse.json(response);
-  } catch (err: any) {
+  } catch (err: unknown) {
     return NextResponse.json(
-      { success: false, error: { code: 'MEDIA_EDIT_FAILED', message: err.message || 'Media edit failed.' } },
+      { success: false, error: { code: 'MEDIA_EDIT_FAILED', message: (err as Error).message || 'Media edit failed.' } },
       { status: 500 }
     );
   }

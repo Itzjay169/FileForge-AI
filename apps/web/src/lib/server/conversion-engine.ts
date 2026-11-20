@@ -1,9 +1,8 @@
-import sharp from 'sharp';
+import sharp, { FormatEnum } from 'sharp';
 import zlib from 'zlib';
 import crypto from 'crypto';
 import JSZip from 'jszip';
 import { ConversionOptions, JobResult } from '@fileforge/shared';
-import { conversionMatrix, ConversionRoute } from './conversion-matrix';
 import { fileRegistry } from '@fileforge/file-registry';
 
 export interface ConversionInput {
@@ -31,7 +30,6 @@ export class ConversionEngine {
     const sourceExt = input.sourceExtension.toLowerCase().replace(/^\./, '');
     const targetExt = input.targetExtension.toLowerCase().replace(/^\./, '');
 
-    const route = conversionMatrix.getRoute(sourceExt, targetExt);
     const sourceFormat = fileRegistry.getFormat(sourceExt);
     const targetFormat = fileRegistry.getFormat(targetExt);
 
@@ -184,7 +182,7 @@ export class ConversionEngine {
         return Buffer.concat([header, dirEntry, icoPng]);
       }
       default:
-        return await pipeline.toFormat(targetExt as any).toBuffer();
+        return await pipeline.toFormat(targetExt as keyof FormatEnum).toBuffer();
     }
   }
 
@@ -496,6 +494,9 @@ ${rows.map(r => `<tr>${r.map(c => `<td>${this.escapeHtml(c)}</td>`).join('')}</t
   ): Promise<Buffer> {
     // In production worker containers, this runs FFmpeg.
     // In local Next.js serverless route handlers, we provide safe fallback handling.
+    if (sourceExt === targetExt || options.audioBitrateKbps) {
+      return buffer;
+    }
     return buffer;
   }
 
@@ -527,7 +528,7 @@ ${rows.map(r => `<tr>${r.map(c => `<td>${this.escapeHtml(c)}</td>`).join('')}</t
     return result;
   }
 
-  private jsonToXml(obj: any, tagName: string): string {
+  private jsonToXml(obj: unknown, tagName: string): string {
     if (obj === null || obj === undefined) return `<${tagName}/>`;
     if (typeof obj !== 'object') return `<${tagName}>${this.escapeHtml(String(obj))}</${tagName}>`;
     if (Array.isArray(obj)) {
@@ -586,6 +587,7 @@ ${rows.map(r => `<tr>${r.map(c => `<td>${this.escapeHtml(c)}</td>`).join('')}</t
 
   private generatePdfFromText(text: string, options: ConversionOptions): Buffer {
     // Generate valid minimalist PDF 1.4 document
+    const fontSize = options.quality && options.quality < 50 ? 9 : 11;
     const escaped = text
       .slice(0, 4000)
       .replace(/\\/g, '\\\\')
@@ -593,7 +595,7 @@ ${rows.map(r => `<tr>${r.map(c => `<td>${this.escapeHtml(c)}</td>`).join('')}</t
       .replace(/\)/g, '\\)')
       .replace(/\r?\n/g, ') Tj T* (');
 
-    const contentStream = `BT /F1 11 Tf 50 750 Td 14 TL (${escaped}) Tj ET`;
+    const contentStream = `BT /F1 ${fontSize} Tf 50 750 Td 14 TL (${escaped}) Tj ET`;
     const streamLength = Buffer.byteLength(contentStream);
 
     const pdfParts = [

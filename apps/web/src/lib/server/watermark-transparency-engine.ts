@@ -3,8 +3,7 @@ import sharp from 'sharp';
 import {
   WatermarkApplyOptions,
   AiDisclosureOptions,
-  OwnershipVerificationRequest,
-  WatermarkAuditRecord
+  OwnershipVerificationRequest
 } from '@fileforge/shared';
 import { complianceStore } from './compliance-store-service';
 

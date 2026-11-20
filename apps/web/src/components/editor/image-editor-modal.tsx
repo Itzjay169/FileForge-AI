@@ -10,11 +10,8 @@ import {
   FlipHorizontal,
   FlipVertical,
   Wand2,
-  Sliders,
   Check,
-  Download,
-  Sparkles,
-  Layers
+  Sparkles
 } from 'lucide-react';
 import { ImageEditOptions } from '@fileforge/shared';
 import { useReducedMotion } from '@/lib/hooks';
@@ -24,7 +21,7 @@ export interface ImageEditorModalProps {
   isOpen: boolean;
   onClose: () => void;
   file: File | null;
-  onSaved?: (result: any) => void;
+  onSaved?: (result: unknown) => void;
 }
 
 export const ImageEditorModal: React.FC<ImageEditorModalProps> = ({
@@ -85,8 +82,8 @@ export const ImageEditorModal: React.FC<ImageEditorModalProps> = ({
       forgeToast.success('Image Edit Applied', json.data.outputName);
       onSaved?.(json.data);
       onClose();
-    } catch (err: any) {
-      forgeToast.error('Edit Failed', err.message);
+    } catch (err: unknown) {
+      forgeToast.error('Edit Failed', (err as Error).message);
     } finally {
       setIsProcessing(false);
     }

@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { HelpCircle, ChevronDown, Sparkles, MessageCircle } from 'lucide-react';
+import { HelpCircle, ChevronDown, MessageCircle } from 'lucide-react';
 import { ForgeButton } from '@/components/sakuga';
 import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/layout/footer';

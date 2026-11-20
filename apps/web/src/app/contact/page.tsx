@@ -192,7 +192,7 @@ export default function ContactPage() {
                       <label className="block text-xs font-semibold text-gray-300 mb-1.5">Category</label>
                       <select
                         value={formData.category}
-                        onChange={(e) => setFormData({ ...formData, category: e.target.value as any })}
+                        onChange={(e) => setFormData({ ...formData, category: e.target.value as 'GENERAL' | 'BILLING' | 'FEATURE' | 'BUG' })}
                         className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-violet-500 transition-colors"
                       >
                         <option value="GENERAL" className="bg-[#12121c]">General Inquiry</option>

@@ -76,16 +76,17 @@ export const SakugaCheckbox: React.FC<SakugaCheckboxProps> = ({
             d="M20 6L9 17L4 12"
             initial={false}
             animate={{
-              pathLength: checked ? 1 : 0,
-              opacity: checked ? 1 : 0
-            } as any}
+              opacity: checked ? 1 : 0,
+              scale: checked ? 1 : 0.6
+            }}
             transition={
               prefersReducedMotion
                 ? { duration: 0.05 }
                 : {
                     type: 'spring',
-                    stiffness: 400,
-                    damping: 25
+                    stiffness: 550,
+                    damping: 28,
+                    mass: 0.5
                   }
             }
           />

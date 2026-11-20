@@ -9,7 +9,6 @@ import {
   CreditCard,
   User,
   ArrowRight,
-  Shield,
   MessageSquare
 } from 'lucide-react';
 import { ForgeButton } from '@/components/sakuga';

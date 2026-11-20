@@ -12,15 +12,10 @@ import {
   Image as ImageIcon,
   Film,
   Music,
-  Archive,
-  Code,
-  Shield,
   ShieldCheck,
   Scale,
   Folder,
-  Share2,
   CreditCard,
-  HelpCircle,
   Wand2,
   X
 } from 'lucide-react';

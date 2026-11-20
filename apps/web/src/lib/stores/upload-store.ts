@@ -162,9 +162,9 @@ export const useUploadStore = create<UploadStoreState>((set, get) => ({
       set((state) => ({ items: [newItem, ...state.items] }));
       forgeToast.success('URL Imported Successfully', `${data.originalName} (${(data.sizeBytes / (1024 * 1024)).toFixed(1)} MB)`);
       return true;
-    } catch (err: any) {
+    } catch (err: unknown) {
       forgeToast.dismiss(loadingToast);
-      forgeToast.error('Network Error', err.message);
+      forgeToast.error('Network Error', (err as Error).message);
       return false;
     }
   },
@@ -238,15 +238,15 @@ export const useUploadStore = create<UploadStoreState>((set, get) => ({
         `Optimized: ${item.originalName}`,
         `Reduced by ${result.savingsPercentage}% (${(result.originalSizeBytes / (1024 * 1024)).toFixed(1)}MB -> ${(result.outputSizeBytes / (1024 * 1024)).toFixed(1)}MB)`
       );
-    } catch (err: any) {
+    } catch (err: unknown) {
       set((state) => ({
         items: state.items.map((i) =>
           i.id === id
-            ? { ...i, status: 'FAILED', error: err.message, currentStep: 'Failed' }
+            ? { ...i, status: 'FAILED', error: (err as Error).message, currentStep: 'Failed' }
             : i
         )
       }));
-      forgeToast.error(`Failed: ${item.originalName}`, err.message);
+      forgeToast.error(`Failed: ${item.originalName}`, (err as Error).message);
     }
   },
 
@@ -324,7 +324,7 @@ export const useUploadStore = create<UploadStoreState>((set, get) => ({
 
     try {
       const storageKeys = completedItems
-        .map((i) => (i.result as any).storageKey)
+        .map((i) => (i.result as { storageKey?: string })?.storageKey)
         .filter(Boolean);
 
       const filenames = completedItems.map((i) => i.result!.outputName);
@@ -351,9 +351,9 @@ export const useUploadStore = create<UploadStoreState>((set, get) => ({
 
       forgeToast.dismiss(toastId);
       forgeToast.success('Batch Download Ready', 'ZIP bundle downloaded.');
-    } catch (err: any) {
+    } catch (err: unknown) {
       forgeToast.dismiss(toastId);
-      forgeToast.error('Batch Download Failed', err.message);
+      forgeToast.error('Batch Download Failed', (err as Error).message);
     }
   }
 }));

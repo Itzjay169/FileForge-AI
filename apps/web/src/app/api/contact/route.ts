@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
       message: 'Your inquiry has been received. Our team will contact you within 24 hours.',
       ticketId: ticket.id
     });
-  } catch (error: any) {
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    return NextResponse.json({ success: false, error: (error as Error).message }, { status: 500 });
   }
 }

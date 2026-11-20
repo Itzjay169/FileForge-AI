@@ -81,13 +81,13 @@ export async function POST(request: NextRequest) {
     };
 
     return NextResponse.json(response, { status: 201 });
-  } catch (err: any) {
+  } catch (err: unknown) {
     return NextResponse.json(
       {
         success: false,
         error: {
           code: 'UPLOAD_ERROR',
-          message: err.message || 'An unexpected error occurred while processing the file upload.'
+          message: (err as Error).message || 'An unexpected error occurred while processing the file upload.'
         }
       },
       { status: 500 }

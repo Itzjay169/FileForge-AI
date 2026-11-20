@@ -7,13 +7,8 @@ import {
   Film,
   Music,
   X,
-  Volume2,
-  VolumeX,
   Scissors,
-  Image as ImageIcon,
-  Check,
-  Download,
-  Sparkles
+  Check
 } from 'lucide-react';
 import { VideoEditOptions, AudioEditOptions } from '@fileforge/shared';
 import { useReducedMotion } from '@/lib/hooks';
@@ -23,7 +18,7 @@ export interface MediaEditorModalProps {
   isOpen: boolean;
   onClose: () => void;
   file: File | null;
-  onSaved?: (result: any) => void;
+  onSaved?: (result: unknown) => void;
 }
 
 export const MediaEditorModal: React.FC<MediaEditorModalProps> = ({
@@ -82,8 +77,8 @@ export const MediaEditorModal: React.FC<MediaEditorModalProps> = ({
       forgeToast.success('Media Edited Successfully', json.data.outputName);
       onSaved?.(json.data);
       onClose();
-    } catch (err: any) {
-      forgeToast.error('Media Tool Failed', err.message);
+    } catch (err: unknown) {
+      forgeToast.error('Media Tool Failed', (err as Error).message);
     } finally {
       setIsProcessing(false);
     }

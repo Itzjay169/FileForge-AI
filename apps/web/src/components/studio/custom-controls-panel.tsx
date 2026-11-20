@@ -7,7 +7,6 @@ import { useUploadStore } from '@/lib/stores/upload-store';
 import { useReducedMotion } from '@/lib/hooks';
 import { ForgeSlider } from '@/components/sakuga/forge-slider';
 import { ForgeToggle } from '@/components/sakuga/forge-toggle';
-import { ForgeCheckbox } from '@/components/sakuga/forge-checkbox';
 import { cn } from '@/lib/utils';
 
 const OUTPUT_FORMATS = [

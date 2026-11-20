@@ -9,7 +9,7 @@ export interface ForgeInputProps {
   label?: string;
   placeholder?: string;
   value?: string;
-  onChange?: (val: any) => void;
+  onChange?: (e: { target: { value: string }; currentTarget?: { value: string }; value?: string }) => void;
   type?: 'text' | 'email' | 'password' | 'number' | 'search';
   name?: string;
   helperText?: string;
@@ -20,8 +20,7 @@ export interface ForgeInputProps {
   trailingIcon?: React.ReactNode;
   className?: string;
   maxLength?: number;
-  onKeyDown?: (e: any) => void;
-  [key: string]: any;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLElement> | KeyboardEvent) => void;
 }
 
 export const ForgeInput: React.FC<ForgeInputProps> = ({
@@ -38,8 +37,7 @@ export const ForgeInput: React.FC<ForgeInputProps> = ({
   leadingIcon,
   trailingIcon,
   className,
-  maxLength,
-  onKeyDown,
+    onKeyDown,
 }) => {
   const inputRef = useRef<SakugaInputElement | null>(null);
 
@@ -60,7 +58,9 @@ export const ForgeInput: React.FC<ForgeInputProps> = ({
         currentTarget: { value: val },
         value: val,
       });
-      (onChange as any)?.(hybrid);
+      if (typeof onChange === 'function') {
+        (onChange as (val: unknown) => void)(hybrid);
+      }
     };
 
     const handleInput = () => {
@@ -103,7 +103,7 @@ export const ForgeInput: React.FC<ForgeInputProps> = ({
 
         {/* Sakuga VFX Animated Input with caret dust effects */}
         <sakuga-input
-          ref={inputRef as any}
+          ref={inputRef}
           label={label || placeholder}
           placeholder={placeholder}
           value={value}

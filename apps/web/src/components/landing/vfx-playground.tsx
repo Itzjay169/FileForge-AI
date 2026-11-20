@@ -1,22 +1,14 @@
 'use client';
 
 import React, { useState, useCallback } from 'react';
-import { motion } from 'framer-motion';
 import {
-  Sparkles,
+  
   Zap,
   Sliders,
-  CheckCircle2,
   RefreshCw,
   Bell,
-  Play,
   Flame,
-  FileCode,
   Gauge,
-  SlidersHorizontal,
-  Shield,
-  Layers,
-  HelpCircle,
   Star
 } from 'lucide-react';
 import {

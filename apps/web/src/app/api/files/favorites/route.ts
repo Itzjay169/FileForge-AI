@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
 
     const isFavorite = accountStore.toggleFavorite(fileId);
     return NextResponse.json({ success: true, isFavorite }, { status: 200 });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err: unknown) {
+    return NextResponse.json({ error: (err as Error).message }, { status: 500 });
   }
 }

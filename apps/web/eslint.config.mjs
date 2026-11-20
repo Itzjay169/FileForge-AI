@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Third-party Sakuga VFX component files (MIT, do not modify)
+    "public/sakuga-vfx/**",
   ]),
 ]);
 

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { forwardRef, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, type MotionStyle } from 'framer-motion';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 import { useReducedMotion } from '@/lib/hooks';
@@ -42,11 +42,12 @@ export const sakugaButtonVariants = cva(
 );
 
 export interface SakugaButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onAnimationStart' | 'onDragStart' | 'onDragEnd' | 'onDrag' | 'style'>,
     VariantProps<typeof sakugaButtonVariants> {
   isLoading?: boolean;
   showSuccessCheck?: boolean;
   onSuccessComplete?: () => void;
+  style?: MotionStyle;
 }
 
 export const SakugaButton = forwardRef<HTMLButtonElement, SakugaButtonProps>(
@@ -60,7 +61,8 @@ export const SakugaButton = forwardRef<HTMLButtonElement, SakugaButtonProps>(
       showSuccessCheck = false,
       onClick,
       disabled,
-      ...props
+      style,
+      ...restProps
     },
     ref
   ) => {
@@ -108,7 +110,8 @@ export const SakugaButton = forwardRef<HTMLButtonElement, SakugaButtonProps>(
                 transition: { type: 'spring', stiffness: 500, damping: 15 }
               }
         }
-        {...(props as any)}
+        {...restProps}
+        style={style}
       >
         {/* Single-frame white impact burst overlay */}
         <AnimatePresence>

@@ -3,7 +3,7 @@
 import { ForgeButton, ForgeInput, forgeToast } from '@/components/sakuga';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { AlertOctagon, X, Send, ShieldAlert } from 'lucide-react';
+import {  X, Send, ShieldAlert } from 'lucide-react';
 export interface AbuseReportModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -45,8 +45,8 @@ export const AbuseReportModal: React.FC<AbuseReportModalProps> = ({
 
       forgeToast.success('Report Received', 'Thank you. Our compliance team will review your report promptly.');
       onClose();
-    } catch (err: any) {
-      forgeToast.error('Report Failed', err.message);
+    } catch (err: unknown) {
+      forgeToast.error('Report Failed', (err as Error).message);
     } finally {
       setIsSubmitting(false);
     }
@@ -98,7 +98,7 @@ export const AbuseReportModal: React.FC<AbuseReportModalProps> = ({
                 <label className="text-xs font-semibold text-gray-300 block mb-1">Violation Category</label>
                 <select
                   value={reason}
-                  onChange={(e) => setReason(e.target.value as any)}
+                  onChange={(e) => setReason(e.target.value as 'UNAUTHORIZED_COPYRIGHT_INFRINGEMENT' | 'CIRCUMVENTION_ATTEMPT' | 'DECEPTIVE_PROVENANCE_STRIPPING' | 'OTHER')}
                   className="w-full h-11 px-3 rounded-xl bg-white/5 border border-white/10 text-xs text-white focus:outline-none focus:border-red-500"
                 >
                   <option value="UNAUTHORIZED_COPYRIGHT_INFRINGEMENT" className="bg-[#12121c]">

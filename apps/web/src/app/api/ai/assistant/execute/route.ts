@@ -128,9 +128,9 @@ export async function POST(request: NextRequest) {
     };
 
     return NextResponse.json(response);
-  } catch (err: any) {
+  } catch (err: unknown) {
     return NextResponse.json(
-      { success: false, error: { code: 'AI_EXECUTE_FAILED', message: err.message || 'Execution failed.' } },
+      { success: false, error: { code: 'AI_EXECUTE_FAILED', message: (err as Error).message || 'Execution failed.' } },
       { status: 500 }
     );
   }

@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
     const timestamp = new Date().toISOString().slice(0, 10);
     const downloadFilename = `fileforge-batch-optimized-${timestamp}.zip`;
 
-    return new NextResponse(zipBuffer as any, {
+    return new NextResponse(new Uint8Array(zipBuffer), {
       status: 200,
       headers: {
         'Content-Type': 'application/zip',
@@ -56,13 +56,13 @@ export async function POST(request: NextRequest) {
         'Cache-Control': 'no-store'
       }
     });
-  } catch (err: any) {
+  } catch (err: unknown) {
     return NextResponse.json(
       {
         success: false,
         error: {
           code: 'ZIP_GENERATION_FAILED',
-          message: err.message || 'Failed to assemble batch ZIP archive.'
+          message: (err as Error).message || 'Failed to assemble batch ZIP archive.'
         }
       },
       { status: 500 }

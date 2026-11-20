@@ -31,28 +31,27 @@ export class MetadataInspectorEngine {
     filename: string,
     mimeType: string
   ): Promise<MetadataInspectionReport> {
-    const startTime = performance.now();
-    const sha256Hash = crypto.createHash('sha256').update(buffer).digest('hex');
+        const sha256Hash = crypto.createHash('sha256').update(buffer).digest('hex');
     const ext = filename.split('.').pop()?.toLowerCase() || '';
 
-    let exif: ExifData = {};
-    let c2pa: C2paProvenance = { hasC2paManifest: false };
-    let aiDisclosure: AiProvenanceDisclosure = {
+    const exif: ExifData = {};
+    const c2pa: C2paProvenance = { hasC2paManifest: false };
+    const aiDisclosure: AiProvenanceDisclosure = {
       isAiGeneratedOrAssisted: false,
       confidence: 0,
       disclosureSource: 'NONE',
       detectedGenerators: []
     };
-    let watermark: WatermarkDetection = {
+    const watermark: WatermarkDetection = {
       detectedVisibleWatermark: false,
       confidence: 0
     };
-    let document: DocumentProperties = {
+    const document: DocumentProperties = {
       isEncrypted: false,
       hasDigitalSignature: false
     };
-    let media: MediaProperties = {};
-    const rawTags: Record<string, any> = {};
+    const media: MediaProperties = {};
+    const rawTags: Record<string, unknown> = {};
 
     // 1. Process Raster / Vector Images
     if (['png', 'jpg', 'jpeg', 'webp', 'avif', 'tiff', 'gif'].includes(ext) || mimeType.startsWith('image/')) {
@@ -147,7 +146,7 @@ export class MetadataInspectorEngine {
             break;
           }
         }
-      } catch (err) {
+      } catch {
         // Fallback gracefully
         rawTags.parseWarning = 'Image buffer analyzed via standard binary scanner';
       }

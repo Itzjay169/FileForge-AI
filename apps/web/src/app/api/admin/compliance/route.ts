@@ -1,13 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { complianceStore } from '@/lib/server/compliance-store-service';
-import { AdminReviewActionSchema } from '@fileforge/shared';
+import { AdminReviewActionSchema, OwnershipRequestStatus } from '@fileforge/shared';
 
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
-    const status = searchParams.get('status') as any;
+    const statusParam = searchParams.get('status');
+    const status = statusParam ? (statusParam as OwnershipRequestStatus) : undefined;
 
-    const requests = complianceStore.listVerificationRequests(status || undefined);
+    const requests = complianceStore.listVerificationRequests(status);
     const abuseReports = complianceStore.listAbuseReports();
     const auditLogs = complianceStore.listAuditLogs();
 
@@ -24,8 +25,8 @@ export async function GET(req: NextRequest) {
         totalAuditRecords: auditLogs.length
       }
     });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message || 'Failed to fetch admin compliance data' }, { status: 500 });
+  } catch (err: unknown) {
+    return NextResponse.json({ error: (err as Error).message || 'Failed to fetch admin compliance data' }, { status: 500 });
   }
 }
 
@@ -55,8 +56,8 @@ export async function POST(req: NextRequest) {
       message: `Request ${requestId} status updated to ${updated.status}`,
       request: updated
     });
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error('Admin Review error:', err);
-    return NextResponse.json({ error: err.message || 'Admin review update failed' }, { status: 500 });
+    return NextResponse.json({ error: (err as Error).message || 'Admin review update failed' }, { status: 500 });
   }
 }

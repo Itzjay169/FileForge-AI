@@ -10,8 +10,8 @@ export async function GET(req: NextRequest) {
 
     const members = accountStore.getWorkspaceMembers(workspaceId);
     return NextResponse.json({ members }, { status: 200 });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err: unknown) {
+    return NextResponse.json({ error: (err as Error).message }, { status: 500 });
   }
 }
 
@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
     );
 
     return NextResponse.json({ success: true, member: newMember }, { status: 201 });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 403 });
+  } catch (err: unknown) {
+    return NextResponse.json({ error: (err as Error).message }, { status: 403 });
   }
 }

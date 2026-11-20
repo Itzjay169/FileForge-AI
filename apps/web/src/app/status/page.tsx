@@ -1,19 +1,14 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
 import {
   CheckCircle2,
   AlertTriangle,
   XCircle,
   RefreshCw,
-  Server,
-  Activity,
-  ShieldCheck,
   Clock
 } from 'lucide-react';
 import { SystemStatus } from '@fileforge/shared';
-import { ForgeButton } from '@/components/sakuga';
 import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/layout/footer';
 
@@ -21,7 +16,7 @@ export default function StatusPage() {
   const [overall, setOverall] = useState<string>('OPERATIONAL');
   const [services, setServices] = useState<SystemStatus[]>([]);
   const [loading, setLoading] = useState(true);
-  const [lastUpdated, setLastUpdated] = useState<number>(Date.now());
+  const [lastUpdated, setLastUpdated] = useState<number>(() => Date.now());
 
   const fetchStatus = async () => {
     setLoading(true);
@@ -41,7 +36,26 @@ export default function StatusPage() {
   };
 
   useEffect(() => {
-    fetchStatus();
+    let ignore = false;
+    const load = async () => {
+      try {
+        const res = await fetch('/api/status');
+        const data = await res.json();
+        if (!ignore && data.success) {
+          setOverall(data.overall);
+          setServices(data.services);
+          setLastUpdated(data.updatedAt || Date.now());
+        }
+      } catch {
+        console.error('Failed to load system status');
+      } finally {
+        if (!ignore) setLoading(false);
+      }
+    };
+    load();
+    return () => {
+      ignore = true;
+    };
   }, []);
 
   return (

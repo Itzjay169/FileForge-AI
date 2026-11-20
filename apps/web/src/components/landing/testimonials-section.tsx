@@ -1,11 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
-import { Star, Quote, MessageSquare, Sparkles, CheckCircle2 } from 'lucide-react';
+import { Star, MessageSquare, Sparkles, CheckCircle2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { ScrollReveal } from '@/components/ui/scroll-reveal';
-import { ForgeRating, ForgeButton, forgeToast } from '@/components/sakuga';
+import { ForgeRating, forgeToast } from '@/components/sakuga';
 
 export interface TestimonialItem {
   id: string;
@@ -63,8 +62,7 @@ const TESTIMONIALS: TestimonialItem[] = [
 ];
 
 export function TestimonialsSection() {
-  const shouldReduceMotion = useReducedMotion();
-  const [userRating, setUserRating] = useState(5);
+    const [userRating, setUserRating] = useState(5);
   const [rated, setRated] = useState(false);
 
   const handleRatingChange = (val: number) => {

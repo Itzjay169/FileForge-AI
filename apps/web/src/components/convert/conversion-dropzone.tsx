@@ -9,9 +9,7 @@ import {
   Camera,
   Link2,
   X,
-  ArrowRight,
-  Sparkles,
-  Zap
+  Sparkles
 } from 'lucide-react';
 import { useConversionStore } from '@/lib/stores/conversion-store';
 import { useUploadStore } from '@/lib/stores/upload-store';
@@ -247,7 +245,7 @@ export const ConversionDropzone: React.FC = () => {
       <input
         ref={folderInputRef}
         type="file"
-        {...({ webkitdirectory: '', directory: '' } as any)}
+        {...({ webkitdirectory: '', directory: '' } as Record<string, string>)}
         className="hidden"
         onChange={handleFileChange}
       />

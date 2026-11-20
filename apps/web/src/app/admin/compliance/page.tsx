@@ -11,15 +11,8 @@ import {
   WatermarkAuditRecord
 } from '@fileforge/shared';
 import {
-  ShieldAlert,
-  ShieldCheck,
   CheckCircle2,
   XCircle,
-  Flag,
-  Clock,
-  FileText,
-  AlertTriangle,
-  Search,
   ExternalLink,
   RefreshCw,
   Scale
@@ -30,7 +23,7 @@ export default function AdminCompliancePage() {
   const [requests, setRequests] = useState<OwnershipVerificationRequest[]>([]);
   const [abuseReports, setAbuseReports] = useState<AbuseReport[]>([]);
   const [auditLogs, setAuditLogs] = useState<WatermarkAuditRecord[]>([]);
-  const [stats, setStats] = useState<any>({});
+  const [stats, setStats] = useState<Record<string, number>>({});
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<'requests' | 'abuse' | 'audit'>('requests');
   const [selectedReq, setSelectedReq] = useState<OwnershipVerificationRequest | null>(null);
@@ -48,15 +41,36 @@ export default function AdminCompliancePage() {
       setAbuseReports(data.abuseReports || []);
       setAuditLogs(data.auditLogs || []);
       setStats(data.stats || {});
-    } catch (err: any) {
-      forgeToast.error('Fetch Error', err.message);
+    } catch (err: unknown) {
+      forgeToast.error('Fetch Error', (err as Error).message);
     } finally {
       setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchData();
+    let ignore = false;
+    const load = async () => {
+      try {
+        const res = await fetch('/api/admin/compliance');
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Failed to load compliance data');
+        if (!ignore) {
+          setRequests(data.requests || []);
+          setAbuseReports(data.abuseReports || []);
+          setAuditLogs(data.auditLogs || []);
+          setStats(data.stats || {});
+        }
+      } catch (err: unknown) {
+        forgeToast.error('Fetch Error', (err as Error).message);
+      } finally {
+        if (!ignore) setIsLoading(false);
+      }
+    };
+    load();
+    return () => {
+      ignore = true;
+    };
   }, []);
 
   const handleReviewAction = async (action: 'APPROVE' | 'REJECT' | 'FLAG') => {
@@ -84,8 +98,8 @@ export default function AdminCompliancePage() {
       setSelectedReq(null);
       setAdminNotes('');
       fetchData();
-    } catch (err: any) {
-      forgeToast.error('Review Error', err.message);
+    } catch (err: unknown) {
+      forgeToast.error('Review Error', (err as Error).message);
     } finally {
       setIsSubmittingReview(false);
     }

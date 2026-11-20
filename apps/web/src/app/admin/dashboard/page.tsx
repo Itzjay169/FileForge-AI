@@ -7,7 +7,6 @@ import {
   CreditCard,
   HardDrive,
   Activity,
-  AlertTriangle,
   ToggleLeft,
   ToggleRight,
   Ticket,
@@ -16,9 +15,6 @@ import {
   UserX,
   UserCheck,
   RefreshCw,
-  Clock,
-  CheckCircle,
-  XCircle,
   FileText
 } from 'lucide-react';
 import {
@@ -69,7 +65,36 @@ export default function AdminDashboardPage() {
   };
 
   useEffect(() => {
-    fetchAdminData();
+    let ignore = false;
+    const load = async () => {
+      try {
+        const [statsRes, usersRes, jobsRes, flagsRes, ticketsRes, statusRes] = await Promise.all([
+          fetch('/api/admin/dashboard').then((r) => r.json()),
+          fetch('/api/admin/users?limit=10').then((r) => r.json()),
+          fetch('/api/admin/jobs?limit=10').then((r) => r.json()),
+          fetch('/api/admin/feature-flags').then((r) => r.json()),
+          fetch('/api/admin/support').then((r) => r.json()),
+          fetch('/api/status').then((r) => r.json())
+        ]);
+
+        if (!ignore) {
+          if (statsRes.success) setStats(statsRes.stats);
+          if (usersRes.success) setUsers(usersRes.users);
+          if (jobsRes.success) setJobs(jobsRes.jobs);
+          if (flagsRes.success) setFlags(flagsRes.flags);
+          if (ticketsRes.success) setTickets(ticketsRes.tickets);
+          if (statusRes.success) setStatuses(statusRes.services);
+        }
+      } catch (e) {
+        console.error('Failed to load admin telemetry', e);
+      } finally {
+        if (!ignore) setLoading(false);
+      }
+    };
+    load();
+    return () => {
+      ignore = true;
+    };
   }, []);
 
   const handleToggleFlag = async (flag: FeatureFlag) => {
@@ -154,7 +179,7 @@ export default function AdminDashboardPage() {
             return (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id as any)}
+                onClick={() => setActiveTab(tab.id as 'overview' | 'users' | 'jobs' | 'flags' | 'tickets' | 'health')}
                 className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
                   isActive
                     ? 'bg-gradient-to-r from-violet-600 to-pink-600 text-white shadow-lg shadow-violet-900/40'

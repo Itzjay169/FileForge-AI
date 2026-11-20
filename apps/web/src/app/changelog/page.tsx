@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Sparkles, Tag, Calendar, ArrowRight, GitCommit } from 'lucide-react';
+import { Sparkles, Calendar, GitCommit } from 'lucide-react';
 import { ChangelogEntry } from '@fileforge/shared';
 import { ForgeButton } from '@/components/sakuga';
 import { Navbar } from '@/components/layout/navbar';
@@ -10,7 +10,7 @@ import { Footer } from '@/components/layout/footer';
 
 export default function ChangelogPage() {
   const [changelogs, setChangelogs] = useState<ChangelogEntry[]>([]);
-  const [loading, setLoading] = useState(true);
+  // loading state removed
 
   useEffect(() => {
     fetch('/api/changelog')
@@ -20,8 +20,7 @@ export default function ChangelogPage() {
           setChangelogs(data.changelog);
         }
       })
-      .catch((err) => console.error(err))
-      .finally(() => setLoading(false));
+      .catch((err) => console.error(err));
   }, []);
 
   return (

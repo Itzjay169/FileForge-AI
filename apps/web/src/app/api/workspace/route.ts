@@ -2,12 +2,12 @@ import { NextRequest, NextResponse } from 'next/server';
 import { accountStore } from '@/lib/server/account-store-service';
 import { CreateWorkspaceSchema } from '@fileforge/shared';
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
     const workspaces = accountStore.listWorkspaces('usr_creative_pro_01');
     return NextResponse.json({ workspaces }, { status: 200 });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err: unknown) {
+    return NextResponse.json({ error: (err as Error).message }, { status: 500 });
   }
 }
 
@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
     );
 
     return NextResponse.json({ workspace }, { status: 201 });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err: unknown) {
+    return NextResponse.json({ error: (err as Error).message }, { status: 500 });
   }
 }

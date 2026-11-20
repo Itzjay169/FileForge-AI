@@ -20,7 +20,7 @@ export interface ForgeSliderProps {
     time?: string;
   };
   className?: string;
-  [key: string]: any;
+  variant?: string;
 }
 
 export const ForgeSlider: React.FC<ForgeSliderProps> = ({
@@ -102,7 +102,7 @@ export const ForgeSlider: React.FC<ForgeSliderProps> = ({
       {/* Sakuga VFX Custom Slider with spring teardrop thumb */}
       <div className="py-1">
         <sakuga-slider
-          ref={sliderRef as any}
+          ref={sliderRef}
           value={value}
           min={min}
           max={max}

@@ -120,13 +120,13 @@ export async function POST(request: NextRequest) {
     };
 
     return NextResponse.json(response, { status: 200 });
-  } catch (err: any) {
+  } catch (err: unknown) {
     return NextResponse.json(
       {
         success: false,
         error: {
           code: 'COMPRESSION_FAILED',
-          message: err.message || 'An error occurred during file compression.'
+          message: (err as Error).message || 'An error occurred during file compression.'
         }
       },
       { status: 500 }

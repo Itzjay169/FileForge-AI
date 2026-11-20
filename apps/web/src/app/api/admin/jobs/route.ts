@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
 
     const data = AdminService.getInstance().listJobs(page, limit, status, type);
     return NextResponse.json({ success: true, ...data });
-  } catch (error: any) {
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    return NextResponse.json({ success: false, error: (error as Error).message }, { status: 500 });
   }
 }

@@ -64,7 +64,7 @@ export const ForgeRadioGroup: React.FC<ForgeRadioGroupProps> = ({
 
       {/* Official Sakuga VFX Radio with animated dot spring and burst */}
       <sakuga-radio
-        ref={radioRef as any}
+        ref={radioRef}
         label={label || 'Select option'}
         name={name}
         disabled={disabled ? true : undefined}

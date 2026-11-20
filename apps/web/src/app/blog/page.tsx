@@ -1,7 +1,5 @@
 import React from 'react';
-import Link from 'next/link';
-import { Sparkles, Calendar, Clock, ArrowRight, BookOpen } from 'lucide-react';
-import { ForgeButton } from '@/components/sakuga';
+import { ArrowRight, BookOpen } from 'lucide-react';
 import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/layout/footer';
 

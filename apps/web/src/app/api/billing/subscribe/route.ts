@@ -20,8 +20,8 @@ export async function POST(req: NextRequest) {
     );
 
     return NextResponse.json({ success: true, subscription });
-  } catch (error: any) {
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    return NextResponse.json({ success: false, error: (error as Error).message }, { status: 500 });
   }
 }
 
@@ -40,7 +40,7 @@ export async function DELETE(req: NextRequest) {
     );
 
     return NextResponse.json({ success: true, subscription });
-  } catch (error: any) {
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    return NextResponse.json({ success: false, error: (error as Error).message }, { status: 500 });
   }
 }

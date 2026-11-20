@@ -14,13 +14,11 @@ import {
   RotateCcw,
   X,
   Eye,
-  Loader2,
   FileQuestion,
   type LucideIcon,
 } from 'lucide-react';
 import { type QueueItem } from '@fileforge/shared';
 import { useUploadStore } from '@/lib/stores/upload-store';
-import { useReducedMotion } from '@/lib/hooks';
 import { ForgeProgress } from '@/components/sakuga/forge-progress';
 import { ForgeButton } from '@/components/sakuga/forge-button';
 import { formatFileSize, cn, truncate } from '@/lib/utils';
@@ -85,25 +83,15 @@ function StatusBadge({ status }: { status: QueueItem['status'] }) {
 // ---------------------------------------------------------------------------
 
 function QueueCard({ item }: { item: QueueItem }) {
-  const processItem = useUploadStore((s) => s.processItem);
   const cancelItem = useUploadStore((s) => s.cancelItem);
   const retryItem = useUploadStore((s) => s.retryItem);
   const removeItem = useUploadStore((s) => s.removeItem);
   const setComparisonItem = useUploadStore((s) => s.setComparisonItem);
 
-  const Icon = getCategoryIcon(item.extension);
   const isCompleted = item.status === 'COMPLETED';
   const isFailed = item.status === 'FAILED';
   const isProcessing = item.status === 'PROCESSING';
   const isReady = item.status === 'READY' || item.status === 'QUEUED';
-
-  const progressVariant = isFailed
-    ? 'error'
-    : isCompleted
-    ? 'success'
-    : isProcessing
-    ? 'plasma'
-    : 'default';
 
   return (
     <motion.div
@@ -130,7 +118,7 @@ function QueueCard({ item }: { item: QueueItem }) {
             : 'bg-white/[0.06] text-white/60',
         )}
       >
-        <Icon className="w-5 h-5" />
+        {React.createElement(getCategoryIcon(item.extension), { className: 'w-5 h-5' })}
       </div>
 
       {/* Center content */}

@@ -44,7 +44,6 @@ export interface ForgeProgressProps {
   showPercentage?: boolean;
   showLabel?: boolean;
   showPipeline?: boolean;
-  [key: string]: any;
 }
 
 export const ForgeProgress: React.FC<ForgeProgressProps> = ({
@@ -60,9 +59,7 @@ export const ForgeProgress: React.FC<ForgeProgressProps> = ({
   error,
   isSuccess = false,
   className,
-  size,
-  variant,
-  showPercentage = true,
+      showPercentage = true,
   showLabel = true,
   showPipeline,
 }) => {
@@ -94,10 +91,10 @@ export const ForgeProgress: React.FC<ForgeProgressProps> = ({
       )}
     >
       {/* Top Header: Label, Stage pill, and Percentage */}
-      {(Boolean(label) || showPercentage) && (
+      {(Boolean(label && showLabel) || showPercentage) && (
         <div className="flex items-center justify-between gap-3">
           <div className="flex items-center gap-2 min-w-0">
-            {Boolean(label) && <span className="text-sm font-bold text-[var(--sk-text)] truncate">{label}</span>}
+            {Boolean(label && showLabel) && <span className="text-sm font-bold text-[var(--sk-text)] truncate">{label}</span>}
             {stage && (
               <span className="text-[11px] font-mono px-2 py-0.5 rounded-md bg-[var(--sk-surface-raised)] border border-[var(--sk-border)] text-[var(--sk-pri)] font-semibold shrink-0">
                 {stage}
@@ -123,7 +120,7 @@ export const ForgeProgress: React.FC<ForgeProgressProps> = ({
       {/* Official Sakuga VFX Progress Bar with storm cloud and impact burst */}
       <div className="py-1">
         <sakuga-progress
-          ref={progressRef as any}
+          ref={progressRef}
           label={label || 'Progress'}
           class="w-full"
         />

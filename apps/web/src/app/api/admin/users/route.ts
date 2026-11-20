@@ -10,8 +10,8 @@ export async function GET(req: NextRequest) {
 
     const data = AdminService.getInstance().listUsers(page, limit, search);
     return NextResponse.json({ success: true, ...data });
-  } catch (error: any) {
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    return NextResponse.json({ success: false, error: (error as Error).message }, { status: 500 });
   }
 }
 
@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
     }
 
     return NextResponse.json({ success: true, action, userId });
-  } catch (error: any) {
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    return NextResponse.json({ success: false, error: (error as Error).message }, { status: 500 });
   }
 }

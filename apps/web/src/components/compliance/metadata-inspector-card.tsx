@@ -1,20 +1,12 @@
 'use client';
 
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 import {
   ShieldCheck,
-  ShieldAlert,
   AlertTriangle,
   Info,
   Sparkles,
-  Camera,
-  FileText,
-  Lock,
   Download,
-  CheckCircle2,
-  Cpu,
-  Layers,
   Search
 } from 'lucide-react';
 import { MetadataInspectionReport } from '@fileforge/shared';

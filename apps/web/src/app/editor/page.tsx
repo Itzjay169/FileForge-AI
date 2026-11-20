@@ -9,22 +9,20 @@ import { AiCopilotCard } from '@/components/editor/ai-copilot-card';
 import { ImageEditorModal } from '@/components/editor/image-editor-modal';
 import { PdfStudioModal } from '@/components/editor/pdf-studio-modal';
 import { MediaEditorModal } from '@/components/editor/media-editor-modal';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import {
-  Wand2,
+  
   UploadCloud,
   File,
   Image as ImageIcon,
   FileText,
   Film,
-  Music,
   Download,
   Trash2,
   Sliders,
   CheckCircle2,
   Sparkles,
-  ArrowRight,
-  ShieldAlert
+  ArrowRight
 } from 'lucide-react';
 import { formatBytes } from '@fileforge/shared';
 
@@ -68,15 +66,16 @@ export default function EditorPage() {
     }
   };
 
-  const handleResultAdded = (result: any, toolType: string) => {
-    if (!result || !result.url) return;
+  const handleResultAdded = (result: { url?: string; filename?: string; size?: number } | null | unknown, toolType: string) => {
+    const res = result as { url?: string; filename?: string; size?: number } | null;
+    if (!res || !res.url) return;
     const newResult: ProcessedResult = {
       id: Math.random().toString(36).substring(2, 9),
       originalName: activeFile?.name || 'input-file',
-      resultName: result.filename || activeFile?.name || 'processed-file',
-      url: result.url,
+      resultName: res.filename || activeFile?.name || 'processed-file',
+      url: res.url,
       originalSize: activeFile?.size || 0,
-      resultSize: result.size || 0,
+      resultSize: res.size || 0,
       toolType,
       timestamp: Date.now()
     };

@@ -1,11 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Check, Zap, Sparkles, Shield, Building2, Crown, Tag } from 'lucide-react';
+import { Check, Sparkles, Crown, Tag } from 'lucide-react';
 import { PLANS } from '@fileforge/shared';
 import { ScrollReveal } from '@/components/ui/scroll-reveal';
-import { ForgeButton, ForgeToggle, ForgeTooltip, forgeToast } from '@/components/sakuga';
+import { ForgeButton, ForgeToggle, forgeToast } from '@/components/sakuga';
 
 export const PricingSection: React.FC = () => {
   const [isAnnual, setIsAnnual] = useState(true);

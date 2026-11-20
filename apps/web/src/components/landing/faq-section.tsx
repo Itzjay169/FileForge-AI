@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, HelpCircle, FileQuestion } from 'lucide-react';
+import { ChevronDown, FileQuestion } from 'lucide-react';
 import { ScrollReveal } from '@/components/ui/scroll-reveal';
 
 export const FAQSection: React.FC = () => {

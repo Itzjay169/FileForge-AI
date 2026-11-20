@@ -280,15 +280,15 @@ export const useConversionStore = create<ConversionStoreState>((set, get) => ({
         `Converted: ${result.outputName}`,
         `Transcoded from .${item.sourceExtension} to .${item.targetExtension} in ${result.durationMs}ms.`
       );
-    } catch (err: any) {
+    } catch (err: unknown) {
       set((state) => ({
         items: state.items.map((i) =>
           i.id === id
-            ? { ...i, status: 'FAILED', error: err.message, currentStep: 'Conversion Failed' }
+            ? { ...i, status: 'FAILED', error: (err as Error).message, currentStep: 'Conversion Failed' }
             : i
         )
       }));
-      forgeToast.error(`Failed: ${item.originalName}`, err.message);
+      forgeToast.error(`Failed: ${item.originalName}`, (err as Error).message);
     }
   },
 
@@ -355,7 +355,7 @@ export const useConversionStore = create<ConversionStoreState>((set, get) => ({
     const toastId = forgeToast.loading('Bundling converted outputs into ZIP archive...');
     try {
       const storageKeys = completedItems
-        .map((i) => (i.result as any).storageKey)
+        .map((i) => (i.result as { storageKey?: string })?.storageKey)
         .filter(Boolean);
       const filenames = completedItems.map((i) => i.result!.outputName);
 
@@ -379,9 +379,9 @@ export const useConversionStore = create<ConversionStoreState>((set, get) => ({
 
       forgeToast.dismiss(toastId);
       forgeToast.success('Batch Download Ready', 'ZIP bundle downloaded.');
-    } catch (err: any) {
+    } catch (err: unknown) {
       forgeToast.dismiss(toastId);
-      forgeToast.error('Batch Download Failed', err.message);
+      forgeToast.error('Batch Download Failed', (err as Error).message);
     }
   },
 

@@ -41,8 +41,8 @@ export async function POST(req: NextRequest) {
 
     const report = await metadataInspectorEngine.inspectFile(buffer, validation.sanitizedName, mimeType);
     return NextResponse.json(report, { status: 200 });
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error('Compliance Inspect API error:', err);
-    return NextResponse.json({ error: err.message || 'Inspection failed' }, { status: 500 });
+    return NextResponse.json({ error: (err as Error).message || 'Inspection failed' }, { status: 500 });
   }
 }

@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'next/navigation';
+import Link from 'next/link';
 import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/layout/footer';
 import { SakugaButton } from '@/components/ui/sakuga-button';
@@ -14,12 +15,9 @@ import {
   KeyRound,
   File,
   ShieldCheck,
-  Clock,
   AlertTriangle,
   QrCode,
-  Sparkles,
-  CheckCircle2,
-  X
+  Sparkles
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -36,7 +34,7 @@ export default function PublicSharePage() {
   const [error, setError] = useState<string | null>(null);
   const [showQr, setShowQr] = useState(false);
 
-  const fetchLink = async (pwd?: string) => {
+  const fetchLink = useCallback(async (pwd?: string) => {
     setIsLoading(true);
     setError(null);
     try {
@@ -54,17 +52,43 @@ export default function PublicSharePage() {
       setLinkInfo(data.link);
       setIsPasswordRequired(data.isPasswordRequired);
       setIsAuthorized(data.isAuthorized);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      setError((err as Error).message);
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [code]);
 
   useEffect(() => {
-    if (code) {
-      fetchLink();
-    }
+    if (!code) return;
+    let ignore = false;
+    const load = async () => {
+      try {
+        const res = await fetch(`/api/share/${code}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password: '' })
+        });
+        const data = await res.json();
+        if (!ignore) {
+          if (!res.ok) {
+            setError(data.error || 'Failed to access share link');
+          } else {
+            setLinkInfo(data.link);
+            setIsPasswordRequired(data.isPasswordRequired);
+            setIsAuthorized(data.isAuthorized);
+          }
+        }
+      } catch (err: unknown) {
+        if (!ignore) setError((err as Error).message);
+      } finally {
+        if (!ignore) setIsLoading(false);
+      }
+    };
+    load();
+    return () => {
+      ignore = true;
+    };
   }, [code]);
 
   const handleUnlock = (e: React.FormEvent) => {
@@ -94,8 +118,8 @@ export default function PublicSharePage() {
       document.body.removeChild(link);
 
       forgeToast.success('Download Initiated', `Downloading "${data.fileName}"`);
-    } catch (err: any) {
-      forgeToast.error('Download Error', err.message);
+    } catch (err: unknown) {
+      forgeToast.error('Download Error', (err as Error).message);
     } finally {
       setIsDownloading(false);
     }
@@ -131,11 +155,11 @@ export default function PublicSharePage() {
                 {error}
               </p>
               <div className="pt-2">
-                <a href="/">
+                <Link href="/">
                   <SakugaButton variant="secondary" size="sm">
                     Back to FileForge
                   </SakugaButton>
-                </a>
+                </Link>
               </div>
             </div>
           ) : isPasswordRequired && !isAuthorized ? (

@@ -179,11 +179,6 @@ export const StudioDropzone: React.FC = () => {
     }
   }, [importUrl, uploadStore]);
 
-  // ---- Motion helpers ----
-  const m = prefersReduced
-    ? { animate: {}, transition: { duration: 0 } }
-    : {};
-
   return (
     <div
       className={cn(
@@ -288,7 +283,7 @@ export const StudioDropzone: React.FC = () => {
       <input
         ref={folderInputRef}
         type="file"
-        {...({ webkitdirectory: '', directory: '' } as any)}
+        {...({ webkitdirectory: '', directory: '' } as Record<string, string>)}
         className="hidden"
         onChange={handleFileChange}
       />

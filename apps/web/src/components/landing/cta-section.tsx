@@ -3,8 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
-import { Zap, Sparkles, ArrowRight, ShieldCheck, Flame } from 'lucide-react';
+import { Zap, ArrowRight, ShieldCheck, Flame } from 'lucide-react';
 import { ForgeButton } from '@/components/sakuga';
 import { ScrollReveal } from '@/components/ui/scroll-reveal';
 

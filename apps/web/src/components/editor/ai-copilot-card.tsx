@@ -4,24 +4,18 @@ import { ForgeButton, forgeToast } from '@/components/sakuga';
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Sparkles,
+  
   Send,
   CheckCircle2,
-  AlertCircle,
   ShieldCheck,
-  Bot,
-  ArrowRight,
-  Info,
-  Sliders,
-  Zap
+  Bot
 } from 'lucide-react';
 import { AiAssistantPlan, AiFileContext } from '@fileforge/shared';
 import { useReducedMotion } from '@/lib/hooks';
-import { cn } from '@/lib/utils';
 
 export interface AiCopilotCardProps {
   file: File | null;
-  onPlanExecuted?: (result: any) => void;
+  onPlanExecuted?: (result: unknown) => void;
 }
 
 const SAMPLE_PROMPTS = [
@@ -71,8 +65,8 @@ export const AiCopilotCard: React.FC<AiCopilotCardProps> = ({ file, onPlanExecut
 
       setCurrentPlan(json.data);
       forgeToast.info('AI Execution Plan Formulated', 'Review settings and confirm below.');
-    } catch (err: any) {
-      forgeToast.error('AI Planning Error', err.message);
+    } catch (err: unknown) {
+      forgeToast.error('AI Planning Error', (err as Error).message);
     } finally {
       setIsPlanning(false);
     }
@@ -97,8 +91,8 @@ export const AiCopilotCard: React.FC<AiCopilotCardProps> = ({ file, onPlanExecut
 
       forgeToast.success('AI Plan Executed Successfully', json.data.outputName);
       onPlanExecuted?.(json.data);
-    } catch (err: any) {
-      forgeToast.error('Execution Failed', err.message);
+    } catch (err: unknown) {
+      forgeToast.error('Execution Failed', (err as Error).message);
     } finally {
       setIsExecuting(false);
     }

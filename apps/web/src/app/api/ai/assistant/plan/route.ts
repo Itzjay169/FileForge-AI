@@ -31,9 +31,9 @@ export async function POST(request: NextRequest) {
     };
 
     return NextResponse.json(response);
-  } catch (err: any) {
+  } catch (err: unknown) {
     return NextResponse.json(
-      { success: false, error: { code: 'AI_PLAN_FAILED', message: err.message || 'AI planning failed.' } },
+      { success: false, error: { code: 'AI_PLAN_FAILED', message: (err as Error).message || 'AI planning failed.' } },
       { status: 500 }
     );
   }

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { complianceStore } from '@/lib/server/compliance-store-service';
-import { OwnershipVerificationRequestSchema } from '@fileforge/shared';
+import { OwnershipVerificationRequestSchema, OwnershipRequestStatus } from '@fileforge/shared';
 
 export async function POST(req: NextRequest) {
   try {
@@ -44,19 +44,20 @@ export async function POST(req: NextRequest) {
       },
       { status: 201 }
     );
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error('Ownership Request API error:', err);
-    return NextResponse.json({ error: err.message || 'Request submission failed' }, { status: 500 });
+    return NextResponse.json({ error: (err as Error).message || 'Request submission failed' }, { status: 500 });
   }
 }
 
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
-    const status = searchParams.get('status') as any;
-    const requests = complianceStore.listVerificationRequests(status || undefined);
+    const statusParam = searchParams.get('status');
+    const status = statusParam ? (statusParam as OwnershipRequestStatus) : undefined;
+    const requests = complianceStore.listVerificationRequests(status);
     return NextResponse.json({ requests }, { status: 200 });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message || 'Failed to list requests' }, { status: 500 });
+  } catch (err: unknown) {
+    return NextResponse.json({ error: (err as Error).message || 'Failed to list requests' }, { status: 500 });
   }
 }

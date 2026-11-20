@@ -20,8 +20,8 @@ export async function GET(req: NextRequest) {
     });
 
     return NextResponse.json({ files }, { status: 200 });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err: unknown) {
+    return NextResponse.json({ error: (err as Error).message }, { status: 500 });
   }
 }
 
@@ -48,8 +48,8 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json({ file: newRecord }, { status: 201 });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err: unknown) {
+    return NextResponse.json({ error: (err as Error).message }, { status: 500 });
   }
 }
 
@@ -67,8 +67,8 @@ export async function PATCH(req: NextRequest) {
 
     const updated = accountStore.updateFile(fileId, parseRes.data);
     return NextResponse.json({ file: updated }, { status: 200 });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err: unknown) {
+    return NextResponse.json({ error: (err as Error).message }, { status: 500 });
   }
 }
 
@@ -80,7 +80,7 @@ export async function DELETE(req: NextRequest) {
 
     const deleted = accountStore.deleteFile(fileId);
     return NextResponse.json({ success: deleted }, { status: 200 });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+  } catch (err: unknown) {
+    return NextResponse.json({ error: (err as Error).message }, { status: 500 });
   }
 }

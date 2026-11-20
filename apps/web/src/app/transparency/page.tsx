@@ -13,13 +13,6 @@ import { motion } from 'framer-motion';
 import {
   ShieldCheck,
   UploadCloud,
-  FileText,
-  AlertTriangle,
-  Download,
-  Sparkles,
-  Lock,
-  Stamp,
-  HelpCircle,
   AlertOctagon,
   File
 } from 'lucide-react';
@@ -55,8 +48,8 @@ export default function TransparencyPage() {
 
       setInspectionReport(data);
       forgeToast.success('Inspection Complete', `Analyzed provenance and metadata for "${file.name}"`);
-    } catch (err: any) {
-      forgeToast.error('Inspection Failed', err.message);
+    } catch (err: unknown) {
+      forgeToast.error('Inspection Failed', (err as Error).message);
     } finally {
       setIsInspecting(false);
     }

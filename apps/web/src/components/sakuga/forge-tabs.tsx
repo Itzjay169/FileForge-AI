@@ -68,7 +68,7 @@ export const ForgeTabs: React.FC<ForgeTabsProps> = ({
   return (
     <div className={cn('w-full overflow-x-auto scrollbar-none py-1 select-none', className)}>
       <sakuga-tabs
-        ref={tabsRef as any}
+        ref={tabsRef}
         label={ariaLabel}
         class="inline-flex cursor-pointer"
       >

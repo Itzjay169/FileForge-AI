@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Sparkles, Home, Layers } from 'lucide-react';
+import {  Sparkles, Home, Layers } from 'lucide-react';
 import { SakugaButton } from '@/components/ui/sakuga-button';
 
 export default function NotFound() {

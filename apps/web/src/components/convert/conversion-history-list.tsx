@@ -8,14 +8,12 @@ import {
   RotateCw,
   Trash2,
   ArrowRight,
-  ExternalLink,
-  ChevronDown,
-  CheckCircle2
+  ChevronDown
 } from 'lucide-react';
 import { useConversionStore } from '@/lib/stores/conversion-store';
 import { fileRegistry } from '@fileforge/file-registry';
 import { ForgeButton } from '@/components/sakuga';
-import { formatFileSize, formatDuration, cn, truncate } from '@/lib/utils';
+import { formatFileSize, truncate } from '@/lib/utils';
 
 export const ConversionHistoryList: React.FC = () => {
   const history = useConversionStore((s) => s.history);

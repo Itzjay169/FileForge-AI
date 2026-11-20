@@ -90,7 +90,7 @@ export const ForgeToastProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         className="fixed bottom-6 right-6 z-[9999] pointer-events-auto"
         style={{ isolation: 'isolate' }}
       >
-        <sakuga-toast ref={toastRef as any} class="block" />
+        <sakuga-toast ref={toastRef} class="block" />
       </div>
 
       {/* Screen reader live region */}

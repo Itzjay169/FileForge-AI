@@ -6,7 +6,6 @@
 import { BillingService } from '../billing-service';
 import { AdminService } from '../admin-service';
 import { AccountStoreService } from '../account-store-service';
-import { PLANS } from '@fileforge/shared';
 
 let passes = 0;
 let failures = 0;

@@ -51,7 +51,7 @@ export const ForgeCheckbox: React.FC<ForgeCheckboxProps> = ({
     <div className={cn('flex items-start gap-3 py-1.5 select-none', className)}>
       <div className="shrink-0 pt-0.5">
         <sakuga-checkbox
-          ref={checkboxRef as any}
+          ref={checkboxRef}
           checked={checked ? true : undefined}
           disabled={disabled ? true : undefined}
           name={name}

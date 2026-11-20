@@ -1,6 +1,6 @@
 'use client';
 
-import { ForgeButton, ForgeInput, forgeToast, ForgeToggle } from '@/components/sakuga';
+import { ForgeButton, ForgeInput, forgeToast } from '@/components/sakuga';
 import React, { useState, useEffect } from 'react';
 import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/layout/footer';
@@ -15,7 +15,7 @@ import {
   formatBytes
 } from '@fileforge/shared';
 import {
-  User,
+  
   HardDrive,
   Coins,
   Search,
@@ -23,15 +23,11 @@ import {
   Folder,
   Share2,
   Download,
-  Trash2,
   Plus,
-  Sparkles,
   Lock,
-  QrCode,
   Copy,
   Check,
   X,
-  ExternalLink,
   Users,
   Image as ImageIcon,
   FileText,
@@ -70,33 +66,36 @@ export default function DashboardPage() {
   const [newFolderOpen, setNewFolderOpen] = useState(false);
   const [newFolderName, setNewFolderName] = useState('');
 
-  const loadData = async () => {
-    try {
-      const [pRes, sRes, fRes, fldRes, wsRes] = await Promise.all([
-        fetch('/api/user/profile').then((r) => r.json()),
-        fetch('/api/user/storage').then((r) => r.json()),
-        fetch('/api/files').then((r) => r.json()),
-        fetch('/api/files/folders').then((r) => r.json()),
-        fetch('/api/workspace').then((r) => r.json())
-      ]);
-
-      if (pRes.profile) setProfile(pRes.profile);
-      if (sRes.storage) setStorage(sRes.storage);
-      if (fRes.files) setFiles(fRes.files);
-      if (fldRes.folders) setFolders(fldRes.folders);
-      if (wsRes.workspaces) {
-        setWorkspaces(wsRes.workspaces);
-        if (wsRes.workspaces.length > 0 && !selectedWorkspace) {
-          setSelectedWorkspace(wsRes.workspaces[0].id);
-        }
-      }
-    } catch (err: any) {
-      console.error('Failed to load dashboard data:', err);
-    }
-  };
-
   useEffect(() => {
-    loadData();
+    let ignore = false;
+    async function loadDashboardData() {
+      try {
+        const [pRes, sRes, fRes, fldRes, wsRes] = await Promise.all([
+          fetch('/api/user/profile').then((r) => r.json()),
+          fetch('/api/user/storage').then((r) => r.json()),
+          fetch('/api/files').then((r) => r.json()),
+          fetch('/api/files/folders').then((r) => r.json()),
+          fetch('/api/workspace').then((r) => r.json())
+        ]);
+
+        if (!ignore) {
+          if (pRes.profile) setProfile(pRes.profile);
+          if (sRes.storage) setStorage(sRes.storage);
+          if (fRes.files) setFiles(fRes.files);
+          if (fldRes.folders) setFolders(fldRes.folders);
+          if (wsRes.workspaces) {
+            setWorkspaces(wsRes.workspaces);
+            setSelectedWorkspace((prev) => prev || (wsRes.workspaces.length > 0 ? wsRes.workspaces[0].id : null));
+          }
+        }
+      } catch (err: unknown) {
+        console.error('Failed to load dashboard data:', err);
+      }
+    }
+    loadDashboardData();
+    return () => {
+      ignore = true;
+    };
   }, []);
 
   const handleToggleFavorite = async (fileId: string) => {
@@ -112,8 +111,8 @@ export default function DashboardPage() {
           prev.map((f) => (f.id === fileId ? { ...f, isFavorite: data.isFavorite } : f))
         );
       }
-    } catch (err: any) {
-      forgeToast.error('Favorite Error', err.message);
+    } catch (err: unknown) {
+      forgeToast.error('Favorite Error', (err as Error).message);
     }
   };
 
@@ -136,8 +135,8 @@ export default function DashboardPage() {
 
       setCreatedShareLink(data.link);
       forgeToast.success('Secure Link Ready', 'Share link and QR code generated.');
-    } catch (err: any) {
-      forgeToast.error('Share Error', err.message);
+    } catch (err: unknown) {
+      forgeToast.error('Share Error', (err as Error).message);
     } finally {
       setIsCreatingLink(false);
     }
@@ -158,8 +157,8 @@ export default function DashboardPage() {
         setNewFolderOpen(false);
         forgeToast.success('Folder Created', `Folder "${data.folder.name}" added.`);
       }
-    } catch (err: any) {
-      forgeToast.error('Folder Error', err.message);
+    } catch (err: unknown) {
+      forgeToast.error('Folder Error', (err as Error).message);
     }
   };
 

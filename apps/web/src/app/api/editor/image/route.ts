@@ -81,9 +81,9 @@ export async function POST(request: NextRequest) {
     };
 
     return NextResponse.json(response);
-  } catch (err: any) {
+  } catch (err: unknown) {
     return NextResponse.json(
-      { success: false, error: { code: 'EDIT_FAILED', message: err.message || 'Image editing failed.' } },
+      { success: false, error: { code: 'EDIT_FAILED', message: (err as Error).message || 'Image editing failed.' } },
       { status: 500 }
     );
   }

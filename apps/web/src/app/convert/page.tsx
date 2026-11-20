@@ -10,14 +10,13 @@ import { ConversionQueueList } from '@/components/convert/conversion-queue-list'
 import { ConversionHistoryList } from '@/components/convert/conversion-history-list';
 import { useConversionStore } from '@/lib/stores/conversion-store';
 import { motion } from 'framer-motion';
-import { Sparkles, RefreshCw } from 'lucide-react';
+import {  RefreshCw } from 'lucide-react';
 
 export default function ConvertPage() {
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const globalOptions = useConversionStore((s) => s.globalOptions);
   const globalTargetFormat = useConversionStore((s) => s.globalTargetFormat);
-  const setItemOptions = useConversionStore((s) => s.setItemOptions);
-
+  
   return (
     <div className="relative min-h-screen bg-[var(--color-bg)] text-[var(--color-text)] overflow-x-hidden selection:bg-violet-500/30 selection:text-violet-200">
       <Navbar onOpenCommandPalette={() => setCommandPaletteOpen(true)} />

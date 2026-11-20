@@ -15,7 +15,7 @@ export async function GET() {
       updatedAt: Date.now(),
       services: statuses
     });
-  } catch (error: any) {
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    return NextResponse.json({ success: false, error: (error as Error).message }, { status: 500 });
   }
 }

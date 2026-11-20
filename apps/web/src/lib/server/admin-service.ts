@@ -9,7 +9,6 @@ import {
   ChangelogEntry,
   FeatureFlag,
   SupportTicket,
-  TicketStatus,
   TicketCategory,
   TicketPriority
 } from '@fileforge/shared';

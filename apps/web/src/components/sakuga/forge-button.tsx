@@ -14,9 +14,10 @@ export interface ForgeButtonRef {
 
 export interface ForgeButtonProps {
   children?: React.ReactNode;
-  variant?: 'primary' | 'secondary' | 'ghost' | 'danger' | 'success' | 'paper';
+  variant?: 'primary' | 'secondary' | 'ghost' | 'danger' | 'success' | 'paper' | 'default' | 'accent' | 'destructive';
   size?: 'sm' | 'md' | 'lg' | 'icon';
   loading?: boolean;
+  isLoading?: boolean;
   disabled?: boolean;
   icon?: React.ReactNode;
   fullWidth?: boolean;
@@ -24,7 +25,6 @@ export interface ForgeButtonProps {
   onClick?: (e: React.MouseEvent<HTMLElement>) => void;
   className?: string;
   ariaLabel?: string;
-  [key: string]: any;
 }
 
 export const ForgeButton = forwardRef<ForgeButtonRef, ForgeButtonProps>(
@@ -34,6 +34,7 @@ export const ForgeButton = forwardRef<ForgeButtonRef, ForgeButtonProps>(
       variant = 'primary',
       size = 'md',
       loading = false,
+      isLoading = false,
       disabled = false,
       icon,
       fullWidth = false,
@@ -46,7 +47,15 @@ export const ForgeButton = forwardRef<ForgeButtonRef, ForgeButtonProps>(
   ) => {
     const sakugaRef = useRef<SakugaButtonElement | null>(null);
     const nativeRef = useRef<HTMLButtonElement | null>(null);
-    const [isDone, setIsDone] = useState(false);
+    const [, setIsDone] = useState(false);
+
+    const actualLoading = loading || isLoading;
+    const actualVariant =
+      variant === 'default' || variant === 'accent'
+        ? 'primary'
+        : variant === 'destructive'
+        ? 'danger'
+        : variant;
 
     useImperativeHandle(ref, () => ({
       done: () => {
@@ -65,7 +74,7 @@ export const ForgeButton = forwardRef<ForgeButtonRef, ForgeButtonProps>(
       element: sakugaRef.current || nativeRef.current,
     }));
 
-    const isPrimaryOrSecondary = variant === 'primary' || variant === 'secondary';
+    const isPrimaryOrSecondary = actualVariant === 'primary' || actualVariant === 'secondary';
 
     // Size styling
     const sizeMap: Record<string, string> = {
@@ -85,7 +94,7 @@ export const ForgeButton = forwardRef<ForgeButtonRef, ForgeButtonProps>(
       success: 'bg-emerald-950/40 border-2 border-emerald-500 text-emerald-200 hover:bg-emerald-900/50 shadow-[4px_5px_0_rgba(16,185,129,0.3)]',
       paper: 'bg-[#faf9f7] text-[#09090e] border-2 border-black/10 font-bold shadow-[4px_6px_0_rgba(139,92,246,0.35)] hover:shadow-[2px_3px_0_rgba(139,92,246,0.5)]',
     };
-    const variantClasses = variantMap[variant as string] || variantMap.primary;
+    const variantClasses = variantMap[actualVariant as string] || variantMap.primary;
 
     // For primary and secondary, we can mount <sakuga-button> directly to let Sakuga's DOM and anime burst fire!
     if (isPrimaryOrSecondary) {
@@ -98,20 +107,20 @@ export const ForgeButton = forwardRef<ForgeButtonRef, ForgeButtonProps>(
           )}
         >
           <sakuga-button
-            ref={sakugaRef as any}
-            variant={variant === 'secondary' ? 'secondary' : undefined}
-            disabled={disabled || loading ? true : undefined}
+            ref={sakugaRef}
+            variant={actualVariant === 'secondary' ? 'secondary' : undefined}
+            disabled={disabled || actualLoading ? true : undefined}
             type={type}
             aria-label={ariaLabel}
-            onClick={onClick as any}
+            onClick={onClick}
             class={cn(
               'cursor-pointer select-none transition-all outline-none focus-visible:outline-[var(--sk-acc)]',
               disabled && 'opacity-50 cursor-not-allowed pointer-events-none'
             )}
           >
             <span className="inline-flex items-center justify-center gap-2 font-sans font-bold">
-              {loading && <Loader2 className="w-4 h-4 animate-spin text-[var(--sk-acc)]" />}
-              {!loading && icon && <span className="inline-flex shrink-0">{icon}</span>}
+              {actualLoading && <Loader2 className="w-4 h-4 animate-spin text-[var(--sk-acc)]" />}
+              {!actualLoading && icon && <span className="inline-flex shrink-0">{icon}</span>}
               <span>{children}</span>
             </span>
           </sakuga-button>
@@ -124,7 +133,7 @@ export const ForgeButton = forwardRef<ForgeButtonRef, ForgeButtonProps>(
       <button
         ref={nativeRef}
         type={type}
-        disabled={disabled || loading}
+        disabled={disabled || actualLoading}
         onClick={onClick}
         aria-label={ariaLabel}
         className={cn(
@@ -138,8 +147,8 @@ export const ForgeButton = forwardRef<ForgeButtonRef, ForgeButtonProps>(
           className
         )}
       >
-        {loading && <Loader2 className="w-4 h-4 animate-spin shrink-0" />}
-        {!loading && icon && <span className="shrink-0">{icon}</span>}
+        {actualLoading && <Loader2 className="w-4 h-4 animate-spin shrink-0" />}
+        {!actualLoading && icon && <span className="shrink-0">{icon}</span>}
         {children}
       </button>
     );

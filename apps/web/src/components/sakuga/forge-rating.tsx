@@ -51,7 +51,7 @@ export const ForgeRating: React.FC<ForgeRatingProps> = ({
         </span>
       )}
       <sakuga-rating
-        ref={ratingRef as any}
+        ref={ratingRef}
         label={label}
         value={value}
         disabled={disabled ? true : undefined}

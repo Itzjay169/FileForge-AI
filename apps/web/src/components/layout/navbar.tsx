@@ -13,10 +13,7 @@ import {
   Moon,
   User,
   Sparkles,
-  ArrowRight,
-  Layers,
-  Shield,
-  FileCode
+  ArrowRight
 } from 'lucide-react';
 import { ForgeButton } from '@/components/sakuga';
 import { cn } from '@/lib/utils';
@@ -28,16 +25,21 @@ export interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(true);
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    if (typeof window === 'undefined') return true;
+    return document.documentElement.classList.contains('dark') ||
+      (!document.documentElement.classList.contains('light') && localStorage.getItem('fileforge-theme') !== 'light');
+  });
   const pathname = usePathname();
 
   // Sync theme state with DOM / localStorage on mount and route change
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    const frame = requestAnimationFrame(() => {
       const isDark = document.documentElement.classList.contains('dark') ||
         (!document.documentElement.classList.contains('light') && localStorage.getItem('fileforge-theme') !== 'light');
       setIsDarkMode(isDark);
-    }
+    });
+    return () => cancelAnimationFrame(frame);
   }, [pathname]);
 
   useEffect(() => {
@@ -53,7 +55,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
     setIsDarkMode(nextMode);
     try {
       localStorage.setItem('fileforge-theme', nextMode ? 'dark' : 'light');
-    } catch (e) {}
+    } catch {
+      // ignore storage access error
+    }
     if (nextMode) {
       document.documentElement.classList.remove('light');
       document.documentElement.classList.add('dark');

@@ -16,7 +16,6 @@ export interface ForgeToggleProps {
   size?: 'sm' | 'md' | 'lg';
   ariaLabel?: string;
   className?: string;
-  [key: string]: any;
 }
 
 export const ForgeToggle: React.FC<ForgeToggleProps> = ({
@@ -62,7 +61,7 @@ export const ForgeToggle: React.FC<ForgeToggleProps> = ({
     return () => {
       el.removeEventListener('change', handleChange);
     };
-  }, [onChange]);
+  }, [checked, onChange]);
 
   return (
     <div className={cn('flex items-start justify-between gap-4 py-2 select-none', className)}>
@@ -86,7 +85,7 @@ export const ForgeToggle: React.FC<ForgeToggleProps> = ({
 
       <div className="shrink-0 pt-0.5">
         <sakuga-toggle
-          ref={toggleRef as any}
+          ref={toggleRef}
           label={ariaLabel || label}
           disabled={disabled ? true : undefined}
           name={name}

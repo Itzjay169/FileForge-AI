@@ -5,8 +5,7 @@ import JSZip from 'jszip';
 import {
   CompressionOptions,
   COMPRESSION_PRESETS,
-  JobResult,
-  CompressionPreset
+  JobResult
 } from '@fileforge/shared';
 import { fileRegistry } from '@fileforge/file-registry';
 
@@ -329,12 +328,13 @@ export class CompressionEngine {
         }
       }
 
-      // Generate with maximum compression
+      // Generate with maximum compression based on options
+      const level = options.strength === 'LOW' ? 1 : options.strength === 'BALANCED' ? 6 : 9;
       const repacked = await repackedZip.generateAsync({
         type: 'nodebuffer',
         compression: 'DEFLATE',
         compressionOptions: {
-          level: 9
+          level
         }
       });
 
@@ -356,9 +356,12 @@ export class CompressionEngine {
     if (ext === 'pdf') {
       // Strip unneeded trailer metadata comments and optimize stream markers
       const text = buffer.toString('binary');
-      const sanitized = text
-        .replace(/\/Producer\s*\([^)]*\)/g, '/Producer (FileForge AI)')
-        .replace(/\/Creator\s*\([^)]*\)/g, '/Creator (FileForge AI)');
+      let sanitized = text;
+      if (options.stripMetadata) {
+        sanitized = text
+          .replace(/\/Producer\s*\([^)]*\)/g, '/Producer (FileForge AI)')
+          .replace(/\/Creator\s*\([^)]*\)/g, '/Creator (FileForge AI)');
+      }
 
       return {
         buffer: Buffer.from(sanitized, 'binary'),
@@ -378,6 +381,9 @@ export class CompressionEngine {
     options: CompressionOptions
   ): Promise<{ buffer: Buffer; extension: string }> {
     // If target requires web packaging
+    if (options.strength === 'EXTREME' && buffer.length > 0) {
+      return { buffer, extension: ext };
+    }
     return { buffer, extension: ext };
   }
 }

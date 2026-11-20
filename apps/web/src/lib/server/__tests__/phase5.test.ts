@@ -167,8 +167,8 @@ async function runPhase5Tests() {
   let blockedUnauthorized = false;
   try {
     await watermarkTransparencyEngine.removeWatermarkVerified(baseImage, 'original-photo.png', petition);
-  } catch (err: any) {
-    if (err.message.includes('UNAUTHORIZED_WATERMARK_REMOVAL_DENIED')) {
+  } catch (err: unknown) {
+    if ((err as Error).message.includes('UNAUTHORIZED_WATERMARK_REMOVAL_DENIED')) {
       blockedUnauthorized = true;
     }
   }
@@ -179,8 +179,8 @@ async function runPhase5Tests() {
   try {
     const invalidPetition = { ...petition, status: 'APPROVED' as const, legalDeclarationSigned: false };
     await watermarkTransparencyEngine.removeWatermarkVerified(baseImage, 'original-photo.png', invalidPetition);
-  } catch (err: any) {
-    if (err.message.includes('LEGAL_DECLARATION_REQUIRED')) {
+  } catch (err: unknown) {
+    if ((err as Error).message.includes('LEGAL_DECLARATION_REQUIRED')) {
       blockedNoDeclaration = true;
     }
   }

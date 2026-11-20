@@ -21,7 +21,7 @@ export async function POST(req: NextRequest, context: RouteContext) {
       downloadUrl: downloadInfo.downloadUrl,
       fileName: downloadInfo.fileName
     });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 400 });
+  } catch (err: unknown) {
+    return NextResponse.json({ error: (err as Error).message }, { status: 400 });
   }
 }

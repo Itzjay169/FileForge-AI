@@ -1,7 +1,6 @@
 import crypto from 'crypto';
 import {
   OwnershipVerificationRequest,
-  OwnershipReasonCode,
   OwnershipRequestStatus,
   AbuseReport,
   WatermarkAuditRecord

@@ -59,9 +59,10 @@ export async function POST(request: NextRequest) {
           'User-Agent': 'FileForge-AI-Bot/1.0 (+https://fileforge.ai)'
         }
       });
-    } catch (fetchErr: any) {
+    } catch (fetchErr: unknown) {
       clearTimeout(timeout);
-      if (fetchErr.name === 'AbortError') {
+      const errorObj = fetchErr as Error;
+      if (errorObj?.name === 'AbortError') {
         return NextResponse.json(
           {
             success: false,
@@ -78,7 +79,7 @@ export async function POST(request: NextRequest) {
           success: false,
           error: {
             code: 'FETCH_FAILED',
-            message: `Failed to connect to remote host: ${fetchErr.message}`
+            message: `Failed to connect to remote host: ${errorObj?.message || 'Connection error'}`
           }
         },
         { status: 502 }
@@ -183,13 +184,13 @@ export async function POST(request: NextRequest) {
     };
 
     return NextResponse.json(response, { status: 201 });
-  } catch (err: any) {
+  } catch (err: unknown) {
     return NextResponse.json(
       {
         success: false,
         error: {
           code: 'IMPORT_ERROR',
-          message: err.message || 'An unexpected error occurred during URL import.'
+          message: (err as Error).message || 'An unexpected error occurred during URL import.'
         }
       },
       { status: 500 }

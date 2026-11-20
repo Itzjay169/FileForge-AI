@@ -1,6 +1,6 @@
 import sharp from 'sharp';
 import crypto from 'crypto';
-import { ImageEditOptions, JobResult } from '@fileforge/shared';
+import { ImageEditOptions } from '@fileforge/shared';
 
 export interface ImageEditResult {
   buffer: Buffer;
@@ -36,7 +36,7 @@ export class ImageEditorEngine {
     let pipeline = sharp(buffer, { failOn: 'none' });
 
     // 1. Initial metadata inspection
-    let meta = await pipeline.metadata();
+    const meta = await pipeline.metadata();
     let currentWidth = meta.width || 800;
     let currentHeight = meta.height || 600;
 

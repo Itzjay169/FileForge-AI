@@ -58,10 +58,10 @@ export async function POST(req: NextRequest) {
       url: downloadUrl,
       auditRecordId: result.auditRecordId
     });
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error('Verified Removal Execution API error:', err);
     return NextResponse.json(
-      { error: err.message || 'Watermark removal execution failed' },
+      { error: (err as Error).message || 'Watermark removal execution failed' },
       { status: 500 }
     );
   }

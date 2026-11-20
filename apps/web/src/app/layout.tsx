@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import { Plus_Jakarta_Sans, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import { ForgeToaster } from '@/components/ui/sakuga-toast';
@@ -70,25 +71,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark scroll-smooth" suppressHydrationWarning>
-      <head>
-        <script
+      <body
+        className={`${sansFont.variable} ${monoFont.variable} font-sans bg-[var(--color-bg)] text-[var(--color-text)] min-h-screen antialiased selection:bg-pink-500/25 selection:text-pink-300`}
+        suppressHydrationWarning
+      >
+        <Script
+          id="theme-initializer"
+          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
-            __html: `(function(){
-              try {
-                var t = localStorage.getItem('fileforge-theme') || 'dark';
-                if (t === 'light') {
-                  document.documentElement.classList.remove('dark');
-                  document.documentElement.classList.add('light');
-                } else {
-                  document.documentElement.classList.remove('light');
-                  document.documentElement.classList.add('dark');
-                }
-              } catch(e) {}
-            })();`,
+            __html: `try{var t=localStorage.getItem('fileforge-theme')||'dark';if(t==='light'){document.documentElement.classList.remove('dark');document.documentElement.classList.add('light');}}catch(e){}`,
           }}
         />
-      </head>
-      <body className={`${sansFont.variable} ${monoFont.variable} font-sans bg-[var(--color-bg)] text-[var(--color-text)] min-h-screen antialiased selection:bg-pink-500/25 selection:text-pink-300`}>
         <SakugaProvider>
           <ForgeToastProvider>
             {children}

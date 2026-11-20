@@ -8,7 +8,7 @@ export async function GET(req: NextRequest) {
 
     const breakdown = AdminService.getInstance().getRevenueBreakdown(periods);
     return NextResponse.json({ success: true, periods: breakdown });
-  } catch (error: any) {
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    return NextResponse.json({ success: false, error: (error as Error).message }, { status: 500 });
   }
 }

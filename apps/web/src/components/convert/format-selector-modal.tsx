@@ -6,8 +6,7 @@ import {
   Search,
   X,
   FileCheck,
-  AlertTriangle,
-  Sparkles
+  AlertTriangle
 } from 'lucide-react';
 import { fileRegistry } from '@fileforge/file-registry';
 import { conversionMatrix } from '@/lib/server/conversion-matrix';

@@ -2,23 +2,15 @@
 
 import { ForgeButton, ForgeInput, ForgeSlider, forgeToast, ForgeToggle } from '@/components/sakuga';
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import {
   Stamp,
   Sparkles,
   ShieldCheck,
   ShieldAlert,
-  AlertTriangle,
   Lock,
-  Sliders,
-  Check,
-  Send,
-  HelpCircle,
-  FileText
+  Check
 } from 'lucide-react';
 import {
-  WatermarkApplyOptions,
-  AiDisclosureOptions,
   OwnershipReasonCode,
   WatermarkPosition,
   AiDisclosureTier
@@ -26,7 +18,7 @@ import {
 export interface WatermarkStudioCardProps {
   file: File | null;
   fileHash?: string;
-  onOperationComplete?: (result: any) => void;
+  onOperationComplete?: (result: unknown) => void;
 }
 
 export const WatermarkStudioCard: React.FC<WatermarkStudioCardProps> = ({
@@ -41,7 +33,7 @@ export const WatermarkStudioCard: React.FC<WatermarkStudioCardProps> = ({
   const [watermarkText, setWatermarkText] = useState('FILEFORGE AI • VERIFIED');
   const [watermarkPos, setWatermarkPos] = useState<WatermarkPosition>('center');
   const [watermarkOpacity, setWatermarkOpacity] = useState(45);
-  const [watermarkRotation, setWatermarkRotation] = useState(-25);
+  const [watermarkRotation] = useState(-25);
 
   // Tab 2: AI Content Disclosure state
   const [disclosureTier, setDisclosureTier] = useState<AiDisclosureTier>('FULLY_AI_GENERATED');
@@ -91,8 +83,8 @@ export const WatermarkStudioCard: React.FC<WatermarkStudioCardProps> = ({
 
       forgeToast.success('Watermark Applied', `Saved as "${data.filename}"`);
       if (onOperationComplete) onOperationComplete(data);
-    } catch (err: any) {
-      forgeToast.error('Watermark Error', err.message);
+    } catch (err: unknown) {
+      forgeToast.error('Watermark Error', (err as Error).message);
     } finally {
       setIsProcessing(false);
     }
@@ -131,8 +123,8 @@ export const WatermarkStudioCard: React.FC<WatermarkStudioCardProps> = ({
 
       forgeToast.success('AI Disclosure Embedded', `Saved as "${data.filename}"`);
       if (onOperationComplete) onOperationComplete(data);
-    } catch (err: any) {
-      forgeToast.error('Disclosure Error', err.message);
+    } catch (err: unknown) {
+      forgeToast.error('Disclosure Error', (err as Error).message);
     } finally {
       setIsProcessing(false);
     }
@@ -193,8 +185,8 @@ export const WatermarkStudioCard: React.FC<WatermarkStudioCardProps> = ({
 
       setSubmittedRequestId(data.request.id);
       forgeToast.success('Verification Request Queued', 'Request submitted for compliance review.');
-    } catch (err: any) {
-      forgeToast.error('Verification Error', err.message);
+    } catch (err: unknown) {
+      forgeToast.error('Verification Error', (err as Error).message);
     } finally {
       setIsProcessing(false);
     }

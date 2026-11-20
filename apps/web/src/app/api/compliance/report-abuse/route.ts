@@ -29,8 +29,8 @@ export async function POST(req: NextRequest) {
       },
       { status: 201 }
     );
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error('Abuse Report API error:', err);
-    return NextResponse.json({ error: err.message || 'Report submission failed' }, { status: 500 });
+    return NextResponse.json({ error: (err as Error).message || 'Report submission failed' }, { status: 500 });
   }
 }

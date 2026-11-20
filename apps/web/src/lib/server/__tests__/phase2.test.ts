@@ -3,6 +3,7 @@ import { validateFileBuffer } from '../file-validator';
 import { storageService } from '../storage-service';
 import { compressionEngine } from '../compression-engine';
 import sharp from 'sharp';
+import JSZip from 'jszip';
 
 async function runTests() {
   console.log('⚡ Starting Phase 2 Engine & Security Test Suite...\n');
@@ -26,35 +27,35 @@ async function runTests() {
   try {
     const loopback = await validateUrlForSsrf('http://127.0.0.1:8080/secret');
     assert(!loopback.isValid, 'Blocks 127.0.0.1 loopback access');
-  } catch (e: any) {
+  } catch {
     assert(true, 'Blocks loopback access via exception');
   }
 
   try {
     const awsMetadata = await validateUrlForSsrf('http://169.254.169.254/latest/meta-data/');
     assert(!awsMetadata.isValid, 'Blocks AWS/Cloud metadata IP (169.254.169.254)');
-  } catch (e: any) {
+  } catch {
     assert(true, 'Blocks AWS metadata IP via exception');
   }
 
   try {
     const privateIp = await validateUrlForSsrf('http://192.168.1.1/admin');
     assert(!privateIp.isValid, 'Blocks private subnet 192.168.x.x');
-  } catch (e: any) {
+  } catch {
     assert(true, 'Blocks 192.168.x.x');
   }
 
   try {
     const localhost = await validateUrlForSsrf('http://localhost:3000');
     assert(!localhost.isValid, 'Blocks localhost domain');
-  } catch (e: any) {
+  } catch {
     assert(true, 'Blocks localhost domain');
   }
 
   try {
     const badScheme = await validateUrlForSsrf('file:///etc/passwd');
     assert(!badScheme.isValid, 'Rejects non-HTTP(S) scheme file://');
-  } catch (e: any) {
+  } catch {
     assert(true, 'Rejects file://');
   }
 
@@ -187,7 +188,7 @@ async function runTests() {
     { name: 'file1.txt', content: 'Sample text content '.repeat(50) },
     { name: 'file2.json', content: JSON.stringify({ item: 'forge', count: 42 }) }
   ];
-  const zip = new (require('jszip'))();
+  const zip = new JSZip();
   testFilesToArchive.forEach(f => zip.file(f.name, f.content));
   const sampleZipBuffer = await zip.generateAsync({ type: 'nodebuffer', compression: 'STORE' });
 

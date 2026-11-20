@@ -108,8 +108,8 @@ async function runPhase6Tests() {
   let failedWrongPass = false;
   try {
     shareService.getShareLink(protectedLink.code, 'WrongPassword!');
-  } catch (err: any) {
-    if (err.message.includes('INVALID_PASSWORD')) {
+  } catch (err: unknown) {
+    if ((err as Error).message.includes('INVALID_PASSWORD')) {
       failedWrongPass = true;
     }
   }
@@ -130,8 +130,8 @@ async function runPhase6Tests() {
   let downloadCeilingExceeded = false;
   try {
     shareService.authorizeDownload(protectedLink.code, 'SecretForge2026');
-  } catch (err: any) {
-    if (err.message.includes('DOWNLOAD_LIMIT_REACHED')) {
+  } catch (err: unknown) {
+    if ((err as Error).message.includes('DOWNLOAD_LIMIT_REACHED')) {
       downloadCeilingExceeded = true;
     }
   }
@@ -170,8 +170,8 @@ async function runPhase6Tests() {
       'ADMIN',
       invitedViewer.userId // VIEWER trying to invite an ADMIN
     );
-  } catch (err: any) {
-    if (err.message.includes('FORBIDDEN_INVITE')) {
+  } catch (err: unknown) {
+    if ((err as Error).message.includes('FORBIDDEN_INVITE')) {
       rbacBlocked = true;
     }
   }

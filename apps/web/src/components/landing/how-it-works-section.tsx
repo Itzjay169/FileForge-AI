@@ -1,10 +1,8 @@
 'use client';
 
 import React from 'react';
-import { motion } from 'framer-motion';
-import { UploadCloud, Sliders, Download, Sparkles, CheckCircle2, ArrowRight, Layers, Flame } from 'lucide-react';
+import { UploadCloud, Sliders, Download, CheckCircle2, Flame } from 'lucide-react';
 import { ScrollReveal } from '@/components/ui/scroll-reveal';
-import { ForgeTooltip } from '@/components/sakuga';
 
 export const HowItWorksSection: React.FC = () => {
   const steps = [

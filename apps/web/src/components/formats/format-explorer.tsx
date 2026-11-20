@@ -19,11 +19,7 @@ import {
   Check,
   AlertTriangle,
   ArrowRight,
-  ShieldAlert,
   Zap,
-  Info,
-  Sliders,
-  ExternalLink,
   ChevronRight
 } from 'lucide-react';
 import { fileRegistry } from '@fileforge/file-registry';
@@ -127,7 +123,7 @@ export const FormatExplorer: React.FC<{ initialCategory?: string }> = ({ initial
         <ForgeInput
           placeholder="Search by extension (e.g. '.heic', '.mkv', '.docx', '.psd', '.7z', '.glb', '.ttf') or format name..."
           value={search}
-          onChange={(val) => setSearch(val)}
+          onChange={(e) => setSearch(e.target.value)}
           type="search"
           leadingIcon={<Search className="w-4 h-4" />}
         />

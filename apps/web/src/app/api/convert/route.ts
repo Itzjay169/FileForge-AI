@@ -150,7 +150,7 @@ export async function POST(request: NextRequest) {
     const signedDownloadUrl = storageService.generateSignedDownloadUrl(savedOutput.storageKey, 3600 * 24);
     result.outputFileUrl = signedDownloadUrl;
 
-    const response: ApiResponse<JobResult & { storageKey: string; route: any }> = {
+    const response: ApiResponse<JobResult & { storageKey: string; route: unknown }> = {
       success: true,
       data: {
         ...result,
@@ -165,13 +165,13 @@ export async function POST(request: NextRequest) {
     };
 
     return NextResponse.json(response, { status: 200 });
-  } catch (err: any) {
+  } catch (err: unknown) {
     return NextResponse.json(
       {
         success: false,
         error: {
           code: 'CONVERSION_FAILED',
-          message: err.message || 'An error occurred during file conversion.'
+          message: (err as Error).message || 'An error occurred during file conversion.'
         }
       },
       { status: 500 }

@@ -1,5 +1,4 @@
 import crypto from 'crypto';
-import zlib from 'zlib';
 import { PdfToolOptions } from '@fileforge/shared';
 
 export interface PdfToolResult {
@@ -252,7 +251,6 @@ export class PdfStudioEngine {
   // --------------------------------------------------------------------------
   public extractImages(buffer: Buffer): Array<{ name: string; buffer: Buffer; format: string }> {
     const images: Array<{ name: string; buffer: Buffer; format: string }> = [];
-    const pdfStr = buffer.toString('latin1');
 
     // Look for embedded JPEG images with SOI marker \xFF\xD8\xFF
     let searchIndex = 0;

@@ -1,26 +1,16 @@
 'use client';
 
 import React from 'react';
-import { motion } from 'framer-motion';
 import {
   Zap,
   RefreshCw,
   Eye,
-  ShieldCheck,
   Sparkles,
-  Users,
-  Lock,
-  Layers,
   Fingerprint,
-  Cpu,
-  Flame,
   ArrowUpRight,
-  TrendingDown,
-  Clock,
-  SlidersHorizontal
+  Clock
 } from 'lucide-react';
-import { ScrollReveal } from '@/components/ui/scroll-reveal';
-import { ForgeButton, ForgeTooltip } from '@/components/sakuga';
+import { ForgeButton } from '@/components/sakuga';
 import Link from 'next/link';
 
 export const FeaturesSection: React.FC = () => {
