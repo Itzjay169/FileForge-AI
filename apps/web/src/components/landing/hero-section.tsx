@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -15,13 +16,15 @@ import {
   Archive,
   Layers,
   CheckCircle2,
-  Sliders,
   TrendingDown,
-  ShieldCheck
+  ShieldCheck,
+  Cpu,
+  Flame,
+  HelpCircle,
+  Link2
 } from 'lucide-react';
-import { ForgeButton } from '@/components/sakuga';
+import { ForgeButton, ForgeInput, ForgeToggle, ForgeTooltip, forgeToast } from '@/components/sakuga';
 import { useReducedMotion } from '@/lib/hooks';
-import { springs } from '@/lib/motion';
 
 interface ActiveFileDemo {
   id: string;
@@ -31,7 +34,6 @@ interface ActiveFileDemo {
   originalSize: string;
   optimizedSize: string;
   savings: string;
-  progress: number;
   stage: string;
   details: string;
 }
@@ -45,9 +47,8 @@ const DEMO_FILES: ActiveFileDemo[] = [
     originalSize: '48.0 MB',
     optimizedSize: '8.2 MB',
     savings: '-82.9%',
-    progress: 100,
-    stage: 'Web-Optimized AV1 Stream',
-    details: '1920x1080 • 60fps • 2,400 kbps'
+    stage: 'AV1 Hardware Stream',
+    details: '1920x1080 • 60fps • Constant Rate Factor'
   },
   {
     id: 'f2',
@@ -57,9 +58,8 @@ const DEMO_FILES: ActiveFileDemo[] = [
     originalSize: '28.4 MB',
     optimizedSize: '2.1 MB',
     savings: '-92.6%',
-    progress: 100,
     stage: 'Lossless WebP Quantized',
-    details: '6000x4000 • 300 DPI • ICC sRGB'
+    details: '6000x4000 • 300 DPI • ICC Profile Intact'
   },
   {
     id: 'f3',
@@ -69,21 +69,19 @@ const DEMO_FILES: ActiveFileDemo[] = [
     originalSize: '64.2 MB',
     optimizedSize: '6.8 MB',
     savings: '-89.4%',
-    progress: 100,
-    stage: 'Linearized & OCR Streamed',
-    details: '48 Pages • PDF/X-1a • Encrypted'
+    stage: 'Linearized Fast Web Stream',
+    details: '48 Pages • PDF/X-1a Standard'
   },
   {
     id: 'f4',
-    name: 'annual-financial-audit.docx',
-    format: 'DOCX',
-    category: 'Document',
-    originalSize: '18.6 MB',
-    optimizedSize: '2.4 MB',
-    savings: '-87.1%',
-    progress: 100,
-    stage: 'Deflated XML & Embedded Assets',
-    details: 'Clean Formatting • Zero Loss'
+    name: 'studio-soundtrack-stem.wav',
+    format: 'WAV',
+    category: 'Audio',
+    originalSize: '124.0 MB',
+    optimizedSize: '22.4 MB',
+    savings: '-81.9%',
+    stage: 'Opus 320k Lossless Container',
+    details: '48kHz 24-Bit Stereo Master'
   },
   {
     id: 'f5',
@@ -93,8 +91,7 @@ const DEMO_FILES: ActiveFileDemo[] = [
     originalSize: '890.0 MB',
     optimizedSize: '245.0 MB',
     savings: '-72.5%',
-    progress: 100,
-    stage: 'High-Ratio Deflate64 Recompressed',
+    stage: 'Deflate64 Multi-Stream Recompressed',
     details: '142 Files • Solid Container'
   }
 ];
@@ -107,6 +104,8 @@ const TICKER_FORMATS = [
 export const HeroSection: React.FC = () => {
   const prefersReducedMotion = useReducedMotion();
   const [activeFileIndex, setActiveFileIndex] = useState(0);
+  const [urlInput, setUrlInput] = useState('');
+  const [gpuBoost, setGpuBoost] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
@@ -118,255 +117,287 @@ export const HeroSection: React.FC = () => {
 
   const currentFile = DEMO_FILES[activeFileIndex];
 
+  const handleUrlFetch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!urlInput.trim()) {
+      forgeToast.warning('URL Required', 'Please enter a valid media or cloud asset URL');
+      return;
+    }
+    forgeToast.info('Asset Ingestion Initiated', `Connecting to ${urlInput.slice(0, 30)}...`);
+    setTimeout(() => {
+      forgeToast.success('Source Asset Mounted', 'Ready in Studio workspace for optimization');
+      router.push('/studio');
+    }, 1200);
+  };
+
+  // Spring transition definition for anime staged slam-in
+  const slamSpring = prefersReducedMotion
+    ? { duration: 0.2 }
+    : { type: 'spring', stiffness: 380, damping: 22, mass: 0.9 };
+
   return (
-    <section className="relative min-h-[96vh] flex flex-col items-center justify-center pt-32 pb-20 overflow-hidden bg-[#09090e]">
-      {/* Cinematic Studio Lighting: Deep Indigo & Charcoal Ambient Atmosphere */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[750px] bg-gradient-to-tr from-violet-900/20 via-purple-800/15 to-pink-600/10 rounded-full blur-[160px] pointer-events-none" />
-      <div className="absolute top-1/3 -right-32 w-[450px] h-[450px] bg-pink-600/10 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-16 -left-32 w-[500px] h-[500px] bg-violet-600/10 rounded-full blur-[140px] pointer-events-none" />
+    <section className="relative min-h-[96vh] flex flex-col justify-center pt-28 pb-20 overflow-hidden bg-[var(--sk-bg)]">
+      {/* Background Manga Speedline Grids & Film Lighting */}
+      <div className="absolute inset-0 pointer-events-none opacity-[0.035] bg-[radial-gradient(#6d5ae0_1px,transparent_1px)] [background-size:24px_24px]" />
+      
+      {/* Diagonal Speedline Streaks */}
+      <div 
+        className="absolute inset-0 pointer-events-none opacity-[0.03]"
+        style={{
+          backgroundImage: 'repeating-linear-gradient(45deg, #a78bfa 0, #a78bfa 1px, transparent 0, transparent 40px)'
+        }}
+      />
 
-      {/* Subtle Moving Violet Energy Lines & Ambient Particles */}
-      {!prefersReducedMotion && (
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-violet-500/15 to-transparent" />
-          <div className="absolute top-0 right-1/4 w-px h-full bg-gradient-to-b from-transparent via-pink-500/15 to-transparent" />
-          {[...Array(8)].map((_, i) => (
+      {/* Atmospheric Glow Spheres */}
+      <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-violet-600/15 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-pink-500/15 rounded-full blur-[140px] pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+        {/* Asymmetric Manga Panel Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+          
+          {/* Left Column: Hand-Crafted Studio Typography & Controls (7 Cols) */}
+          <div className="lg:col-span-7 flex flex-col items-start text-left">
+            
+            {/* Manga Scene Tag & Live Telemetry */}
             <motion.div
-              key={i}
-              className="absolute rounded-full bg-violet-300"
-              style={{
-                width: i % 2 === 0 ? '3px' : '2px',
-                height: i % 2 === 0 ? '3px' : '2px',
-                top: `${12 + (i * 11) % 76}%`,
-                left: `${8 + (i * 13) % 84}%`,
-                boxShadow: i % 2 === 0 ? '0 0 10px #ec4899' : '0 0 10px #8b5cf6'
-              }}
-              animate={{
-                y: [0, -35, 0],
-                opacity: [0.15, 0.85, 0.15],
-                scale: [0.7, 1.4, 0.7]
-              }}
-              transition={{
-                duration: 3.5 + i * 0.8,
-                repeat: Infinity,
-                ease: 'easeInOut'
-              }}
-            />
-          ))}
-        </div>
-      )}
+              initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.85, y: -20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={slamSpring}
+              className="inline-flex items-center gap-3 px-3.5 py-1.5 rounded-none border-2 border-[var(--sk-line)] bg-[var(--sk-surface)] shadow-[4px_4px_0_rgba(109,90,224,0.4)] mb-8"
+            >
+              <span className="w-2.5 h-2.5 bg-[var(--sk-acc)] animate-ping" />
+              <span className="text-xs font-mono font-black tracking-widest text-[var(--sk-text)] uppercase">
+                [SCENE 01 // PRODUCTION DISPATCH]
+              </span>
+              <span className="text-[10px] font-mono font-semibold px-2 py-0.5 bg-[var(--sk-pri)] text-black">
+                LATENCY: 0.0s
+              </span>
+            </motion.div>
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center flex flex-col items-center">
-        {/* Studio Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-          className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-violet-950/40 border border-violet-500/30 backdrop-blur-xl mb-8 shadow-sm"
-        >
-          <span className="w-2 h-2 rounded-full bg-pink-500 animate-ping" />
-          <span className="text-xs font-semibold tracking-wide text-violet-200">
-            Next-Gen Cinematic Creative File Studio • Zero Generic SaaS Vibes
-          </span>
-        </motion.div>
+            {/* Confident Asymmetric Display Headline */}
+            <motion.h1
+              initial={prefersReducedMotion ? false : { opacity: 0, x: -40, scale: 0.95 }}
+              animate={{ opacity: 1, x: 0, scale: 1 }}
+              transition={{ ...slamSpring, delay: 0.1 }}
+              className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tighter text-white uppercase leading-[0.96] mb-6 font-sans"
+            >
+              EVERY FILE. <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-pink-400 to-amber-300 drop-shadow-[0_4px_20px_rgba(255,95,162,0.4)]">
+                CRUSHED & FORGED.
+              </span>
+            </motion.h1>
 
-        {/* Hero Headline */}
-        <motion.h1
-          initial={{ opacity: 0, y: 22 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.06] mb-6 font-sans max-w-4xl"
-        >
-          Every file. <br />
-          <span className="text-gradient-sakuga drop-shadow-sm">
-            One creative studio.
-          </span>
-        </motion.h1>
+            {/* Editorial Subheadline */}
+            <motion.p
+              initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ ...slamSpring, delay: 0.2 }}
+              className="text-base sm:text-xl text-[var(--sk-text-muted)] max-w-xl leading-relaxed mb-8 font-sans font-medium"
+            >
+              Anime-responsive creative file studio. Decimate file weight up to 90%, cross-transcode across 200+ format pairs, and automate pipelines with physics-grade spring dynamics.
+            </motion.p>
 
-        {/* Hero Subheadline */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-base sm:text-xl text-[#9aa1b2] max-w-2xl mx-auto leading-relaxed mb-10 font-sans"
-        >
-          Compress, convert, optimize, preview, organize, and share files with precision.
-        </motion.p>
+            {/* Rapid URL Intake Form Using ForgeInput and ForgeButton */}
+            <motion.form
+              onSubmit={handleUrlFetch}
+              initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ ...slamSpring, delay: 0.25 }}
+              className="w-full max-w-lg mb-8 p-3 rounded-2xl bg-[var(--sk-surface)] border-2 border-[var(--sk-line)] shadow-[4px_6px_0_rgba(109,90,224,0.35)] flex flex-col sm:flex-row gap-2.5 items-stretch"
+            >
+              <div className="flex-1">
+                <ForgeInput
+                  placeholder="Paste Figma, Drive, or raw media URL..."
+                  value={urlInput}
+                  onChange={(e) => setUrlInput(e.target.value)}
+                  className="w-full text-xs"
+                />
+              </div>
+              <ForgeButton type="submit" variant="primary" size="sm" className="whitespace-nowrap shrink-0">
+                <Link2 className="w-3.5 h-3.5 mr-1" />
+                <span>Fetch & Forge</span>
+              </ForgeButton>
+            </motion.form>
 
-        {/* CTA Buttons Row */}
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="flex flex-wrap items-center justify-center gap-4 mb-14"
-        >
-          <Link href="/studio">
-            <ForgeButton variant="primary" size="lg" className="px-8 shadow-2xl">
-              <Zap className="w-4 h-4 text-[var(--sk-acc)] fill-[var(--sk-acc)]" />
-              <span>Start Compressing</span>
-            </ForgeButton>
-          </Link>
+            {/* Primary Action Buttons */}
+            <motion.div
+              initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ ...slamSpring, delay: 0.3 }}
+              className="flex flex-wrap items-center gap-4 mb-10"
+            >
+              <Link href="/studio">
+                <ForgeButton variant="primary" size="lg" className="px-8 text-base shadow-[4px_6px_0_rgba(255,95,162,0.4)]">
+                  <Zap className="w-4 h-4 fill-current mr-2" />
+                  <span>Launch File Studio</span>
+                </ForgeButton>
+              </Link>
 
-          <Link href="/formats">
-            <ForgeButton variant="secondary" size="lg" className="px-7">
-              <span>Explore Formats</span>
-              <ArrowRight className="w-4 h-4 text-[var(--sk-acc)]" />
-            </ForgeButton>
-          </Link>
-        </motion.div>
+              <Link href="/formats">
+                <ForgeButton variant="secondary" size="lg" className="px-7 text-base shadow-[4px_6px_0_rgba(109,90,224,0.3)]">
+                  <span>Explore 200+ Codecs</span>
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </ForgeButton>
+              </Link>
+            </motion.div>
 
-        {/* Cinematic Live-Looking File Transformation Showcase Card */}
-        <motion.div
-          initial={{ opacity: 0, y: 25, scale: 0.98 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="w-full max-w-3xl rounded-3xl p-6 sm:p-8 bg-[#12121c]/95 border border-white/15 backdrop-blur-2xl shadow-2xl shadow-violet-950/60 relative overflow-hidden text-left"
-        >
-          {/* Top Card Bar: Selector Pills */}
-          <div className="flex flex-wrap items-center justify-between gap-3 pb-5 border-b border-white/10">
-            <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0">
-              {DEMO_FILES.map((file, idx) => {
-                const isActive = idx === activeFileIndex;
-                return (
-                  <button
-                    key={file.id}
-                    onClick={() => setActiveFileIndex(idx)}
-                    className={`px-3 py-1.5 rounded-xl font-mono text-xs font-bold transition-all ${
-                      isActive
-                        ? 'bg-gradient-to-r from-violet-600 to-pink-600 text-white shadow-lg shadow-violet-900/50 scale-105'
-                        : 'bg-white/5 text-gray-400 hover:text-white hover:bg-white/10'
-                    }`}
-                  >
-                    .{file.format}
-                  </button>
-                );
-              })}
-            </div>
-
-            <div className="flex items-center gap-2 text-xs font-mono text-emerald-400 font-semibold shrink-0">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>LIVE TRANSFORM ENGINE</span>
-            </div>
+            {/* Physical Stamp Highlights */}
+            <motion.div
+              initial={prefersReducedMotion ? false : { opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4 }}
+              className="flex flex-wrap items-center gap-5 text-xs font-mono font-bold text-[var(--sk-text-muted)]"
+            >
+              <span className="flex items-center gap-1.5 text-emerald-400">
+                <ShieldCheck className="w-4 h-4" />
+                2 GB FREE UPLOADS
+              </span>
+              <span>•</span>
+              <span className="flex items-center gap-1.5 text-violet-300">
+                <Flame className="w-4 h-4 text-pink-400" />
+                C2PA PROVENANCE VERIFIED
+              </span>
+              <span>•</span>
+              <span className="text-amber-300">
+                24H AUTO-SHRED GUARANTEE
+              </span>
+            </motion.div>
           </div>
 
-          {/* Active File Stage Presentation */}
-          <AnimatePresence mode="wait">
+          {/* Right Column: Tilted Manuscript Console with User's Uploaded Icon Emblem (5 Cols) */}
+          <div className="lg:col-span-5 relative">
             <motion.div
-              key={currentFile.id}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.25 }}
-              className="mt-6 space-y-6"
+              initial={prefersReducedMotion ? false : { opacity: 0, rotate: 3, scale: 0.9, y: 40 }}
+              animate={{ opacity: 1, rotate: 1.5, scale: 1, y: 0 }}
+              whileHover={prefersReducedMotion ? {} : { rotate: 0, scale: 1.02 }}
+              transition={{ ...slamSpring, delay: 0.2 }}
+              className="relative p-6 sm:p-7 rounded-3xl bg-[var(--sk-card)] border-2 border-[var(--sk-line)] shadow-[8px_10px_0_rgba(109,90,224,0.45)] backdrop-blur-2xl overflow-hidden"
             >
-              {/* File Title and Category */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                <div>
-                  <h3 className="text-base sm:text-lg font-bold text-white font-mono flex items-center gap-2.5">
-                    {currentFile.format === 'MP4' && <Video className="w-5 h-5 text-pink-400" />}
-                    {currentFile.format === 'JPG' && <ImageIcon className="w-5 h-5 text-violet-400" />}
-                    {currentFile.format === 'PDF' && <FileText className="w-5 h-5 text-amber-400" />}
-                    {currentFile.format === 'DOCX' && <FileText className="w-5 h-5 text-blue-400" />}
-                    {currentFile.format === 'ZIP' && <Archive className="w-5 h-5 text-emerald-400" />}
-                    {currentFile.name}
-                  </h3>
-                  <div className="text-xs text-gray-400 font-mono mt-1 flex items-center gap-2">
-                    <span className="px-2 py-0.5 rounded bg-white/5 text-violet-300 font-semibold">
-                      {currentFile.category}
-                    </span>
-                    <span>•</span>
-                    <span>{currentFile.details}</span>
-                  </div>
-                </div>
-
-                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 font-mono font-bold text-sm shadow-sm shrink-0">
-                  <TrendingDown className="w-4 h-4 text-emerald-400" />
-                  <span>{currentFile.savings}</span>
-                </div>
+              {/* Corner Manga Tag */}
+              <div className="absolute top-0 right-0 bg-[var(--sk-acc)] text-black font-mono font-black text-[10px] px-3 py-1 uppercase tracking-wider transform translate-x-1 -translate-y-0 shadow-md">
+                FORGE_CORE // V2.4
               </div>
 
-              {/* Animated Before vs After Size Meter */}
-              <div className="p-4 sm:p-5 rounded-2xl bg-black/40 border border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div className="flex items-center gap-6">
-                  <div>
-                    <div className="text-[10px] uppercase font-bold text-gray-500 font-mono">Original</div>
-                    <div className="text-lg font-mono font-bold text-gray-400 line-through decoration-rose-500/80">
-                      {currentFile.originalSize}
-                    </div>
+              {/* Central Graphic Showcase: Featured Uploaded App Icon with Orbiting Format Chips */}
+              <div className="relative py-6 flex flex-col items-center justify-center">
+                
+                {/* Glowing Outer Rings Matching Icon Color Scheme */}
+                <div className="relative w-44 h-44 sm:w-52 sm:h-52 flex items-center justify-center">
+                  <div className="absolute inset-0 rounded-3xl bg-gradient-to-tr from-blue-600 via-violet-600 to-pink-500 opacity-30 blur-2xl animate-pulse" />
+                  
+                  {/* Neon Framed Icon Container */}
+                  <div className="relative w-36 h-36 sm:w-44 sm:h-44 rounded-3xl overflow-hidden border-2 border-[var(--sk-acc)] shadow-[0_0_30px_rgba(255,95,162,0.4)] bg-black/80 p-1">
+                    <Image
+                      src="/app-icon.jpg"
+                      alt="FileForge AI Core Emblem"
+                      width={176}
+                      height={176}
+                      className="w-full h-full object-cover rounded-2xl"
+                      priority
+                    />
                   </div>
 
-                  <ArrowRight className="w-5 h-5 text-pink-500 animate-pulse" />
+                  {/* Physical Format Badges Orbiting the Central Zip Icon */}
+                  {/* PDF Badge (Red) */}
+                  <motion.div
+                    animate={prefersReducedMotion ? {} : { y: [-3, 3, -3] }}
+                    transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+                    className="absolute -top-2 -right-2 px-2.5 py-1 rounded-xl bg-rose-600 text-white font-mono font-black text-[11px] shadow-lg border border-rose-300"
+                  >
+                    .PDF
+                  </motion.div>
 
-                  <div>
-                    <div className="text-[10px] uppercase font-bold text-emerald-400 font-mono">Optimized</div>
-                    <div className="text-xl sm:text-2xl font-mono font-black text-white">
-                      {currentFile.optimizedSize}
-                    </div>
-                  </div>
+                  {/* Image Badge (Cyan) */}
+                  <motion.div
+                    animate={prefersReducedMotion ? {} : { y: [3, -3, 3] }}
+                    transition={{ duration: 3.4, repeat: Infinity, ease: 'easeInOut' }}
+                    className="absolute top-1/2 -right-5 px-2.5 py-1 rounded-xl bg-sky-500 text-white font-mono font-black text-[11px] shadow-lg border border-sky-200"
+                  >
+                    .WEBP
+                  </motion.div>
+
+                  {/* Video Badge (Green) */}
+                  <motion.div
+                    animate={prefersReducedMotion ? {} : { y: [-2, 4, -2] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+                    className="absolute -bottom-2 right-4 px-2.5 py-1 rounded-xl bg-emerald-500 text-white font-mono font-black text-[11px] shadow-lg border border-emerald-200"
+                  >
+                    .AV1
+                  </motion.div>
+
+                  {/* Audio Badge (Orange) */}
+                  <motion.div
+                    animate={prefersReducedMotion ? {} : { y: [2, -3, 2] }}
+                    transition={{ duration: 3.8, repeat: Infinity, ease: 'easeInOut' }}
+                    className="absolute -bottom-2 -left-2 px-2.5 py-1 rounded-xl bg-amber-500 text-white font-mono font-black text-[11px] shadow-lg border border-amber-200"
+                  >
+                    .FLAC
+                  </motion.div>
                 </div>
 
-                <div className="text-right">
-                  <span className="text-xs font-mono text-violet-300 font-semibold bg-violet-950/60 px-3 py-1 rounded-xl border border-violet-500/30">
-                    {currentFile.stage}
+                <div className="mt-3 text-center">
+                  <span className="text-xs font-mono font-bold text-violet-300">
+                    UNIVERSAL FILE PIPELINE MATRIX
                   </span>
                 </div>
               </div>
 
-              {/* Kinetic Progress Bar */}
-              <div className="space-y-2">
-                <div className="flex justify-between text-xs font-mono">
-                  <span className="text-gray-400">Processing Stage: Pipeline Complete</span>
-                  <span className="text-pink-400 font-bold">100% Ready</span>
+              {/* Interactive Hardware Acceleration Control */}
+              <div className="mt-4 pt-4 border-t-2 border-[var(--sk-border)] flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-mono font-bold text-white flex items-center gap-1.5">
+                    <Cpu className="w-3.5 h-3.5 text-pink-400" />
+                    WebCodecs GPU Acceleration
+                  </span>
+                  <ForgeTooltip text="Enables direct client-side WebAssembly and GPU shaders to maximize transcode speeds without cloud latency." />
                 </div>
-                <div className="h-2.5 w-full bg-white/5 rounded-full overflow-hidden relative">
-                  <motion.div
-                    className="h-full bg-gradient-to-r from-violet-600 via-pink-500 to-amber-300 rounded-full shadow-[0_0_15px_rgba(236,72,153,0.6)]"
-                    initial={{ width: 0 }}
-                    animate={{ width: '100%' }}
-                    transition={{ duration: 1.2, ease: 'easeOut' }}
-                  />
+                <ForgeToggle
+                  checked={gpuBoost}
+                  onChange={setGpuBoost}
+                />
+              </div>
+
+              {/* Live Active File Card Stage */}
+              <div className="mt-4 p-4 rounded-2xl bg-black/40 border border-white/10">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="font-mono text-xs font-bold text-white truncate max-w-[200px]">
+                    {currentFile.name}
+                  </span>
+                  <span className="px-2 py-0.5 rounded-full bg-emerald-950 border border-emerald-500/40 text-emerald-300 font-mono text-xs font-bold">
+                    {currentFile.savings}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between text-xs font-mono text-[var(--sk-text-muted)]">
+                  <span className="line-through decoration-rose-500/80">{currentFile.originalSize}</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-[var(--sk-acc)]" />
+                  <span className="font-bold text-white">{currentFile.optimizedSize}</span>
+                  <span className="text-[10px] text-violet-300 font-semibold">{currentFile.stage}</span>
                 </div>
               </div>
-            </motion.div>
-          </AnimatePresence>
-        </motion.div>
 
-        {/* Format Ticker / Animated Marquee */}
-        <div className="w-full max-w-4xl mt-12 overflow-hidden relative mask-radial">
-          <div className="flex items-center gap-3 justify-center flex-wrap">
-            <span className="text-xs text-gray-500 font-mono uppercase tracking-wider font-semibold mr-2">
-              Supported Codecs & Containers:
-            </span>
-            {TICKER_FORMATS.map((ext, i) => (
+            </motion.div>
+          </div>
+
+        </div>
+
+        {/* Ticker / Format Matrix Banner */}
+        <div className="w-full mt-16 pt-8 border-t-2 border-[var(--sk-border)] flex flex-wrap items-center justify-between gap-4">
+          <span className="text-xs font-mono font-black uppercase tracking-widest text-[var(--sk-text-muted)]">
+            READY CONTAINER FORMATS:
+          </span>
+          <div className="flex flex-wrap items-center gap-2">
+            {TICKER_FORMATS.map((fmt) => (
               <span
-                key={i}
-                className="font-mono text-xs font-semibold px-2.5 py-1 rounded-lg bg-[#12121c] border border-white/10 text-gray-300 hover:text-pink-400 hover:border-pink-500/40 transition-colors"
+                key={fmt}
+                className="font-mono text-xs font-bold px-2.5 py-1 bg-[var(--sk-surface)] border border-[var(--sk-border)] text-[var(--sk-text)] hover:border-[var(--sk-acc)] hover:text-[var(--sk-acc)] transition-colors cursor-default"
               >
-                {ext}
+                {fmt}
               </span>
             ))}
           </div>
         </div>
 
-        {/* Metric Strip */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-10 mt-16 max-w-3xl w-full text-center">
-          <div className="flex flex-col">
-            <span className="text-2xl sm:text-3xl font-extrabold text-white font-mono">100+</span>
-            <span className="text-xs text-gray-400 mt-1 font-sans">Formats Supported</span>
-          </div>
-          <div className="flex flex-col">
-            <span className="text-2xl sm:text-3xl font-extrabold text-violet-400 font-mono">2 GB</span>
-            <span className="text-xs text-gray-400 mt-1 font-sans">Free Upload Ceiling</span>
-          </div>
-          <div className="flex flex-col">
-            <span className="text-2xl sm:text-3xl font-extrabold text-pink-400 font-mono">90%</span>
-            <span className="text-xs text-gray-400 mt-1 font-sans">Max Size Savings</span>
-          </div>
-          <div className="flex flex-col">
-            <span className="text-2xl sm:text-3xl font-extrabold text-emerald-400 font-mono">0.0s</span>
-            <span className="text-xs text-gray-400 mt-1 font-sans">Client-side Latency</span>
-          </div>
-        </div>
       </div>
     </section>
   );

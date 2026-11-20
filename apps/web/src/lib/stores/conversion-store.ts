@@ -319,7 +319,7 @@ export const useConversionStore = create<ConversionStoreState>((set, get) => ({
 
     await Promise.all(workers);
     set({ isProcessingBatch: false });
-    forgeToast.success('Batch Complete! (ドン!)', 'All conversion tasks completed.');
+    forgeToast.success('Batch Complete!', 'All conversion tasks completed.');
   },
 
   removeItem: (id: string) => {

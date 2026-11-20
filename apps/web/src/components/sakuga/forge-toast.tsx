@@ -60,7 +60,7 @@ export const ForgeToastProvider: React.FC<{ children: React.ReactNode }> = ({ ch
 
       const fullMessage = `${prefix}${message}${options?.description ? ` — ${options.description}` : ''}`;
 
-      // 1. Trigger Sakuga VFX Toast custom element (smear streak + dust cloud + ズザッ)
+      // 1. Trigger Sakuga VFX Toast custom element (smear streak + dust cloud + slide sound)
       if (toastRef.current?.show) {
         toastRef.current.show(fullMessage, { duration: options?.duration || 3500 });
       }

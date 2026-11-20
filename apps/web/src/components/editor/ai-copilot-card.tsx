@@ -95,7 +95,7 @@ export const AiCopilotCard: React.FC<AiCopilotCardProps> = ({ file, onPlanExecut
       const json = await res.json();
       if (!json.success) throw new Error(json.error?.message || 'Plan execution failed');
 
-      forgeToast.success('AI Plan Executed Successfully (ドン!)', json.data.outputName);
+      forgeToast.success('AI Plan Executed Successfully', json.data.outputName);
       onPlanExecuted?.(json.data);
     } catch (err: any) {
       forgeToast.error('Execution Failed', err.message);

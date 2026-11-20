@@ -3,6 +3,7 @@
 import React, { useEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
 import { SakugaToggleElement } from '@/types/sakuga';
+import { useSakuga } from '@/components/providers/sakuga-provider';
 
 export interface ForgeToggleProps {
   label?: string;
@@ -30,6 +31,12 @@ export const ForgeToggle: React.FC<ForgeToggleProps> = ({
   className,
 }) => {
   const toggleRef = useRef<SakugaToggleElement | null>(null);
+  const { loadComponent } = useSakuga();
+
+  // Lazy-load the ~505 KB toggle sprite script only when a ForgeToggle mounts
+  useEffect(() => {
+    loadComponent('toggle.js');
+  }, [loadComponent]);
 
   // Sync React controlled checked prop with the Web Component only when it actually differs
   useEffect(() => {

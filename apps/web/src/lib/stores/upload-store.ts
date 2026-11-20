@@ -278,7 +278,7 @@ export const useUploadStore = create<UploadStoreState>((set, get) => ({
 
     await Promise.all(workers);
     set({ isProcessingBatch: false });
-    forgeToast.success('Batch Complete! (ドン!)', 'All queue items have been optimized.');
+    forgeToast.success('Batch Complete!', 'All queue items have been optimized.');
   },
 
   cancelItem: (id: string) => {

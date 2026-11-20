@@ -75,10 +75,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: `(function(){
               try {
-                var t = localStorage.getItem('fileforge-theme');
-                if (!t && window.matchMedia('(prefers-color-scheme: light)').matches) {
-                  t = 'light';
-                }
+                var t = localStorage.getItem('fileforge-theme') || 'dark';
                 if (t === 'light') {
                   document.documentElement.classList.remove('dark');
                   document.documentElement.classList.add('light');

@@ -120,7 +120,7 @@ export const ForgeProgress: React.FC<ForgeProgressProps> = ({
         </div>
       )}
 
-      {/* Official Sakuga VFX Progress Bar with storm cloud & ドン! burst */}
+      {/* Official Sakuga VFX Progress Bar with storm cloud and impact burst */}
       <div className="py-1">
         <sakuga-progress
           ref={progressRef as any}

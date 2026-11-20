@@ -1,8 +1,8 @@
 'use client';
 
-import { ForgeButton, forgeToast } from '@/components/sakuga';
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   Zap,
   ShieldCheck,
@@ -16,6 +16,8 @@ import {
   Smartphone,
   ExternalLink
 } from 'lucide-react';
+import { ForgeButton, forgeToast } from '@/components/sakuga';
+
 export const Footer: React.FC = () => {
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
@@ -27,23 +29,32 @@ export const Footer: React.FC = () => {
       return;
     }
     setSubscribed(true);
-    forgeToast.success('Subscribed!', 'You will receive monthly file studio updates & release notes.');
+    forgeToast.success('Subscribed!', 'You will receive monthly file studio updates and release notes.');
   };
 
   return (
-    <footer className="relative bg-[#07070b] border-t border-white/10 pt-16 pb-12 overflow-hidden text-gray-400 font-sans">
-      {/* Background Decorative Glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-24 bg-gradient-to-r from-violet-600/10 via-pink-500/10 to-transparent blur-3xl pointer-events-none" />
+    <footer className="relative bg-[#07070b] border-t-2 border-[var(--sk-line)] pt-16 pb-12 overflow-hidden text-gray-400 font-sans">
+      {/* Background Decorative Manga Speed Glow */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-24 bg-gradient-to-r from-violet-600/15 via-pink-500/15 to-transparent blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Top Newsletter & Brand Section */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 pb-14 border-b border-white/10 items-center">
           <div className="lg:col-span-5 flex flex-col gap-3">
-            <Link href="/" className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-violet-600 to-pink-500 flex items-center justify-center shadow-lg shadow-violet-500/30">
-                <Zap className="w-4 h-4 text-white fill-white stroke-none" />
+            <Link href="/" className="flex items-center gap-3 group">
+              <div className="relative w-10 h-10 rounded-2xl overflow-hidden border border-[var(--sk-pri)] shadow-lg shadow-violet-500/40 group-hover:shadow-pink-500/50 group-hover:scale-105 transition-all">
+                <Image
+                  src="/app-icon.jpg"
+                  alt="FileForge AI Logo"
+                  width={40}
+                  height={40}
+                  className="w-full h-full object-cover"
+                />
               </div>
-              <span className="text-xl font-bold tracking-tight text-white">FileForge AI</span>
+              <div>
+                <span className="text-xl font-black tracking-tight text-white uppercase font-sans">FileForge AI</span>
+                <span className="block text-[10px] font-mono font-bold tracking-widest text-[var(--sk-acc)]">[CREATIVE STUDIO ENGINE]</span>
+              </div>
             </Link>
             <p className="text-sm text-gray-400 max-w-sm leading-relaxed">
               The high-velocity creative file studio. Compress up to 90%, convert between 200+ formats, and automate asset pipelines with anime-inspired responsiveness.

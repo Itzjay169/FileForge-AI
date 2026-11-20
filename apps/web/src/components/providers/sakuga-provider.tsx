@@ -20,7 +20,6 @@ export const useSakuga = () => useContext(SakugaContext);
 const SAKUGA_SCRIPTS = [
   'core.js',
   'button.js',
-  'toggle.js',
   'slider.js',
   'checkbox.js',
   'radio.js',

@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, HelpCircle } from 'lucide-react';
+import { ChevronDown, HelpCircle, FileQuestion } from 'lucide-react';
 import { ScrollReveal } from '@/components/ui/scroll-reveal';
 
 export const FAQSection: React.FC = () => {
@@ -39,7 +39,7 @@ export const FAQSection: React.FC = () => {
     },
     {
       q: 'Are mobile applications available?',
-      a: 'Yes! FileForge AI includes a React Native Expo application with camera scanner support, mobile share-sheet integration, background uploads, and offline queueing.'
+      a: 'Yes! FileForge AI includes a companion mobile application with camera scanner support, mobile share-sheet integration, background uploads, and offline queueing.'
     }
   ];
 
@@ -48,41 +48,45 @@ export const FAQSection: React.FC = () => {
   };
 
   return (
-    <section id="faq" className="py-24 relative bg-[#07070b]">
+    <section id="faq" className="py-24 relative bg-[var(--sk-bg)] border-b-2 border-[var(--sk-line)]">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-14">
-          <span className="text-xs font-mono font-bold uppercase tracking-wider text-pink-400 px-3 py-1 rounded-full bg-pink-500/10 border border-pink-500/20 inline-block mb-3">
-            Knowledge Base
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight font-sans">
+        
+        {/* Header with Manga Tag */}
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center gap-2 px-3 py-1 border-2 border-[var(--sk-line)] bg-[var(--sk-surface)] text-xs font-mono font-black text-[var(--sk-acc)] mb-3 shadow-[3px_3px_0_rgba(109,90,224,0.4)]">
+            <FileQuestion className="w-3.5 h-3.5" />
+            <span>[ACT 08 // ARCHIVE CODEX & FAQ]</span>
+          </div>
+
+          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight uppercase font-sans">
             Frequently Asked Questions
           </h2>
-          <p className="mt-3 text-sm text-gray-400">
-            Clear answers on security, file retention, compliance, and our processing architecture.
+          <p className="mt-4 text-sm sm:text-base text-[var(--sk-text-muted)] font-medium">
+            Clear technical answers on security, file retention, compliance, and our isolated processing architecture.
           </p>
         </div>
 
-        {/* Accordion List */}
-        <div className="space-y-3">
+        {/* Accordion List with Ink Borders */}
+        <div className="space-y-4">
           {faqs.map((faq, idx) => {
             const isOpen = openIndex === idx;
             return (
-              <ScrollReveal key={faq.q} delay={idx * 0.05}>
-                <div className="bg-[#12121c] border border-white/10 rounded-2xl overflow-hidden transition-colors">
+              <ScrollReveal key={faq.q} delay={idx * 0.04}>
+                <div className="bg-[var(--sk-card)] border-2 border-[var(--sk-line)] rounded-2xl overflow-hidden shadow-[4px_6px_0_rgba(109,90,224,0.3)] transition-all">
                   <button
                     onClick={() => toggle(idx)}
-                    className="w-full px-6 py-5 flex items-center justify-between text-left gap-4 focus:outline-none"
+                    className="w-full px-6 py-5 flex items-center justify-between text-left gap-4 focus:outline-none hover:bg-[var(--sk-surface-raised)] transition-colors"
                     aria-expanded={isOpen}
                   >
-                    <span className="text-sm sm:text-base font-semibold text-white font-sans">
+                    <span className="text-sm sm:text-base font-bold text-white font-sans uppercase">
                       {faq.q}
                     </span>
                     <motion.div
                       animate={{ rotate: isOpen ? 180 : 0 }}
                       transition={{ duration: 0.2 }}
-                      className="shrink-0 text-violet-400"
+                      className="text-[var(--sk-acc)] shrink-0"
                     >
-                      <ChevronDown className="w-5 h-5" />
+                      <ChevronDown className="w-5 h-5 stroke-[2.5]" />
                     </motion.div>
                   </button>
 
@@ -94,7 +98,7 @@ export const FAQSection: React.FC = () => {
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.25, ease: 'easeInOut' }}
                       >
-                        <div className="px-6 pb-6 pt-1 text-xs sm:text-sm text-gray-400 leading-relaxed border-t border-white/5">
+                        <div className="px-6 pb-6 pt-2 text-xs sm:text-sm text-[var(--sk-text-muted)] leading-relaxed border-t-2 border-[var(--sk-border)] font-medium">
                           {faq.a}
                         </div>
                       </motion.div>
@@ -105,6 +109,7 @@ export const FAQSection: React.FC = () => {
             );
           })}
         </div>
+
       </div>
     </section>
   );

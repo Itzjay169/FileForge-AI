@@ -13,12 +13,16 @@ import { TestimonialsSection } from '@/components/landing/testimonials-section';
 import { PricingSection } from '@/components/landing/pricing-section';
 import { FAQSection } from '@/components/landing/faq-section';
 import { CTASection } from '@/components/landing/cta-section';
+import { AnimeCursorTrail } from '@/components/effects/anime-cursor-trail';
 
 export default function HomePage() {
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
 
   return (
-    <div className="relative min-h-screen bg-[var(--color-bg)] text-[var(--color-text)] overflow-x-hidden selection:bg-violet-500/30 selection:text-violet-200">
+    <div className="relative min-h-screen bg-[var(--sk-bg)] text-[var(--sk-text)] overflow-x-hidden selection:bg-[var(--sk-acc)]/30 selection:text-[var(--sk-acc)]">
+      {/* Interactive Anime Cursor & Touch Spark Trail */}
+      <AnimeCursorTrail />
+
       {/* Global Navigation */}
       <Navbar onOpenCommandPalette={() => setCommandPaletteOpen(true)} />
 

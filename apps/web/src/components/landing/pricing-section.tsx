@@ -1,53 +1,53 @@
 'use client';
 
-import { ForgeButton, forgeToast } from '@/components/sakuga';
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Check, Zap, Sparkles, Shield, Building2, Crown } from 'lucide-react';
+import { Check, Zap, Sparkles, Shield, Building2, Crown, Tag } from 'lucide-react';
 import { PLANS } from '@fileforge/shared';
 import { ScrollReveal } from '@/components/ui/scroll-reveal';
+import { ForgeButton, ForgeToggle, ForgeTooltip, forgeToast } from '@/components/sakuga';
+
 export const PricingSection: React.FC = () => {
   const [isAnnual, setIsAnnual] = useState(true);
 
   return (
-    <section id="pricing" className="py-24 relative bg-[#09090f] border-t border-white/10">
+    <section id="pricing" className="py-24 relative bg-[var(--sk-bg)] border-b-2 border-[var(--sk-line)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
+        {/* Header with Manga Tag */}
         <div className="text-center max-w-3xl mx-auto mb-14">
-          <span className="text-xs font-mono font-bold uppercase tracking-wider text-violet-400 px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/20 inline-block mb-3">
-            Transparent Pricing
-          </span>
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight font-sans">
-            Core Compression is Always Free
+          <div className="inline-flex items-center gap-2 px-3 py-1 border-2 border-[var(--sk-line)] bg-[var(--sk-surface)] text-xs font-mono font-black text-[var(--sk-acc)] mb-3 shadow-[3px_3px_0_rgba(109,90,224,0.4)]">
+            <Tag className="w-3.5 h-3.5" />
+            <span>[ACT 07 // STUDIO ACCESS TIERS]</span>
+          </div>
+
+          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight uppercase font-sans">
+            Core Processing is Always Free
           </h2>
-          <p className="mt-4 text-sm sm:text-base text-gray-400">
-            Never pay for everyday optimization. Upgrade only when you need massive batch pipelines, extended archival cloud storage, or dedicated worker priority.
+          
+          <p className="mt-4 text-sm sm:text-base text-[var(--sk-text-muted)] font-medium">
+            Never pay for everyday optimization. Upgrade only when you need massive multi-threaded batch queues, team workspaces, or dedicated GPU priority.
           </p>
 
-          {/* Billing Toggle */}
-          <div className="mt-8 inline-flex items-center gap-3 p-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
-            <button
-              onClick={() => setIsAnnual(false)}
-              className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${
-                !isAnnual ? 'bg-violet-600 text-white shadow-md' : 'text-gray-400 hover:text-white'
-              }`}
-            >
-              Monthly Billing
-            </button>
-            <button
-              onClick={() => setIsAnnual(true)}
-              className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all flex items-center gap-1.5 ${
-                isAnnual ? 'bg-gradient-to-r from-violet-600 to-pink-500 text-white shadow-md' : 'text-gray-400 hover:text-white'
-              }`}
-            >
+          {/* Billing Switcher with Real Sakuga VFX Toggle */}
+          <div className="mt-8 inline-flex items-center gap-3 p-3 rounded-2xl bg-[var(--sk-card)] border-2 border-[var(--sk-line)] shadow-[4px_6px_0_rgba(109,90,224,0.35)]">
+            <span className={`text-xs font-mono font-bold ${!isAnnual ? 'text-white' : 'text-[var(--sk-text-muted)]'}`}>
+              Monthly
+            </span>
+            <ForgeToggle
+              checked={isAnnual}
+              onChange={setIsAnnual}
+            />
+            <span className={`text-xs font-mono font-bold flex items-center gap-1.5 ${isAnnual ? 'text-[var(--sk-acc)]' : 'text-[var(--sk-text-muted)]'}`}>
               <span>Annual Billing</span>
-              <span className="text-[10px] bg-white/20 px-1.5 py-0.2 rounded-full font-mono">
-                25% OFF
+              <span className="px-1.5 py-0.2 rounded bg-pink-500/20 text-pink-400 border border-pink-500/40 text-[10px] font-black">
+                SAVE 25%
               </span>
-            </button>
+            </span>
           </div>
         </div>
 
-        {/* 3 Pricing Cards */}
+        {/* 3 Pricing Cards Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
           {PLANS.map((plan, idx) => {
             const isPopular = plan.isPopular;
@@ -58,42 +58,42 @@ export const PricingSection: React.FC = () => {
             return (
               <ScrollReveal key={plan.id} delay={idx * 0.1}>
                 <div
-                  className={`h-full rounded-3xl p-8 flex flex-col justify-between transition-all duration-300 relative ${
+                  className={`h-full rounded-3xl p-8 flex flex-col justify-between transition-all duration-300 relative border-2 ${
                     isPopular
-                      ? 'bg-gradient-to-b from-[#1c142c] to-[#120d20] border-2 border-violet-500 shadow-2xl shadow-violet-950/60'
-                      : 'bg-[#12121c] border border-white/10'
+                      ? 'bg-[var(--sk-surface-raised)] border-[var(--sk-acc)] shadow-[8px_10px_0_rgba(255,95,162,0.45)] scale-[1.02] lg:-translate-y-2'
+                      : 'bg-[var(--sk-card)] border-[var(--sk-line)] shadow-[6px_8px_0_rgba(109,90,224,0.35)] hover:border-violet-400'
                   }`}
                 >
                   {isPopular && (
-                    <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-0.5 rounded-full bg-gradient-to-r from-pink-500 to-violet-600 text-white text-[11px] font-bold uppercase tracking-wider shadow-lg shadow-pink-500/30 flex items-center gap-1.5 font-mono">
-                      <Sparkles className="w-3 h-3" />
-                      Most Popular for Creators
+                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-none bg-[var(--sk-acc)] text-black text-[11px] font-black uppercase tracking-wider shadow-lg flex items-center gap-1.5 font-mono border-2 border-black">
+                      <Sparkles className="w-3.5 h-3.5 fill-black" />
+                      COMMENDED FOR CREATIVE TEAMS
                     </div>
                   )}
 
                   <div>
                     <div className="flex items-center justify-between mb-2">
-                      <h3 className="text-xl font-bold text-white font-sans">{plan.name}</h3>
+                      <h3 className="text-xl font-black text-white uppercase font-sans">{plan.name}</h3>
                       {isPopular && <Crown className="w-5 h-5 text-amber-400" />}
                     </div>
 
-                    <p className="text-xs text-gray-400 mb-6 leading-relaxed min-h-[36px]">
+                    <p className="text-xs text-[var(--sk-text-muted)] mb-6 leading-relaxed min-h-[36px] font-mono">
                       {plan.tagline}
                     </p>
 
                     <div className="flex items-baseline gap-1.5 mb-6">
-                      <span className="text-4xl sm:text-5xl font-extrabold text-white font-mono">
+                      <span className="text-4xl sm:text-5xl font-black text-white font-mono">
                         ${price}
                       </span>
-                      <span className="text-xs text-gray-400 font-mono">
+                      <span className="text-xs text-[var(--sk-text-muted)] font-mono">
                         {plan.priceMonthly === 0 ? 'forever' : '/month'}
                       </span>
                     </div>
 
-                    <div className="space-y-3 mb-8 pt-6 border-t border-white/10">
+                    <div className="space-y-3 mb-8 pt-6 border-t-2 border-[var(--sk-border)]">
                       {plan.features.map((feat) => (
-                        <div key={feat} className="flex items-start gap-2.5 text-xs text-gray-300">
-                          <Check className="w-4 h-4 text-violet-400 shrink-0 mt-0.5" />
+                        <div key={feat} className="flex items-start gap-2.5 text-xs text-gray-300 font-medium">
+                          <Check className="w-4 h-4 text-[var(--sk-acc)] shrink-0 mt-0.5" />
                           <span>{feat}</span>
                         </div>
                       ))}
@@ -101,16 +101,16 @@ export const PricingSection: React.FC = () => {
                   </div>
 
                   <ForgeButton
-                    variant={isPopular ? 'default' : 'secondary'}
+                    variant={isPopular ? 'primary' : 'secondary'}
                     size="md"
-                    className="w-full"
+                    className="w-full shadow-md"
                     onClick={() => {
                       if (plan.id === 'FREE') {
                         forgeToast.success('Free Studio Active', 'You are ready to upload up to 2 GB right now!');
                       } else {
                         forgeToast.info(
                           `${plan.name} Checkout Initiated`,
-                          'Stripe checkout sandbox enabled for Phase 1.'
+                          'Stripe sandbox activated for testing.'
                         );
                       }
                     }}
