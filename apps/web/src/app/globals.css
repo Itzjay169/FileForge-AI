@@ -307,3 +307,64 @@ code, pre, .font-mono {
     scroll-behavior: auto !important;
   }
 }
+
+/* ==========================================================================
+   Global Theme Switching Support
+   Overrides hardcoded dark background and white text when html.light is active
+   ========================================================================== */
+html.light,
+html.light body {
+  background-color: var(--color-bg) !important;
+  color: var(--color-text) !important;
+}
+
+html.light .bg-\[\#0a0a0f\],
+html.light .bg-\[\#09090e\],
+html.light .bg-\[\#0b0913\] {
+  background-color: var(--color-bg) !important;
+  color: var(--color-text) !important;
+}
+
+html.light .text-\[\#f0eee9\],
+html.light .text-\[\#f5f4f0\] {
+  color: var(--color-text) !important;
+}
+
+html.light .bg-\[\#12121c\],
+html.light .bg-\[\#141420\],
+html.light .bg-\[\#14121f\],
+html.light .bg-\[\#171425\],
+html.light .bg-\[\#0e0c18\],
+html.light .bg-\[\#131122\] {
+  background-color: var(--color-surface) !important;
+  color: var(--color-text) !important;
+}
+
+html.light .bg-\[\#1a1a28\],
+html.light .bg-\[\#1e1a2e\],
+html.light .bg-\[\#181826\] {
+  background-color: var(--color-surface-raised) !important;
+}
+
+html.light .border-white\/10,
+html.light .border-white\/15,
+html.light .border-white\/20,
+html.light .border-white\/5 {
+  border-color: var(--color-border) !important;
+}
+
+html.light .bg-white\/5,
+html.light .bg-white\/10,
+html.light .bg-white\/\[0\.03\],
+html.light .bg-white\/\[0\.04\] {
+  background-color: rgba(139, 92, 246, 0.06) !important;
+}
+
+html.light .text-gray-300,
+html.light .text-gray-400 {
+  color: var(--color-text-muted) !important;
+}
+
+html.light .text-white {
+  color: var(--color-text) !important;
+}

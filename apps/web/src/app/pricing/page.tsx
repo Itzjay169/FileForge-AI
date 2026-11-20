@@ -17,6 +17,8 @@ import {
 } from 'lucide-react';
 import { PLANS } from '@fileforge/shared';
 import { ForgeButton } from '@/components/sakuga';
+import { Navbar } from '@/components/layout/navbar';
+import { Footer } from '@/components/layout/footer';
 
 export default function PricingPage() {
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('yearly');
@@ -69,8 +71,10 @@ export default function PricingPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f] text-white pt-24 pb-20 selection:bg-pink-500 selection:text-white">
-      {/* Glow Header */}
+    <div className="relative min-h-screen bg-[var(--color-bg)] text-[var(--color-text)] selection:bg-pink-500/25 selection:text-pink-300">
+      <Navbar />
+      <div className="pt-24 pb-20">
+        {/* Glow Header */}
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-8 pb-12">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-violet-600/15 rounded-full blur-[120px] pointer-events-none" />
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-violet-950/40 border border-violet-500/30 text-violet-400 text-xs font-semibold mb-6 shadow-inner">
@@ -268,6 +272,8 @@ export default function PricingPage() {
           })}
         </div>
       </div>
+      </div>
+      <Footer />
     </div>
   );
 }

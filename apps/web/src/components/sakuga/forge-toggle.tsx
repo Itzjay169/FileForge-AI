@@ -31,9 +31,9 @@ export const ForgeToggle: React.FC<ForgeToggleProps> = ({
 }) => {
   const toggleRef = useRef<SakugaToggleElement | null>(null);
 
-  // Sync React controlled checked prop with the Web Component
+  // Sync React controlled checked prop with the Web Component only when it actually differs
   useEffect(() => {
-    if (toggleRef.current) {
+    if (toggleRef.current && toggleRef.current.checked !== !!checked) {
       toggleRef.current.checked = !!checked;
     }
   }, [checked]);
@@ -41,6 +41,11 @@ export const ForgeToggle: React.FC<ForgeToggleProps> = ({
   useEffect(() => {
     const el = toggleRef.current;
     if (!el) return;
+
+    // Ensure initial checked state is synchronized on mount
+    if (el.checked !== !!checked) {
+      el.checked = !!checked;
+    }
 
     const handleChange = () => {
       onChange?.(el.checked);
@@ -76,7 +81,6 @@ export const ForgeToggle: React.FC<ForgeToggleProps> = ({
         <sakuga-toggle
           ref={toggleRef as any}
           label={ariaLabel || label}
-          checked={checked ? true : undefined}
           disabled={disabled ? true : undefined}
           name={name}
           class="cursor-pointer"

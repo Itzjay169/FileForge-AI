@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { HelpCircle, ChevronDown, Sparkles, MessageCircle } from 'lucide-react';
 import { ForgeButton } from '@/components/sakuga';
+import { Navbar } from '@/components/layout/navbar';
+import { Footer } from '@/components/layout/footer';
 
 export default function FAQPage() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
@@ -60,8 +62,10 @@ export default function FAQPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f] text-white pt-24 pb-20 selection:bg-pink-500 selection:text-white">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="relative min-h-screen bg-[var(--color-bg)] text-[var(--color-text)] selection:bg-pink-500/25 selection:text-pink-300">
+      <Navbar />
+      <div className="pt-24 pb-20">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Glow Header */}
         <div className="text-center py-12 relative">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-violet-600/10 rounded-full blur-[120px] pointer-events-none" />
@@ -125,6 +129,8 @@ export default function FAQPage() {
           </div>
         </div>
       </div>
+      </div>
+      <Footer />
     </div>
   );
 }

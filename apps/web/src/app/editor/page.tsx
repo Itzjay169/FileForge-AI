@@ -90,7 +90,7 @@ export default function EditorPage() {
   const isMedia = ['mp4', 'mkv', 'mov', 'webm', 'avi', 'mp3', 'wav', 'aac', 'flac', 'ogg', 'm4a'].includes(fileExtension);
 
   return (
-    <div className="relative min-h-screen bg-[#0a0a0f] text-[#f0eee9] overflow-x-hidden selection:bg-violet-500/30 selection:text-violet-200">
+    <div className="relative min-h-screen bg-[var(--color-bg)] text-[var(--color-text)] overflow-x-hidden selection:bg-violet-500/30 selection:text-violet-200">
       <Navbar onOpenCommandPalette={() => setCommandPaletteOpen(true)} />
 
       <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-32">

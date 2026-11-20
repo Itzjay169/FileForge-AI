@@ -15,7 +15,7 @@ function FormatsContent() {
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
 
   return (
-    <div className="relative min-h-screen bg-[#0a0a0f] text-[#f0eee9] overflow-x-hidden selection:bg-violet-500/30 selection:text-violet-200">
+    <div className="relative min-h-screen bg-[var(--color-bg)] text-[var(--color-text)] overflow-x-hidden selection:bg-violet-500/30 selection:text-violet-200">
       <Navbar onOpenCommandPalette={() => setCommandPaletteOpen(true)} />
 
       <main className="pt-28 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -61,7 +61,7 @@ function FormatsContent() {
 
 export default function FormatsPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-[#0a0a0f] text-white flex items-center justify-center font-mono">Loading registry...</div>}>
+    <Suspense fallback={<div className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text)] flex items-center justify-center font-mono">Loading registry...</div>}>
       <FormatsContent />
     </Suspense>
   );

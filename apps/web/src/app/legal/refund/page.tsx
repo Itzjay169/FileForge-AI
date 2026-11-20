@@ -1,10 +1,13 @@
+import { Navbar } from '@/components/layout/navbar';
+import { Footer } from '@/components/layout/footer';
 import React from 'react';
 import Link from 'next/link';
 import { RefreshCcw } from 'lucide-react';
 
 export default function RefundPolicyPage() {
   return (
-    <div className="min-h-screen bg-[#0a0a0f] text-white pt-24 pb-20 selection:bg-pink-500 selection:text-white">
+    <div className="relative min-h-screen bg-[var(--color-bg)] text-[var(--color-text)] pt-24 pb-20 selection:bg-pink-500 selection:text-white">
+      <Navbar />
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="py-8 border-b border-white/10">
           <div className="flex items-center gap-2 text-violet-400 text-xs font-semibold mb-2">
@@ -57,6 +60,7 @@ export default function RefundPolicyPage() {
           </section>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

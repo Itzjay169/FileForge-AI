@@ -18,7 +18,7 @@ export default function HomePage() {
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
 
   return (
-    <div className="relative min-h-screen bg-[#0a0a0f] text-[#f0eee9] overflow-x-hidden selection:bg-violet-500/30 selection:text-violet-200">
+    <div className="relative min-h-screen bg-[var(--color-bg)] text-[var(--color-text)] overflow-x-hidden selection:bg-violet-500/30 selection:text-violet-200">
       {/* Global Navigation */}
       <Navbar onOpenCommandPalette={() => setCommandPaletteOpen(true)} />
 

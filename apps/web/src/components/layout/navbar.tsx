@@ -31,6 +31,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
   const [isDarkMode, setIsDarkMode] = useState(true);
   const pathname = usePathname();
 
+  // Sync theme state with DOM / localStorage on mount and route change
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const isDark = document.documentElement.classList.contains('dark') ||
+        (!document.documentElement.classList.contains('light') && localStorage.getItem('fileforge-theme') !== 'light');
+      setIsDarkMode(isDark);
+    }
+  }, [pathname]);
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -52,6 +61,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
       document.documentElement.classList.remove('dark');
       document.documentElement.classList.add('light');
     }
+    window.dispatchEvent(new CustomEvent('fileforge:themechange', { detail: { isDark: nextMode } }));
   };
 
   const navLinks = [
@@ -72,7 +82,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
         className={cn(
           'fixed top-0 left-0 right-0 z-50 transition-all duration-300 font-sans',
           isScrolled
-            ? 'bg-[#09090e]/90 backdrop-blur-xl border-b border-white/10 shadow-2xl shadow-black/60 py-3.5'
+            ? 'bg-[var(--sk-bg)]/90 backdrop-blur-xl border-b border-[var(--sk-border)] shadow-2xl shadow-black/40 py-3.5'
             : 'bg-transparent py-5'
         )}
       >
@@ -91,7 +101,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
               <div className="absolute inset-0 rounded-2xl bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-xl font-black tracking-tight text-white">
+              <span className="text-xl font-black tracking-tight text-[var(--sk-text)]">
                 FileForge
               </span>
               <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-violet-950/80 text-violet-300 border border-violet-500/30">
@@ -101,7 +111,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-1 bg-[#12121c]/80 border border-white/10 px-3 py-1.5 rounded-full backdrop-blur-xl shadow-lg">
+          <nav className="hidden lg:flex items-center gap-1 bg-[var(--sk-surface)]/80 border border-[var(--sk-border)] px-3 py-1.5 rounded-full backdrop-blur-xl shadow-lg">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
@@ -112,7 +122,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
                     'px-3.5 py-1.5 text-xs font-semibold rounded-full transition-all',
                     isActive
                       ? 'bg-gradient-to-r from-violet-600 to-pink-600 text-white shadow-md shadow-violet-950/60'
-                      : 'text-gray-300 hover:text-white hover:bg-white/5'
+                      : 'text-[var(--sk-text-muted)] hover:text-[var(--sk-text)] hover:bg-[var(--sk-surface-raised)]'
                   )}
                 >
                   {link.label}
@@ -127,29 +137,34 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
             <button
               onClick={onOpenCommandPalette}
               aria-label="Open Command Palette"
-              className="hidden md:flex items-center gap-2 px-3 py-1.5 text-xs text-gray-400 bg-[#12121c] hover:bg-white/10 border border-white/10 rounded-xl transition-colors cursor-pointer group shadow-sm"
+              className="hidden md:flex items-center gap-2 px-3 py-1.5 text-xs text-[var(--sk-text-muted)] bg-[var(--sk-surface)] hover:bg-[var(--sk-surface-raised)] border border-[var(--sk-border)] rounded-xl transition-colors cursor-pointer group shadow-sm"
             >
               <Command className="w-3.5 h-3.5 text-violet-400" />
               <span className="hidden xl:inline">Search studio...</span>
-              <kbd className="font-mono text-[10px] bg-white/10 px-1.5 py-0.5 rounded text-gray-300">
+              <kbd className="font-mono text-[10px] bg-white/10 px-1.5 py-0.5 rounded text-[var(--sk-text-muted)]">
                 ⌘K
               </kbd>
             </button>
 
-            {/* Theme Toggle */}
+            {/* Theme Toggle Button */}
             <button
               onClick={toggleTheme}
               aria-label="Toggle theme mode"
-              className="p-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 hover:text-white transition-colors"
+              title={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+              className="p-2 rounded-xl bg-[var(--sk-surface)] hover:bg-[var(--sk-surface-raised)] border border-[var(--sk-border)] text-[var(--sk-text)] transition-all cursor-pointer shadow-sm hover:scale-105 active:scale-95"
             >
-              {isDarkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-violet-400" />}
+              {isDarkMode ? (
+                <Sun className="w-4 h-4 text-amber-400 rotate-0 transition-transform hover:rotate-45" />
+              ) : (
+                <Moon className="w-4 h-4 text-violet-500 rotate-0 transition-transform hover:-rotate-12" />
+              )}
             </button>
 
             {/* User Account / Workspace */}
             <Link href="/dashboard" className="hidden sm:inline-flex">
               <button
                 aria-label="User Workspace"
-                className="p-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 hover:text-white transition-colors"
+                className="p-2 rounded-xl bg-[var(--sk-surface)] hover:bg-[var(--sk-surface-raised)] border border-[var(--sk-border)] text-[var(--sk-text)] transition-colors cursor-pointer shadow-sm"
               >
                 <User className="w-4 h-4 text-pink-400" />
               </button>
@@ -166,7 +181,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
             {/* Mobile menu trigger */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 text-gray-300 hover:text-white bg-white/5 rounded-xl border border-white/10"
+              className="lg:hidden p-2 text-[var(--sk-text-muted)] hover:text-[var(--sk-text)] bg-[var(--sk-surface)] rounded-xl border border-[var(--sk-border)] cursor-pointer"
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
