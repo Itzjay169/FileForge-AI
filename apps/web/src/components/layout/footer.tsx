@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
-  
   ShieldCheck,
   Lock,
   FileCheck2,
@@ -13,8 +12,14 @@ import {
   Sparkles,
   ArrowRight,
   CheckCircle2,
-  Smartphone,
-  ExternalLink
+  ExternalLink,
+  Mail,
+  Bug,
+  Users,
+  Accessibility,
+  Cookie,
+  Scale,
+  Shield
 } from 'lucide-react';
 import { ForgeButton, forgeToast } from '@/components/sakuga';
 
@@ -99,10 +104,6 @@ export const Footer: React.FC = () => {
             <Link href="/transparency" className="hover:text-white transition-colors">AI & Watermarks</Link>
             <Link href="/dashboard" className="hover:text-white transition-colors">Workspace & Library</Link>
             <Link href="/pricing" className="hover:text-white transition-colors">Pricing & Plans</Link>
-            <span className="inline-flex items-center gap-1.5 text-gray-500">
-              <Smartphone className="w-3 h-3 text-pink-400" />
-              Expo Mobile App <span className="text-[9px] bg-pink-500/20 text-pink-300 px-1 py-0.5 rounded font-mono">BETA</span>
-            </span>
           </div>
 
           {/* Column 2: Resources */}
@@ -139,14 +140,39 @@ export const Footer: React.FC = () => {
             <Link href="/legal/privacy" className="hover:text-white transition-colors">Privacy Policy (GDPR)</Link>
             <Link href="/legal/refund" className="hover:text-white transition-colors">Refund Policy</Link>
             <Link href="/legal/acceptable-use" className="hover:text-white transition-colors">Acceptable Use Policy</Link>
-            <Link href="/legal/terms#ip" className="hover:text-white transition-colors">Copyright & DMCA</Link>
+            <Link href="/legal/dmca" className="hover:text-white transition-colors flex items-center gap-1">
+              <Scale className="w-3 h-3 text-violet-400" />
+              Copyright & DMCA
+            </Link>
+            <Link href="/legal/cookies" className="hover:text-white transition-colors flex items-center gap-1">
+              <Cookie className="w-3 h-3 text-amber-400" />
+              Cookie Policy
+            </Link>
+            <Link href="/accessibility" className="hover:text-white transition-colors flex items-center gap-1">
+              <Accessibility className="w-3 h-3 text-cyan-400" />
+              Accessibility
+            </Link>
           </div>
 
           {/* Column 5: Company */}
           <div className="flex flex-col gap-3">
             <span className="font-semibold text-white tracking-wider uppercase text-[11px] font-mono">Company</span>
-            <Link href="/contact" className="hover:text-white transition-colors">Contact Support</Link>
-            <Link href="/admin/dashboard" className="hover:text-white transition-colors">Admin Command Center</Link>
+            <Link href="/about" className="hover:text-white transition-colors flex items-center gap-1">
+              <Users className="w-3 h-3 text-violet-400" />
+              About Us
+            </Link>
+            <Link href="/contact" className="hover:text-white transition-colors flex items-center gap-1">
+              <Mail className="w-3 h-3 text-pink-400" />
+              Contact Support
+            </Link>
+            <Link href="/report-bug" className="hover:text-white transition-colors flex items-center gap-1">
+              <Bug className="w-3 h-3 text-amber-400" />
+              Report a Bug
+            </Link>
+            <Link href="/security" className="hover:text-white transition-colors flex items-center gap-1">
+              <Shield className="w-3 h-3 text-emerald-400" />
+              Security
+            </Link>
             <a
               href="https://github.com/Itzjay169/FileForge-AI"
               target="_blank"
@@ -154,14 +180,6 @@ export const Footer: React.FC = () => {
               className="hover:text-white transition-colors flex items-center gap-1"
             >
               GitHub Repository <ExternalLink className="w-3 h-3 text-gray-500" />
-            </a>
-            <a
-              href="https://github.com/finktheartist/sakuga-vfx"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-white transition-colors flex items-center gap-1"
-            >
-              Sakuga VFX Inspiration <ExternalLink className="w-3 h-3 text-gray-500" />
             </a>
           </div>
         </div>
@@ -198,14 +216,14 @@ export const Footer: React.FC = () => {
 
         {/* Bottom Copyright & Socials */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-500">
-          <p>© 2026 FileForge AI. Built for creators, studios, and high-throughput media pipelines.</p>
+          <p>© {new Date().getFullYear()} FileForge AI. Built for creators, studios, and high-throughput media pipelines.</p>
 
           <div className="flex items-center gap-4 text-gray-400">
             <a href="https://github.com/Itzjay169/FileForge-AI" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors" aria-label="GitHub">
               <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
             </a>
-            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors" aria-label="Twitter">
-              <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            <a href="mailto:support@fileforge.ai" className="hover:text-white transition-colors" aria-label="Email support">
+              <Mail className="w-4 h-4" />
             </a>
           </div>
         </div>

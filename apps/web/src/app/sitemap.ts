@@ -22,7 +22,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/legal/terms`, changeFrequency: 'monthly' as const, priority: 0.5 },
     { url: `${baseUrl}/legal/privacy`, changeFrequency: 'monthly' as const, priority: 0.5 },
     { url: `${baseUrl}/legal/refund`, changeFrequency: 'monthly' as const, priority: 0.5 },
-    { url: `${baseUrl}/legal/acceptable-use`, changeFrequency: 'monthly' as const, priority: 0.5 }
+    { url: `${baseUrl}/legal/acceptable-use`, changeFrequency: 'monthly' as const, priority: 0.5 },
+    { url: `${baseUrl}/legal/cookies`, changeFrequency: 'monthly' as const, priority: 0.4 },
+    { url: `${baseUrl}/legal/dmca`, changeFrequency: 'monthly' as const, priority: 0.4 },
+    { url: `${baseUrl}/about`, changeFrequency: 'monthly' as const, priority: 0.7 },
+    { url: `${baseUrl}/report-bug`, changeFrequency: 'monthly' as const, priority: 0.5 },
+    { url: `${baseUrl}/security`, changeFrequency: 'monthly' as const, priority: 0.5 },
+    { url: `${baseUrl}/accessibility`, changeFrequency: 'monthly' as const, priority: 0.5 },
+    { url: `${baseUrl}/queue`, changeFrequency: 'daily' as const, priority: 0.8 }
   ];
 
   return routes.map((r) => ({

@@ -70,13 +70,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
 
   const navLinks = [
     { label: 'Studio', href: '/studio' },
-    { label: 'Queue', href: '/queue' },
     { label: 'Convert', href: '/convert' },
     { label: 'Editor & AI', href: '/editor' },
-    { label: 'Transparency', href: '/transparency' },
     { label: 'Library', href: '/dashboard' },
     { label: 'Pricing', href: '/pricing' },
     { label: 'Formats', href: '/formats' },
+    { label: 'About', href: '/about' },
     { label: 'Help', href: '/help' }
   ];
 

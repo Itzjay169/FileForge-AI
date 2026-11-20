@@ -115,6 +115,7 @@ declare module 'react' {
         React.HTMLAttributes<HTMLElement> & {
           label?: string;
           name?: string;
+          value?: string;
           disabled?: boolean;
           class?: string;
         },
@@ -135,6 +136,7 @@ declare module 'react' {
       'sakuga-tabs': React.DetailedHTMLProps<
         React.HTMLAttributes<HTMLElement> & {
           label?: string;
+          selected?: number | string;
           class?: string;
         },
         SakugaTabsElement
@@ -227,6 +229,7 @@ declare global {
         React.HTMLAttributes<HTMLElement> & {
           label?: string;
           name?: string;
+          value?: string;
           disabled?: boolean;
           class?: string;
         },
@@ -247,6 +250,7 @@ declare global {
       'sakuga-tabs': React.DetailedHTMLProps<
         React.HTMLAttributes<HTMLElement> & {
           label?: string;
+          selected?: number | string;
           class?: string;
         },
         SakugaTabsElement

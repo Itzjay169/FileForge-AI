@@ -67,6 +67,7 @@ export const ForgeRadioGroup: React.FC<ForgeRadioGroupProps> = ({
         ref={radioRef}
         label={label || 'Select option'}
         name={name}
+        value={value}
         disabled={disabled ? true : undefined}
         class="w-full"
       >
@@ -74,7 +75,6 @@ export const ForgeRadioGroup: React.FC<ForgeRadioGroupProps> = ({
           <option
             key={opt.value}
             value={opt.value}
-            selected={opt.value === value ? true : undefined}
           >
             {opt.label} {opt.badge ? `(${opt.badge})` : ''}
           </option>

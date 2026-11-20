@@ -65,18 +65,20 @@ export const ForgeTabs: React.FC<ForgeTabsProps> = ({
     };
   }, [tabs, onChange, queryParam]);
 
+  const activeIndex = Math.max(0, tabs.findIndex((t) => t.id === activeTab));
+
   return (
     <div className={cn('w-full overflow-x-auto scrollbar-none py-1 select-none', className)}>
       <sakuga-tabs
         ref={tabsRef}
         label={ariaLabel}
+        selected={activeIndex}
         class="inline-flex cursor-pointer"
       >
         {tabs.map((tab) => (
           <option
             key={tab.id}
             value={tab.id}
-            selected={tab.id === activeTab ? true : undefined}
           >
             {tab.label}
           </option>
