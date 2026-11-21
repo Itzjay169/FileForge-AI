@@ -53,8 +53,14 @@ export interface CompressionOptions {
   preset?: CompressionPreset;
   quality: number; // 1 - 100
   targetSizeBytes?: number;
+  targetUnit?: 'KB' | 'MB';
+  targetMode?: 'exact' | 'under';
+  tolerancePercent?: number; // 1, 3, 5, 10
+  maxAttempts?: number; // 3, 5, 8, 10
+  preserveReadableQuality?: boolean;
+  qualityPreference?: 'balanced' | 'best_quality' | 'exact_target';
   targetReductionPercent?: number; // e.g. 70 means reduce by 70%
-  targetPlatformPreset?: 'whatsapp' | 'email' | 'instagram' | 'discord' | 'web';
+  targetPlatformPreset?: 'whatsapp' | 'email' | 'instagram' | 'facebook' | 'twitter' | 'telegram' | 'discord' | 'web';
   stripMetadata: boolean;
   outputFormat?: string; // e.g. 'webp', 'mp4', 'pdf'
   resolution?: {
@@ -281,7 +287,71 @@ export interface JobResult {
     duration?: number;
     pages?: number;
     qualityScore?: number;
+    targetAchieved?: boolean;
+    attemptsUsed?: number;
+    qualityWarning?: string | null;
+    targetSizeKB?: number;
+    finalSizeKB?: number;
+    qualityUsed?: number;
+    compressionStrengthUsed?: string;
+    compressionMethod?: string;
   };
+}
+
+export interface TargetSizeEstimateRequest {
+  fileId?: string;
+  storageKey?: string;
+  originalSizeBytes?: number;
+  extension?: string;
+  targetSize: number;
+  targetUnit: 'KB' | 'MB';
+  outputFormat?: string;
+  qualityPreference?: 'balanced' | 'best_quality' | 'exact_target';
+  preserveReadableQuality?: boolean;
+  maxAttempts?: number;
+  tolerancePercent?: number;
+}
+
+export interface TargetSizeEstimateResponse {
+  estimatedOutputSizeKB: number;
+  estimatedSavingsPercent: number;
+  estimatedProcessingTimeSeconds: number;
+  recommendedSettings: {
+    videoBitrateKbps?: number;
+    audioBitrateKbps?: number;
+    resolution?: string;
+    crf?: number;
+    quality?: number;
+    scalePercent?: number;
+    format?: string;
+  };
+  achievable: boolean;
+  warnings: string[];
+}
+
+export interface TargetSizeJobStatusResponse {
+  jobId: string;
+  status: 'queued' | 'processing' | 'completed' | 'failed' | 'cancelled';
+  attempt?: number;
+  maxAttempts?: number;
+  progress: number;
+  currentOutputSizeKB?: number;
+  targetSizeKB?: number;
+  message?: string;
+}
+
+export interface TargetSizeJobCompletionResponse {
+  jobId: string;
+  status: 'completed' | 'failed';
+  targetAchieved: boolean;
+  originalSizeKB: number;
+  finalSizeKB: number;
+  savingsPercent: number;
+  attemptsUsed: number;
+  downloadUrl: string;
+  qualityWarning: string | null;
+  qualityUsed?: number;
+  compressionStrengthUsed?: string;
 }
 
 export interface QueueItem {

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { compressionEngine } from '@/lib/server/compression-engine';
+import { targetSizeCompressionEngine } from '@/lib/server/target-size-compression-engine';
 import { storageService } from '@/lib/server/storage-service';
 import { validateFileBuffer } from '@/lib/server/file-validator';
 import { CompressionOptions, ApiResponse, JobResult } from '@fileforge/shared';
@@ -82,20 +83,73 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Execute compression engine
-    const result: JobResult = await compressionEngine.compress({
-      buffer,
-      originalName: validation.sanitizedName,
-      extension: validation.detectedExtension,
-      mimeType: validation.mimeType,
-      options
-    });
+    let result: JobResult;
+    let outputBuffer: Buffer;
+
+    // Route to TargetSizeCompressionEngine if target size or percentage reduction is requested
+    if (options.targetSizeBytes || options.targetReductionPercent) {
+      let targetBytes = options.targetSizeBytes;
+      if (!targetBytes && options.targetReductionPercent) {
+        targetBytes = Math.round(buffer.length * (1 - options.targetReductionPercent / 100));
+      }
+
+      const targetResult = await targetSizeCompressionEngine.compressToTarget({
+        buffer,
+        originalName: validation.sanitizedName,
+        extension: validation.detectedExtension,
+        mimeType: validation.mimeType,
+        targetSize: (targetBytes || buffer.length * 0.7) / 1024,
+        targetUnit: 'KB',
+        targetMode: options.targetMode || 'under',
+        tolerancePercent: options.tolerancePercent || 5,
+        maxAttempts: options.maxAttempts || 5,
+        preserveReadableQuality: options.preserveReadableQuality !== false,
+        qualityPreference: options.qualityPreference || 'balanced',
+        outputFormat: options.outputFormat
+      });
+
+      outputBuffer = targetResult.buffer;
+      result = {
+        jobId: targetResult.jobId,
+        outputFileUrl: '',
+        previewUrl: targetResult.previewUrl,
+        originalName: validation.sanitizedName,
+        outputName: targetResult.outputName,
+        originalSizeBytes: targetResult.originalSizeBytes,
+        outputSizeBytes: targetResult.finalSizeBytes,
+        savedBytes: Math.max(0, targetResult.originalSizeBytes - targetResult.finalSizeBytes),
+        savingsPercentage: targetResult.savingsPercent,
+        durationMs: targetResult.durationMs,
+        sha256Hash: targetResult.sha256Hash,
+        outputFormat: targetResult.outputFormat,
+        expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
+        metadata: {
+          qualityScore: targetResult.qualityUsed,
+          targetAchieved: targetResult.targetAchieved,
+          attemptsUsed: targetResult.attemptsUsed,
+          qualityWarning: targetResult.qualityWarning,
+          targetSizeKB: targetResult.targetSizeKB,
+          finalSizeKB: targetResult.finalSizeKB,
+          qualityUsed: targetResult.qualityUsed,
+          compressionStrengthUsed: targetResult.compressionStrengthUsed
+        }
+      };
+    } else {
+      // Standard single-pass compression engine
+      result = await compressionEngine.compress({
+        buffer,
+        originalName: validation.sanitizedName,
+        extension: validation.detectedExtension,
+        mimeType: validation.mimeType,
+        options
+      });
+
+      outputBuffer = result.previewUrl && result.previewUrl.startsWith('data:')
+        ? Buffer.from(result.previewUrl.split(',')[1], 'base64')
+        : buffer;
+    }
 
     // Save compressed result to storage
-    const outputBuffer = result.previewUrl && result.previewUrl.startsWith('data:')
-      ? Buffer.from(result.previewUrl.split(',')[1], 'base64')
-      : buffer; // Default to processed output
-
     const savedOutput = await storageService.saveFile(
       outputBuffer,
       result.outputName,

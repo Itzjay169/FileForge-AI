@@ -15,6 +15,8 @@ import {
   X,
   Eye,
   FileQuestion,
+  CheckCircle2,
+  AlertTriangle,
   type LucideIcon,
 } from 'lucide-react';
 import { type QueueItem } from '@fileforge/shared';
@@ -136,19 +138,60 @@ function QueueCard({ item }: { item: QueueItem }) {
           <StatusBadge status={item.status} />
         </div>
 
-        {/* Size + savings */}
-        <div className="flex items-center gap-3 text-xs text-muted-foreground">
-          <span>{formatFileSize(item.sizeBytes)}</span>
+        {/* Size + savings + target status row */}
+        <div className="flex items-center gap-3 text-xs text-muted-foreground flex-wrap">
+          <span>Orig: {formatFileSize(item.sizeBytes)}</span>
           {isCompleted && item.result && (
             <>
               <span className="text-muted-foreground/40">→</span>
-              <span className="text-foreground font-medium">{formatFileSize(item.result.outputSizeBytes)}</span>
+              <span className="text-foreground font-semibold">Final: {formatFileSize(item.result.outputSizeBytes)}</span>
               <span className="font-bold text-emerald-500">
                 −{item.result.savingsPercentage}%
               </span>
+
+              {/* Target Size Indicators */}
+              {item.result.metadata?.targetSizeKB && (
+                <span className="text-[11px] font-mono text-primary bg-primary/10 px-2 py-0.5 rounded-md border border-primary/20">
+                  Target: {item.result.metadata.targetSizeKB} KB
+                </span>
+              )}
+
+              {item.result.metadata?.targetAchieved === true && (
+                <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-500 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
+                  <CheckCircle2 className="w-3 h-3" />
+                  Target achieved
+                </span>
+              )}
+
+              {item.result.metadata?.targetAchieved === false && item.result.metadata?.qualityWarning && (
+                <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-amber-500 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">
+                  <AlertTriangle className="w-3 h-3" />
+                  Floor reached
+                </span>
+              )}
+
+              {item.result.metadata?.attemptsUsed && item.result.metadata.attemptsUsed > 1 && (
+                <span className="text-[11px] font-mono text-muted-foreground">
+                  ({item.result.metadata.attemptsUsed} passes)
+                </span>
+              )}
+
+              {item.result.metadata?.compressionStrengthUsed && (
+                <span className="text-[11px] font-mono text-muted-foreground">
+                  [{item.result.metadata.compressionStrengthUsed}]
+                </span>
+              )}
             </>
           )}
         </div>
+
+        {/* Quality warning if target couldn't be reached without degradation */}
+        {isCompleted && item.result?.metadata?.qualityWarning && (
+          <p className="text-xs text-amber-500 bg-amber-500/10 px-2.5 py-1.5 rounded-xl border border-amber-500/20 flex items-start gap-1.5">
+            <AlertTriangle className="w-3.5 h-3.5 shrink-0 mt-0.5" />
+            <span>{item.result.metadata.qualityWarning}</span>
+          </p>
+        )}
 
         {/* Progress bar (only while processing/uploading) */}
         {(isProcessing || item.status === 'UPLOADING') && (
