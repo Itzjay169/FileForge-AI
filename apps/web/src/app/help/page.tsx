@@ -87,18 +87,18 @@ export default function HelpCenterPage() {
         {/* Glow Header */}
         <div className="text-center py-12 relative">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-violet-600/10 rounded-full blur-[120px] pointer-events-none" />
-          <h1 className="text-4xl sm:text-5xl font-black text-white">How can we assist your workflow?</h1>
-          <p className="text-sm text-gray-400 mt-3 max-w-xl mx-auto">
+          <h1 className="text-4xl sm:text-5xl font-black text-foreground">How can we assist your workflow?</h1>
+          <p className="text-sm text-muted-foreground mt-3 max-w-xl mx-auto">
             Explore guides, technical API references, and troubleshooting docs for FileForge AI.
           </p>
 
           {/* Search Bar */}
           <div className="mt-8 max-w-xl mx-auto relative">
-            <Search className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+            <Search className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" />
             <input
               type="text"
               placeholder="Search guides, format docs, error codes..."
-              className="w-full bg-[#12121c] border border-white/10 rounded-2xl pl-12 pr-4 py-3.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-violet-500 shadow-xl"
+              className="w-full bg-card border border-border rounded-2xl pl-12 pr-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary shadow-xl"
             />
           </div>
         </div>
@@ -110,19 +110,19 @@ export default function HelpCenterPage() {
             return (
               <div
                 key={i}
-                className="p-6 rounded-3xl bg-[#12121c] border border-white/10 shadow-xl flex flex-col justify-between hover:border-violet-500/30 transition-colors"
+                className="p-6 rounded-3xl bg-card border border-border shadow-xl flex flex-col justify-between hover:border-primary/50 transition-colors"
               >
                 <div>
-                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-violet-600/20 to-pink-600/20 border border-violet-500/30 flex items-center justify-center text-violet-400 mb-4">
+                  <div className="w-12 h-12 rounded-2xl bg-violet-500/15 border border-violet-500/30 flex items-center justify-center text-primary mb-4">
                     <Icon className="w-6 h-6" />
                   </div>
-                  <h3 className="text-lg font-bold text-white">{cat.title}</h3>
-                  <p className="text-xs text-gray-400 mt-1.5 leading-relaxed">{cat.description}</p>
+                  <h3 className="text-lg font-bold text-foreground">{cat.title}</h3>
+                  <p className="text-xs text-muted-foreground mt-1.5 leading-relaxed">{cat.description}</p>
 
                   <ul className="mt-5 space-y-2.5">
                     {cat.articles.map((art, aIdx) => (
-                      <li key={aIdx} className="text-xs text-gray-300 hover:text-pink-400 flex items-center gap-2 cursor-pointer transition-colors">
-                        <ArrowRight className="w-3 h-3 text-violet-400 shrink-0" />
+                      <li key={aIdx} className="text-xs text-muted-foreground hover:text-primary flex items-center gap-2 cursor-pointer transition-colors">
+                        <ArrowRight className="w-3 h-3 text-primary shrink-0" />
                         <span className="truncate">{art}</span>
                       </li>
                     ))}
@@ -134,14 +134,14 @@ export default function HelpCenterPage() {
         </div>
 
         {/* Contact Banner */}
-        <div className="mt-16 p-8 rounded-3xl bg-gradient-to-r from-violet-950/40 via-[#12121c] to-pink-950/40 border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div className="mt-16 p-8 rounded-3xl bg-card border border-border shadow-2xl flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-violet-600/20 border border-violet-500/30 flex items-center justify-center text-violet-400 shrink-0">
+            <div className="w-12 h-12 rounded-2xl bg-violet-500/15 border border-violet-500/30 flex items-center justify-center text-primary shrink-0">
               <MessageSquare className="w-6 h-6" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-white">Need tailored enterprise assistance?</h3>
-              <p className="text-xs text-gray-400 mt-1">
+              <h3 className="text-base font-bold text-foreground">Need tailored enterprise assistance?</h3>
+              <p className="text-xs text-muted-foreground mt-1">
                 Our support team and solutions architects are available 24/7 for custom deployments and SLA inquiries.
               </p>
             </div>

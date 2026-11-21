@@ -130,15 +130,15 @@ export const FormatExplorer: React.FC<{ initialCategory?: string }> = ({ initial
 
         {/* Capability Filters */}
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-xs font-mono font-semibold text-[var(--sk-text-muted)] mr-1">Filter Capabilities:</span>
+          <span className="text-xs font-mono font-semibold text-muted-foreground mr-1">Filter Capabilities:</span>
           {(['all', 'compress', 'convert', 'preview', 'premium'] as const).map((filterKey) => (
             <button
               key={filterKey}
               onClick={() => setCapabilityFilter(filterKey)}
               className={`px-3 py-1 rounded-xl text-xs font-mono font-semibold uppercase tracking-wider transition-all cursor-pointer ${
                 capabilityFilter === filterKey
-                  ? 'bg-[var(--sk-acc)] text-white shadow-sm'
-                  : 'bg-white/5 text-[var(--sk-text-muted)] hover:text-white hover:bg-white/10 border border-[var(--sk-border)]'
+                  ? 'bg-primary text-primary-foreground shadow-sm'
+                  : 'bg-muted/50 text-muted-foreground hover:text-foreground hover:bg-muted border border-border'
               }`}
             >
               {filterKey}
@@ -151,14 +151,14 @@ export const FormatExplorer: React.FC<{ initialCategory?: string }> = ({ initial
       <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-8 scrollbar-none">
         <button
           onClick={() => setSelectedCategory('ALL')}
-          className={`px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-2 ${
+          className={`px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-2 cursor-pointer ${
             selectedCategory === 'ALL'
               ? 'bg-gradient-to-r from-violet-600 to-pink-500 text-white shadow-lg shadow-violet-500/20'
-              : 'bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white border border-white/10'
+              : 'bg-muted/50 hover:bg-muted text-muted-foreground hover:text-foreground border border-border'
           }`}
         >
           <span>All Formats</span>
-          <span className="text-[10px] bg-black/30 px-1.5 py-0.5 rounded-full font-mono">
+          <span className="text-[10px] bg-black/20 dark:bg-black/40 px-1.5 py-0.5 rounded-full font-mono">
             {allFormats.length}
           </span>
         </button>
@@ -171,15 +171,15 @@ export const FormatExplorer: React.FC<{ initialCategory?: string }> = ({ initial
             <button
               key={cat.id}
               onClick={() => setSelectedCategory(cat.id)}
-              className={`px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-2 border ${
+              className={`px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-2 border cursor-pointer ${
                 isSelected
                   ? 'bg-violet-600 text-white border-violet-400 shadow-md'
-                  : 'bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white border-white/10'
+                  : 'bg-muted/50 hover:bg-muted text-muted-foreground hover:text-foreground border-border'
               }`}
             >
               {getCategoryIcon(cat.id)}
               <span>{cat.label}</span>
-              <span className="text-[10px] bg-black/30 px-1.5 py-0.5 rounded-full font-mono">
+              <span className="text-[10px] bg-black/20 dark:bg-black/40 px-1.5 py-0.5 rounded-full font-mono">
                 {count}
               </span>
             </button>
@@ -188,15 +188,15 @@ export const FormatExplorer: React.FC<{ initialCategory?: string }> = ({ initial
       </div>
 
       {/* Results Count Banner */}
-      <div className="flex items-center justify-between text-xs text-gray-400 mb-6 font-mono">
+      <div className="flex items-center justify-between text-xs text-muted-foreground mb-6 font-mono">
         <span>
-          Showing <strong className="text-white font-bold">{filteredFormats.length}</strong> format
+          Showing <strong className="text-foreground font-bold">{filteredFormats.length}</strong> format
           definitions
         </span>
         {search && (
           <button
             onClick={() => setSearch('')}
-            className="text-violet-400 hover:underline cursor-pointer"
+            className="text-primary hover:underline cursor-pointer"
           >
             Clear Search
           </button>
@@ -214,12 +214,12 @@ export const FormatExplorer: React.FC<{ initialCategory?: string }> = ({ initial
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.2 }}
             onClick={() => setSelectedFormat(item)}
-            className="bg-[#12121c] border border-white/10 hover:border-violet-500/40 rounded-2xl p-5 cursor-pointer transition-all hover:shadow-xl hover:shadow-violet-950/20 flex flex-col justify-between group"
+            className="bg-card border border-border hover:border-primary/50 rounded-2xl p-5 cursor-pointer transition-all hover:shadow-xl flex flex-col justify-between group"
           >
             <div>
               {/* Card Top: Extension badge & Category */}
               <div className="flex items-center justify-between mb-3">
-                <span className="text-sm font-mono font-extrabold px-2.5 py-1 rounded-lg bg-gradient-to-r from-violet-500/20 to-pink-500/20 text-violet-300 border border-violet-500/30 group-hover:scale-105 transition-transform">
+                <span className="text-sm font-mono font-extrabold px-2.5 py-1 rounded-lg bg-violet-500/15 text-primary border border-violet-500/30 group-hover:scale-105 transition-transform">
                   .{item.extension.toUpperCase()}
                 </span>
                 <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full border ${getRiskBadge(item.riskLevel)}`}>
@@ -228,30 +228,30 @@ export const FormatExplorer: React.FC<{ initialCategory?: string }> = ({ initial
               </div>
 
               {/* Title & Description */}
-              <h4 className="text-sm font-bold text-white mb-1.5 font-sans group-hover:text-violet-300 transition-colors">
+              <h4 className="text-sm font-bold text-foreground mb-1.5 font-sans group-hover:text-primary transition-colors">
                 {item.name}
               </h4>
-              <p className="text-xs text-gray-400 line-clamp-2 leading-relaxed mb-4">
+              <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed mb-4">
                 {item.description}
               </p>
             </div>
 
             {/* Bottom Capabilities Pills */}
-            <div className="pt-3 border-t border-white/5 flex flex-wrap items-center justify-between gap-2 text-[11px]">
+            <div className="pt-3 border-t border-border flex flex-wrap items-center justify-between gap-2 text-[11px]">
               <div className="flex items-center gap-1.5">
                 {item.compressionSupported && (
-                  <span className="text-emerald-400 font-mono flex items-center gap-0.5">
+                  <span className="text-emerald-500 font-mono flex items-center gap-0.5">
                     <Check className="w-3 h-3" /> Compress
                   </span>
                 )}
                 {item.conversionTargets.length > 0 && (
-                  <span className="text-cyan-400 font-mono flex items-center gap-0.5">
+                  <span className="text-cyan-500 font-mono flex items-center gap-0.5">
                     <ArrowRight className="w-3 h-3" /> {item.conversionTargets.length} Targets
                   </span>
                 )}
               </div>
 
-              <span className="text-gray-400 group-hover:text-white transition-colors flex items-center gap-1">
+              <span className="text-muted-foreground group-hover:text-foreground transition-colors flex items-center gap-1">
                 Inspect <ChevronRight className="w-3 h-3" />
               </span>
             </div>
@@ -260,9 +260,9 @@ export const FormatExplorer: React.FC<{ initialCategory?: string }> = ({ initial
       </div>
 
       {filteredFormats.length === 0 && (
-        <div className="text-center py-20 bg-[#12121c] border border-white/10 rounded-3xl p-8">
-          <p className="text-lg font-bold text-white mb-2">No formats matched your search</p>
-          <p className="text-xs text-gray-400 mb-6">
+        <div className="text-center py-20 bg-card border border-border rounded-3xl p-8">
+          <p className="text-lg font-bold text-foreground mb-2">No formats matched your search</p>
+          <p className="text-xs text-muted-foreground mb-6">
             Try searching with another keyword or pick an explicit category tab above.
           </p>
           <ForgeButton
@@ -296,23 +296,23 @@ export const FormatExplorer: React.FC<{ initialCategory?: string }> = ({ initial
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 15 }}
               transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-              className="relative w-full max-w-2xl bg-[#141422] border border-white/20 rounded-3xl p-6 sm:p-8 shadow-2xl z-10 max-h-[85vh] overflow-y-auto"
+              className="relative w-full max-w-2xl bg-card border border-border rounded-3xl p-6 sm:p-8 shadow-2xl z-10 max-h-[85vh] overflow-y-auto"
             >
               {/* Modal Header */}
-              <div className="flex items-start justify-between pb-6 border-b border-white/10 mb-6">
+              <div className="flex items-start justify-between pb-6 border-b border-border mb-6">
                 <div className="flex items-center gap-3">
-                  <span className="text-lg font-mono font-bold px-3 py-1.5 rounded-xl bg-violet-600/20 text-violet-300 border border-violet-500/30">
+                  <span className="text-lg font-mono font-bold px-3 py-1.5 rounded-xl bg-violet-600/20 text-primary border border-violet-500/30">
                     .{selectedFormat.extension.toUpperCase()}
                   </span>
                   <div>
-                    <h3 className="text-lg font-bold text-white">{selectedFormat.name}</h3>
-                    <p className="text-xs text-gray-400">
+                    <h3 className="text-lg font-bold text-foreground">{selectedFormat.name}</h3>
+                    <p className="text-xs text-muted-foreground">
                       Category:{' '}
-                      <span className="capitalize font-medium text-violet-400">
+                      <span className="capitalize font-medium text-primary">
                         {selectedFormat.category}
                       </span>{' '}
                       • Processor:{' '}
-                      <span className="font-mono text-pink-400">
+                      <span className="font-mono text-pink-500">
                         {selectedFormat.requiredProcessor}
                       </span>
                     </p>
@@ -321,38 +321,38 @@ export const FormatExplorer: React.FC<{ initialCategory?: string }> = ({ initial
 
                 <button
                   onClick={() => setSelectedFormat(null)}
-                  className="p-1.5 rounded-lg text-gray-400 hover:text-white hover:bg-white/10"
+                  className="p-1.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted cursor-pointer"
                 >
                   ✕
                 </button>
               </div>
 
               {/* Description */}
-              <p className="text-sm text-gray-300 leading-relaxed mb-6">
+              <p className="text-sm text-foreground/90 leading-relaxed mb-6">
                 {selectedFormat.description}
               </p>
 
               {/* Specs Grid */}
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-6 text-xs">
-                <div className="p-3 rounded-xl bg-white/5 border border-white/10">
-                  <span className="text-gray-400 block mb-1">Upload Allowed</span>
-                  <span className="font-semibold text-emerald-400 flex items-center gap-1">
+                <div className="p-3 rounded-xl bg-muted/50 border border-border">
+                  <span className="text-muted-foreground block mb-1">Upload Allowed</span>
+                  <span className="font-semibold text-emerald-500 flex items-center gap-1">
                     <Check className="w-3.5 h-3.5" /> Allowed
                   </span>
                 </div>
-                <div className="p-3 rounded-xl bg-white/5 border border-white/10">
-                  <span className="text-gray-400 block mb-1">Compression</span>
+                <div className="p-3 rounded-xl bg-muted/50 border border-border">
+                  <span className="text-muted-foreground block mb-1">Compression</span>
                   <span
                     className={`font-semibold flex items-center gap-1 ${
-                      selectedFormat.compressionSupported ? 'text-emerald-400' : 'text-gray-500'
+                      selectedFormat.compressionSupported ? 'text-emerald-500' : 'text-muted-foreground'
                     }`}
                   >
                     {selectedFormat.compressionSupported ? 'Supported' : 'Not Applicable'}
                   </span>
                 </div>
-                <div className="p-3 rounded-xl bg-white/5 border border-white/10">
-                  <span className="text-gray-400 block mb-1">Free Tier Limit</span>
-                  <span className="font-mono text-violet-300 font-semibold">
+                <div className="p-3 rounded-xl bg-muted/50 border border-border">
+                  <span className="text-muted-foreground block mb-1">Free Tier Limit</span>
+                  <span className="font-mono text-primary font-semibold">
                     {Math.round(selectedFormat.maxFreeSizeBytes / (1024 * 1024))} MB
                   </span>
                 </div>
@@ -360,7 +360,7 @@ export const FormatExplorer: React.FC<{ initialCategory?: string }> = ({ initial
 
               {/* Conversion Targets */}
               <div className="mb-6">
-                <h4 className="text-xs font-mono uppercase text-gray-400 mb-3 font-bold tracking-wider">
+                <h4 className="text-xs font-mono uppercase text-muted-foreground mb-3 font-bold tracking-wider">
                   Supported Conversion Targets ({selectedFormat.conversionTargets.length})
                 </h4>
 
@@ -373,14 +373,14 @@ export const FormatExplorer: React.FC<{ initialCategory?: string }> = ({ initial
                           key={target}
                           className={`px-3 py-1.5 rounded-xl border text-xs font-mono flex items-center gap-1.5 ${
                             warning
-                              ? 'bg-amber-500/10 border-amber-500/30 text-amber-300'
-                              : 'bg-white/5 border-white/10 text-white'
+                              ? 'bg-amber-500/10 border-amber-500/30 text-amber-500'
+                              : 'bg-muted/50 border border-border text-foreground'
                           }`}
                         >
                           <span>.{target.toUpperCase()}</span>
                           {warning && (
                             <span title={warning.warningTitle}>
-                              <AlertTriangle className="w-3 h-3 text-amber-400" />
+                              <AlertTriangle className="w-3 h-3 text-amber-500" />
                             </span>
                           )}
                         </div>
@@ -388,14 +388,14 @@ export const FormatExplorer: React.FC<{ initialCategory?: string }> = ({ initial
                     })}
                   </div>
                 ) : (
-                  <p className="text-xs text-gray-500 italic">
+                  <p className="text-xs text-muted-foreground italic">
                     Direct conversion targets not registered for this system file. Packaging into archive (.ZIP) is supported.
                   </p>
                 )}
               </div>
 
               {/* Action Buttons */}
-              <div className="flex flex-wrap items-center justify-end gap-3 pt-6 border-t border-white/10">
+              <div className="flex flex-wrap items-center justify-end gap-3 pt-6 border-t border-border">
                 <ForgeButton
                   variant="secondary"
                   size="md"
@@ -415,7 +415,7 @@ export const FormatExplorer: React.FC<{ initialCategory?: string }> = ({ initial
                     window.location.hash = 'playground';
                   }}
                 >
-                  <Zap className="w-4 h-4 fill-current text-[var(--sk-acc)]" />
+                  <Zap className="w-4 h-4 fill-current text-primary-foreground" />
                   <span>Launch in Studio</span>
                 </ForgeButton>
               </div>

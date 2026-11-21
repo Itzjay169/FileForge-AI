@@ -173,26 +173,39 @@ export function AboutClient() {
             {/* Ambient Background Glow */}
             <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-violet-600/10 via-pink-500/10 to-transparent blur-3xl pointer-events-none" />
 
-            {/* Header: Vexora Technology */}
-            <div className="relative z-10 space-y-4 border-b border-border pb-8">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-pink-500/10 border border-pink-500/25 text-pink-500 text-xs font-mono font-bold">
-                <span>🇮🇳</span>
-                <span>BASED IN INDIA · MEET THE CREATOR</span>
+            {/* Header: Vexora Technology with Official Vexora Logo */}
+            <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 border-b border-border pb-8">
+              <div className="space-y-4 flex-1">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-pink-500/10 border border-pink-500/25 text-pink-500 text-xs font-mono font-bold">
+                  <span>🇮🇳</span>
+                  <span>BASED IN INDIA · MEET THE CREATOR</span>
+                </div>
+
+                <h2 className="text-3xl sm:text-4xl font-black text-foreground tracking-tight">
+                  About Vexora Technology
+                </h2>
+                <h3 className="text-lg sm:text-xl font-bold text-primary">
+                  Turning Ideas Into Digital Reality
+                </h3>
+
+                <p className="text-sm sm:text-base text-foreground/80 leading-relaxed max-w-2xl">
+                  Based in India, Vexora Technology is a technology-driven software development company focused on creating innovative digital products and smart software solutions. We transform ideas into practical, reliable, and user-friendly digital experiences.
+                </p>
+                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-2xl">
+                  We believe technology should do more than solve problems — it should create opportunities, simplify everyday life, and shape a smarter future.
+                </p>
               </div>
 
-              <h2 className="text-3xl sm:text-4xl font-black text-foreground tracking-tight">
-                About Vexora Technology
-              </h2>
-              <h3 className="text-lg sm:text-xl font-bold text-primary">
-                Turning Ideas Into Digital Reality
-              </h3>
-
-              <p className="text-sm sm:text-base text-foreground/80 leading-relaxed max-w-3xl">
-                Based in India, Vexora Technology is a technology-driven software development company focused on creating innovative digital products and smart software solutions. We transform ideas into practical, reliable, and user-friendly digital experiences.
-              </p>
-              <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-3xl">
-                We believe technology should do more than solve problems — it should create opportunities, simplify everyday life, and shape a smarter future.
-              </p>
+              <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-3xl overflow-hidden border-2 border-primary/40 shadow-2xl shadow-cyan-500/20 shrink-0 bg-black/40 p-1 flex items-center justify-center">
+                <Image
+                  src="/vexora-logo.png"
+                  alt="Vexora Technology Logo"
+                  width={144}
+                  height={144}
+                  className="w-full h-full object-contain rounded-2xl"
+                  priority
+                />
+              </div>
             </div>
 
             {/* Who We Are & What We Do */}
@@ -247,19 +260,6 @@ export function AboutClient() {
               </div>
             </div>
 
-            {/* Featured Product: F.R.I.D.A.Y. */}
-            <div className="relative z-10 p-6 rounded-2xl bg-muted/40 border border-border space-y-3">
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-mono font-bold text-pink-500 uppercase tracking-wider">FEATURED PRODUCT</span>
-              </div>
-              <h3 className="text-xl font-black text-foreground">F.R.I.D.A.Y. – The Trading Desk</h3>
-              <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                F.R.I.D.A.Y. is one of our software products, developed under Vexora Technology. It is a voice-driven trading research and paper-trading desktop application designed to help users research markets, plan trades, and review trading decisions.
-              </p>
-              <p className="text-xs text-muted-foreground/80">
-                We aim to develop more innovative products that bring technology closer to everyday needs.
-              </p>
-            </div>
 
             {/* Lead Developer Section */}
             <div className="relative z-10 pt-4 space-y-6">

@@ -23,7 +23,7 @@ function FormatsContent() {
         <div className="mb-6">
           <Link
             href="/"
-            className="inline-flex items-center gap-1.5 text-xs text-gray-400 hover:text-white transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>Back to Studio</span>
@@ -32,14 +32,14 @@ function FormatsContent() {
 
         {/* Page Title & Intro */}
         <div className="max-w-3xl mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/20 text-xs font-semibold text-violet-300 mb-3">
-            <Sparkles className="w-3.5 h-3.5 text-pink-400" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/20 text-xs font-semibold text-primary mb-3">
+            <Sparkles className="w-3.5 h-3.5 text-pink-500" />
             <span>Universal File-Type Registry</span>
           </div>
-          <h1 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight font-sans">
+          <h1 className="text-3xl sm:text-5xl font-extrabold text-foreground tracking-tight font-sans">
             Supported Formats Explorer
           </h1>
-          <p className="mt-3 text-sm sm:text-base text-gray-400 leading-relaxed">
+          <p className="mt-3 text-sm sm:text-base text-muted-foreground leading-relaxed">
             Search any extension across 12 distinct file categories. Inspect supported conversions,
             loss warnings, risk levels, and isolated processor engines.
           </p>
