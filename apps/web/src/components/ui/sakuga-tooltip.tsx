@@ -75,7 +75,7 @@ export const SakugaTooltipContent: React.FC<{
         <motion.div
           role="tooltip"
           className={cn(
-            'absolute z-50 px-2.5 py-1 text-xs font-medium text-white bg-forge-bg-card border border-white/15 rounded-lg shadow-xl shadow-black/40 backdrop-blur-md pointer-events-none whitespace-nowrap',
+            'absolute z-50 px-2.5 py-1 text-xs font-medium text-foreground bg-card border border-border rounded-lg shadow-xl backdrop-blur-md pointer-events-none whitespace-nowrap',
             positionClasses[side],
             className
           )}

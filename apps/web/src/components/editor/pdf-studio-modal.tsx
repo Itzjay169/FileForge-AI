@@ -103,31 +103,31 @@ export const PdfStudioModal: React.FC<PdfStudioModalProps> = ({
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={prefersReduced ? { opacity: 0 } : { opacity: 0, scale: 0.94, y: 15 }}
           transition={{ type: 'spring', damping: 25, stiffness: 350 }}
-          className="relative w-full max-w-2xl bg-[#12121a] border border-white/15 rounded-3xl p-6 shadow-2xl z-10 overflow-hidden flex flex-col max-h-[85vh]"
+          className="relative w-full max-w-2xl bg-card border border-border rounded-3xl p-6 shadow-2xl z-10 overflow-hidden flex flex-col max-h-[85vh]"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
-          <div className="flex items-center justify-between pb-4 border-b border-white/10">
+          <div className="flex items-center justify-between pb-4 border-b border-border">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-violet-500/15 flex items-center justify-center text-violet-400">
+              <div className="w-10 h-10 rounded-xl bg-violet-500/15 flex items-center justify-center text-violet-500">
                 <FileText className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="text-base font-bold text-white">PDF Toolkit & Studio</h3>
-                <p className="text-xs text-white/40">{file.name}</p>
+                <h3 className="text-base font-bold text-foreground">PDF Toolkit & Studio</h3>
+                <p className="text-xs text-muted-foreground">{file.name}</p>
               </div>
             </div>
 
             <button
               onClick={onClose}
-              className="p-1.5 rounded-xl text-white/40 hover:text-white hover:bg-white/10 transition-colors"
+              className="p-1.5 rounded-xl text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
           </div>
 
           {/* Mode Selector Tabs */}
-          <div className="grid grid-cols-5 gap-2 py-4 border-b border-white/5">
+          <div className="grid grid-cols-5 gap-2 py-4 border-b border-border">
             {MODES.map((m) => {
               const Icon = m.icon;
               const isSelected = activeMode === m.id;
@@ -142,8 +142,8 @@ export const PdfStudioModal: React.FC<PdfStudioModalProps> = ({
                   className={cn(
                     'p-2.5 rounded-xl border flex flex-col items-center gap-1.5 text-center cursor-pointer transition-all',
                     isSelected
-                      ? 'bg-violet-600/20 border-violet-500/60 text-violet-300'
-                      : 'bg-white/[0.03] border-white/10 text-white/50 hover:bg-white/5 hover:text-white'
+                      ? 'bg-violet-600/20 border-violet-500/60 text-primary font-bold'
+                      : 'bg-muted/40 border-border text-muted-foreground hover:bg-muted hover:text-foreground'
                   )}
                 >
                   <Icon className="w-4 h-4" />
@@ -157,7 +157,7 @@ export const PdfStudioModal: React.FC<PdfStudioModalProps> = ({
           <div className="py-5 space-y-4 flex-1 overflow-y-auto pr-1">
             {activeMode === 'rotate' && (
               <div className="space-y-3">
-                <label className="text-xs font-semibold text-white/70 block uppercase">
+                <label className="text-xs font-semibold text-foreground block uppercase">
                   Rotation Angle
                 </label>
                 <div className="flex gap-2">
@@ -170,7 +170,7 @@ export const PdfStudioModal: React.FC<PdfStudioModalProps> = ({
                         'flex-1 h-11 rounded-xl border text-xs font-mono font-bold cursor-pointer transition-colors',
                         rotateDegrees === deg
                           ? 'bg-violet-600 text-white border-violet-400'
-                          : 'bg-white/5 border-white/10 text-white/60 hover:text-white'
+                          : 'bg-muted border-border text-muted-foreground hover:text-foreground'
                       )}
                     >
                       {deg}° Clockwise
@@ -182,7 +182,7 @@ export const PdfStudioModal: React.FC<PdfStudioModalProps> = ({
 
             {activeMode === 'page_numbers' && (
               <div className="space-y-3">
-                <label className="text-xs font-semibold text-white/70 block uppercase">
+                <label className="text-xs font-semibold text-foreground block uppercase">
                   Stamp Format
                 </label>
                 <div className="flex gap-2">
@@ -193,7 +193,7 @@ export const PdfStudioModal: React.FC<PdfStudioModalProps> = ({
                       'flex-1 h-11 rounded-xl border text-xs font-mono cursor-pointer transition-colors',
                       pageNumberFormat === 'PAGE_X_OF_Y'
                         ? 'bg-violet-600 text-white border-violet-400 font-bold'
-                        : 'bg-white/5 border-white/10 text-white/60'
+                        : 'bg-muted border-border text-muted-foreground hover:text-foreground'
                     )}
                   >
                     Page 1 of 10
@@ -206,7 +206,7 @@ export const PdfStudioModal: React.FC<PdfStudioModalProps> = ({
                       'flex-1 h-11 rounded-xl border text-xs font-mono cursor-pointer transition-colors',
                       pageNumberFormat === 'PAGE_X'
                         ? 'bg-violet-600 text-white border-violet-400 font-bold'
-                        : 'bg-white/5 border-white/10 text-white/60'
+                        : 'bg-muted border-border text-muted-foreground hover:text-foreground'
                     )}
                   >
                     Page 1
@@ -217,7 +217,7 @@ export const PdfStudioModal: React.FC<PdfStudioModalProps> = ({
 
             {activeMode === 'password' && (
               <div className="space-y-2">
-                <label className="text-xs font-semibold text-white/70 block uppercase">
+                <label className="text-xs font-semibold text-foreground block uppercase">
                   Encryption Password
                 </label>
                 <input
@@ -225,15 +225,15 @@ export const PdfStudioModal: React.FC<PdfStudioModalProps> = ({
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter access password to protect document..."
-                  className="w-full h-11 px-4 bg-white/5 border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-violet-500/50"
+                  className="w-full h-11 px-4 bg-muted/50 border border-border rounded-xl text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-violet-500/50"
                 />
               </div>
             )}
 
             {activeMode === 'compress' && (
-              <div className="p-4 bg-white/[0.03] border border-white/10 rounded-2xl space-y-1">
-                <span className="text-xs font-semibold text-white">Stream Sanitization</span>
-                <p className="text-xs text-white/40">
+              <div className="p-4 bg-muted/40 border border-border rounded-2xl space-y-1">
+                <span className="text-xs font-semibold text-foreground">Stream Sanitization</span>
+                <p className="text-xs text-muted-foreground">
                   Flattens redundant XML metadata, optimizes content streams, and cleans unreferenced objects.
                 </p>
               </div>
@@ -241,19 +241,19 @@ export const PdfStudioModal: React.FC<PdfStudioModalProps> = ({
 
             {activeMode === 'ocr' && (
               <div className="space-y-3">
-                <div className="p-4 bg-white/[0.03] border border-white/10 rounded-2xl">
-                  <span className="text-xs font-semibold text-white">OCR Text Extraction</span>
-                  <p className="text-xs text-white/40 mt-0.5">
+                <div className="p-4 bg-muted/40 border border-border rounded-2xl">
+                  <span className="text-xs font-semibold text-foreground">OCR Text Extraction</span>
+                  <p className="text-xs text-muted-foreground mt-0.5">
                     Parses font glyph mappings and uncompressed text streams into clean text.
                   </p>
                 </div>
 
                 {ocrResultText && (
                   <div className="space-y-1.5">
-                    <span className="text-xs font-mono text-emerald-400 font-bold">
+                    <span className="text-xs font-mono text-emerald-500 font-bold">
                       Extracted Transcript Preview:
                     </span>
-                    <pre className="p-3 bg-black/50 border border-white/10 rounded-xl text-xs text-white/80 font-mono max-h-40 overflow-y-auto whitespace-pre-wrap">
+                    <pre className="p-3 bg-muted/60 border border-border rounded-xl text-xs text-foreground font-mono max-h-40 overflow-y-auto whitespace-pre-wrap">
                       {ocrResultText}
                     </pre>
                   </div>
@@ -263,7 +263,7 @@ export const PdfStudioModal: React.FC<PdfStudioModalProps> = ({
           </div>
 
           {/* Footer Actions */}
-          <div className="flex items-center justify-end gap-3 pt-4 border-t border-white/10">
+          <div className="flex items-center justify-end gap-3 pt-4 border-t border-border">
             <ForgeButton variant="ghost" size="sm" onClick={onClose}>
               <span>Cancel</span>
             </ForgeButton>

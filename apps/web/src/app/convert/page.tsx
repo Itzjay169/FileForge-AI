@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import { Navbar } from '@/components/layout/navbar';
-import { Footer } from '@/components/layout/footer';
 import { CommandPalette } from '@/components/layout/command-palette';
 import { ConversionDropzone } from '@/components/convert/conversion-dropzone';
 import { ConversionOptionsDrawer } from '@/components/convert/conversion-options-drawer';
@@ -31,16 +30,16 @@ export default function ConvertPage() {
         >
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-violet-500/10 via-pink-500/10 to-violet-500/10 border border-violet-500/30 backdrop-blur-md mb-4 shadow-sm">
             <RefreshCw className="w-3.5 h-3.5 text-pink-400 animate-spin-slow" />
-            <span className="text-xs font-medium text-violet-200">
+            <span className="text-xs font-semibold text-primary">
               Universal Conversion Engine • 100+ Compatible Formats
             </span>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white mb-3">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-foreground mb-3">
             Transcode Any File Format
           </h1>
 
-          <p className="text-sm sm:text-base text-gray-400 max-w-xl mx-auto leading-relaxed">
+          <p className="text-sm sm:text-base text-muted-foreground max-w-xl mx-auto leading-relaxed">
             Convert documents, spreadsheets, raster/vector images, videos, audio tracks, archives, and 3D meshes with clear compatibility warnings.
           </p>
         </motion.div>
@@ -84,7 +83,6 @@ export default function ConvertPage() {
         <ConversionHistoryList />
       </main>
 
-      <Footer />
       <CommandPalette
         isOpen={commandPaletteOpen}
         onClose={() => setCommandPaletteOpen(false)}

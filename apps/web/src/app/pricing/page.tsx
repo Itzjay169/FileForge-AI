@@ -25,7 +25,6 @@ const INR_PLAN_PRICES: Record<string, { monthly: number; yearly: number }> = {
 };
 import { ForgeButton } from '@/components/sakuga';
 import { Navbar } from '@/components/layout/navbar';
-import { Footer } from '@/components/layout/footer';
 
 export default function PricingPage() {
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('yearly');
@@ -88,25 +87,25 @@ export default function PricingPage() {
           <Sparkles className="w-3.5 h-3.5 animate-pulse" />
           <span>Flexible Creator & Enterprise Plans</span>
         </div>
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white max-w-3xl mx-auto">
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-foreground max-w-3xl mx-auto">
           Scale your media workflow with <span className="bg-gradient-to-r from-violet-400 via-pink-400 to-amber-300 bg-clip-text text-transparent">zero friction</span>.
         </h1>
-        <p className="mt-5 text-gray-400 max-w-2xl mx-auto text-base sm:text-lg">
+        <p className="mt-5 text-muted-foreground max-w-2xl mx-auto text-base sm:text-lg">
           From solo artists to global multimedia studios. High-throughput lossless compression, universal conversions, and AI transparency built for scale.
         </p>
 
-        <div className="mt-4 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-xs font-mono font-bold text-emerald-400">
+        <div className="mt-4 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-xs font-mono font-bold text-emerald-500">
           <span>🇮🇳 Indian Rupee (INR ₹) · Localized for Creators in India & Global Studios</span>
         </div>
 
         {/* Billing Cycle Toggle */}
-        <div className="mt-8 inline-flex items-center gap-3 p-1.5 rounded-2xl bg-[#12121c] border border-white/10 shadow-2xl">
+        <div className="mt-8 inline-flex items-center gap-3 p-1.5 rounded-2xl bg-card border border-border shadow-2xl">
           <button
             onClick={() => setBillingCycle('monthly')}
             className={`px-5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all ${
               billingCycle === 'monthly'
                 ? 'bg-gradient-to-r from-violet-600 to-pink-600 text-white shadow-lg shadow-violet-900/40'
-                : 'text-gray-400 hover:text-white'
+                : 'text-muted-foreground hover:text-foreground'
             }`}
           >
             Monthly Billing
@@ -116,7 +115,7 @@ export default function PricingPage() {
             className={`px-5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all flex items-center gap-2 ${
               billingCycle === 'yearly'
                 ? 'bg-gradient-to-r from-violet-600 to-pink-600 text-white shadow-lg shadow-violet-900/40'
-                : 'text-gray-400 hover:text-white'
+                : 'text-muted-foreground hover:text-foreground'
             }`}
           >
             <span>Annual Billing</span>
@@ -143,8 +142,8 @@ export default function PricingPage() {
                 transition={{ duration: 0.2 }}
                 className={`relative rounded-3xl p-6 sm:p-7 flex flex-col justify-between backdrop-blur-xl border ${
                   isPopular
-                    ? 'bg-gradient-to-b from-[#18122c] to-[#12121c] border-violet-500/50 shadow-2xl shadow-violet-950/50'
-                    : 'bg-[#12121c]/90 border-white/10 shadow-xl'
+                    ? 'bg-card border-violet-500/60 shadow-2xl shadow-violet-500/20 ring-1 ring-violet-500/30'
+                    : 'bg-card border-border shadow-xl'
                 }`}
               >
                 {isPopular && (
@@ -155,36 +154,36 @@ export default function PricingPage() {
 
                 <div>
                   <div className="flex items-center justify-between">
-                    <h3 className="text-xl font-bold text-white flex items-center gap-2">
-                      {plan.id === 'FREE' && <Zap className="w-5 h-5 text-gray-400" />}
-                      {plan.id === 'PRO_CREATIVE' && <Crown className="w-5 h-5 text-violet-400" />}
-                      {plan.id === 'STUDIO_TEAM' && <Building2 className="w-5 h-5 text-pink-400" />}
-                      {plan.id === 'ENTERPRISE' && <ShieldCheck className="w-5 h-5 text-amber-400" />}
+                    <h3 className="text-xl font-bold text-foreground flex items-center gap-2">
+                      {plan.id === 'FREE' && <Zap className="w-5 h-5 text-muted-foreground" />}
+                      {plan.id === 'PRO_CREATIVE' && <Crown className="w-5 h-5 text-violet-500" />}
+                      {plan.id === 'STUDIO_TEAM' && <Building2 className="w-5 h-5 text-pink-500" />}
+                      {plan.id === 'ENTERPRISE' && <ShieldCheck className="w-5 h-5 text-amber-500" />}
                       {plan.name}
                     </h3>
                   </div>
-                  <p className="mt-2 text-xs text-gray-400 min-h-[32px]">{plan.tagline}</p>
+                  <p className="mt-2 text-xs text-muted-foreground min-h-[32px]">{plan.tagline}</p>
 
                   {/* Price in INR */}
                   <div className="mt-6 flex items-baseline gap-1">
-                    <span className="text-4xl font-extrabold tracking-tight text-white font-mono">
+                    <span className="text-4xl font-extrabold tracking-tight text-foreground font-mono">
                       {price === 0 ? '₹0' : `₹${price.toLocaleString('en-IN')}`}
                     </span>
-                    <span className="text-xs text-gray-400 font-medium">/ month</span>
+                    <span className="text-xs text-muted-foreground font-medium">/ month</span>
                   </div>
                   {billingCycle === 'yearly' && inrData.monthly > 0 && (
-                    <p className="text-[11px] text-pink-400 mt-1 font-medium font-mono">
+                    <p className="text-[11px] text-pink-500 mt-1 font-semibold font-mono">
                       Billed ₹{inrData.yearly.toLocaleString('en-IN')}/year
                     </p>
                   )}
 
-                  <hr className="my-6 border-white/10" />
+                  <hr className="my-6 border-border" />
 
                   {/* Features */}
-                  <ul className="space-y-3 text-xs text-gray-300">
+                  <ul className="space-y-3 text-xs text-foreground/80">
                     {plan.features.map((feature, idx) => (
                       <li key={idx} className="flex items-start gap-2.5">
-                        <Check className="w-4 h-4 text-violet-400 shrink-0 mt-0.5" />
+                        <Check className="w-4 h-4 text-violet-500 shrink-0 mt-0.5" />
                         <span>{feature}</span>
                       </li>
                     ))}
@@ -224,14 +223,14 @@ export default function PricingPage() {
 
       {/* Credit Pack Add-on Banner */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
-        <div className="rounded-3xl p-6 sm:p-8 bg-gradient-to-r from-violet-950/40 via-[#12121c] to-pink-950/40 border border-white/10 shadow-2xl flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div className="rounded-3xl p-6 sm:p-8 bg-card border border-border shadow-2xl flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-4">
             <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-pink-500 to-violet-600 flex items-center justify-center shrink-0 shadow-lg">
               <Coins className="w-7 h-7 text-white" />
             </div>
             <div>
-              <h3 className="text-lg font-bold text-white">Need Pay-As-You-Go Credits?</h3>
-              <p className="text-xs text-gray-400 mt-1 max-w-md">
+              <h3 className="text-lg font-bold text-foreground">Need Pay-As-You-Go Credits?</h3>
+              <p className="text-xs text-muted-foreground mt-1 max-w-md">
                 Don&apos;t need a monthly subscription? Purchase credits on demand for high-volume OCR, 4K video transcoding, and batch jobs.
               </p>
             </div>
@@ -248,8 +247,8 @@ export default function PricingPage() {
       {/* Pricing FAQs */}
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 mt-20">
         <div className="text-center mb-10">
-          <h2 className="text-2xl sm:text-3xl font-bold text-white">Frequently Asked Questions</h2>
-          <p className="text-xs text-gray-400 mt-2">Everything you need to know about billing, quotas, and subscriptions.</p>
+          <h2 className="text-2xl sm:text-3xl font-bold text-foreground">Frequently Asked Questions</h2>
+          <p className="text-xs text-muted-foreground mt-2">Everything you need to know about billing, quotas, and subscriptions.</p>
         </div>
 
         <div className="space-y-4">
@@ -258,24 +257,24 @@ export default function PricingPage() {
             return (
               <div
                 key={index}
-                className="bg-[#12121c] border border-white/10 rounded-2xl overflow-hidden transition-all"
+                className="bg-card border border-border rounded-2xl overflow-hidden transition-all"
               >
                 <button
                   onClick={() => setOpenFaq(isOpen ? null : index)}
-                  className="w-full p-5 text-left flex items-center justify-between gap-4 hover:bg-white/5 transition-colors"
+                  className="w-full p-5 text-left flex items-center justify-between gap-4 hover:bg-muted/50 transition-colors"
                 >
-                  <span className="text-sm font-semibold text-white flex items-center gap-2">
-                    <HelpCircle className="w-4 h-4 text-violet-400 shrink-0" />
+                  <span className="text-sm font-semibold text-foreground flex items-center gap-2">
+                    <HelpCircle className="w-4 h-4 text-violet-500 shrink-0" />
                     {faq.q}
                   </span>
                   <ChevronDown
-                    className={`w-4 h-4 text-gray-400 transition-transform duration-200 shrink-0 ${
-                      isOpen ? 'rotate-180 text-violet-400' : ''
+                    className={`w-4 h-4 text-muted-foreground transition-transform duration-200 shrink-0 ${
+                      isOpen ? 'rotate-180 text-violet-500' : ''
                     }`}
                   />
                 </button>
                 {isOpen && (
-                  <div className="p-5 pt-0 text-xs text-gray-300 leading-relaxed border-t border-white/5 bg-black/20">
+                  <div className="p-5 pt-0 text-xs text-foreground/80 leading-relaxed border-t border-border bg-muted/30">
                     {faq.a}
                   </div>
                 )}
@@ -285,7 +284,6 @@ export default function PricingPage() {
         </div>
       </div>
       </div>
-      <Footer />
     </div>
   );
 }

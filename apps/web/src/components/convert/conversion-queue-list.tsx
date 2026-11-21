@@ -38,12 +38,12 @@ export const ConversionQueueList: React.FC = () => {
 
   if (items.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-14 gap-3 bg-white/[0.02] border border-white/5 rounded-3xl">
-        <div className="w-14 h-14 rounded-2xl bg-white/[0.04] flex items-center justify-center text-white/20">
+      <div className="flex flex-col items-center justify-center py-14 gap-3 bg-card border border-border shadow-sm rounded-3xl">
+        <div className="w-14 h-14 rounded-2xl bg-muted flex items-center justify-center text-muted-foreground">
           <FileQuestion className="w-7 h-7" />
         </div>
-        <p className="text-sm font-medium text-white/50">Conversion queue is empty</p>
-        <p className="text-xs text-white/30">Drop files above or choose from presets to begin</p>
+        <p className="text-sm font-medium text-foreground">Conversion queue is empty</p>
+        <p className="text-xs text-muted-foreground">Drop files above or choose from presets to begin</p>
       </div>
     );
   }
@@ -51,9 +51,9 @@ export const ConversionQueueList: React.FC = () => {
   return (
     <div className="space-y-4">
       {/* Batch Control Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 bg-white/[0.03] border border-white/10 rounded-2xl">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 bg-card border border-border rounded-2xl shadow-sm">
         <div className="flex items-center gap-2">
-          <span className="text-sm font-semibold text-white">
+          <span className="text-sm font-semibold text-foreground">
             Conversion Queue ({items.length} file{items.length !== 1 ? 's' : ''})
           </span>
           {completedCount > 0 && (
@@ -113,10 +113,10 @@ export const ConversionQueueList: React.FC = () => {
               {/* File details & target arrow */}
               <div className="flex-1 min-w-0 space-y-1.5">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="text-sm font-semibold text-white truncate max-w-[280px]">
+                  <span className="text-sm font-semibold text-foreground truncate max-w-[280px]">
                     {truncate(item.originalName, 32)}
                   </span>
-                  <span className="text-xs text-white/40">
+                  <span className="text-xs text-muted-foreground">
                     ({formatFileSize(item.sizeBytes)})
                   </span>
 
@@ -124,16 +124,16 @@ export const ConversionQueueList: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setActiveModalItem(item)}
-                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-white/[0.06] hover:bg-white/10 border border-white/15 transition-colors cursor-pointer group ml-1"
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-muted hover:bg-muted/80 border border-border transition-colors cursor-pointer group ml-1"
                   >
-                    <span className="font-mono text-[11px] font-bold text-violet-300 uppercase">
+                    <span className="font-mono text-[11px] font-bold text-primary uppercase">
                       .{item.sourceExtension}
                     </span>
-                    <ArrowRight className="w-3 h-3 text-white/40 group-hover:text-white transition-colors" />
-                    <span className="font-mono text-[11px] font-bold text-pink-300 uppercase">
+                    <ArrowRight className="w-3 h-3 text-muted-foreground group-hover:text-foreground transition-colors" />
+                    <span className="font-mono text-[11px] font-bold text-accent uppercase">
                       .{item.targetExtension}
                     </span>
-                    <ChevronDown className="w-3 h-3 text-white/40" />
+                    <ChevronDown className="w-3 h-3 text-muted-foreground" />
                   </button>
 
                   {/* Lossy Warning Chip */}
@@ -168,8 +168,8 @@ export const ConversionQueueList: React.FC = () => {
 
                 {/* Result output summary */}
                 {isCompleted && item.result && (
-                  <div className="flex items-center gap-3 text-xs text-white/50">
-                    <span className="text-emerald-400 font-semibold">
+                  <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                    <span className="text-emerald-500 font-semibold">
                       {item.result.outputName}
                     </span>
                     <span>•</span>

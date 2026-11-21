@@ -182,8 +182,7 @@ export const StudioDropzone: React.FC = () => {
   return (
     <div
       className={cn(
-        'relative bg-gradient-to-b from-white/[0.06] to-white/[0.02]',
-        'border border-white/15 rounded-3xl p-6',
+        'relative bg-card border border-border shadow-sm rounded-3xl p-6',
       )}
     >
       {/* ---- Animated glow border (dragover) ---- */}
@@ -221,8 +220,8 @@ export const StudioDropzone: React.FC = () => {
           'rounded-2xl px-6 py-10 cursor-pointer transition-colors duration-200',
           'border-2 border-dashed',
           isDragOver
-            ? 'border-violet-400/60 bg-violet-500/5'
-            : 'border-white/20 hover:border-white/30',
+            ? 'border-primary bg-primary/5'
+            : 'border-border hover:border-primary/50',
         )}
       >
         {/* Upload icon */}
@@ -247,13 +246,13 @@ export const StudioDropzone: React.FC = () => {
 
         {/* Text */}
         <div className="text-center space-y-1.5">
-          <p className="text-sm font-medium text-white/90">
+          <p className="text-sm font-medium text-foreground">
             Drop files here or{' '}
-            <span className="text-violet-400 underline underline-offset-2">
+            <span className="text-primary font-semibold underline underline-offset-2">
               click to browse
             </span>
           </p>
-          <p className="text-xs text-white/40">Up to 2 GB free</p>
+          <p className="text-xs text-muted-foreground">Up to 2 GB free</p>
         </div>
 
         {/* Format badges */}
@@ -263,7 +262,7 @@ export const StudioDropzone: React.FC = () => {
               key={badge}
               className={cn(
                 'inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-mono',
-                'bg-white/[0.06] text-white/50 border border-white/10',
+                'bg-muted text-muted-foreground border border-border',
               )}
             >
               {badge}
@@ -302,7 +301,7 @@ export const StudioDropzone: React.FC = () => {
           variant="ghost"
           size="sm"
           onClick={() => folderInputRef.current?.click()}
-          className="text-white/60 hover:text-white/90"
+          className="text-muted-foreground hover:text-foreground"
         >
           <FolderOpen className="w-4 h-4 mr-1.5" />
           Browse Folder
@@ -312,7 +311,7 @@ export const StudioDropzone: React.FC = () => {
           variant="ghost"
           size="sm"
           onClick={() => cameraInputRef.current?.click()}
-          className="text-white/60 hover:text-white/90"
+          className="text-muted-foreground hover:text-foreground"
         >
           <Camera className="w-4 h-4 mr-1.5" />
           Camera
@@ -344,7 +343,7 @@ export const StudioDropzone: React.FC = () => {
                 /* clipboard access denied – noop */
               });
           }}
-          className="text-white/60 hover:text-white/90"
+          className="text-muted-foreground hover:text-foreground"
         >
           <UploadCloud className="w-4 h-4 mr-1.5" />
           Paste
@@ -354,7 +353,7 @@ export const StudioDropzone: React.FC = () => {
           variant="ghost"
           size="sm"
           onClick={() => setShowUrlModal(true)}
-          className="text-white/60 hover:text-white/90"
+          className="text-muted-foreground hover:text-foreground"
         >
           <Link2 className="w-4 h-4 mr-1.5" />
           URL Import
@@ -367,7 +366,7 @@ export const StudioDropzone: React.FC = () => {
           <motion.div
             className={cn(
               'mt-4 p-4 rounded-2xl',
-              'bg-white/[0.04] border border-white/10',
+              'bg-card border border-border shadow-md',
             )}
             initial={prefersReduced ? {} : { opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
@@ -375,13 +374,13 @@ export const StudioDropzone: React.FC = () => {
             transition={{ duration: 0.2 }}
           >
             <div className="flex items-center justify-between mb-3">
-              <p className="text-sm font-medium text-white/80">Import from URL</p>
+              <p className="text-sm font-medium text-foreground">Import from URL</p>
               <button
                 onClick={() => {
                   setShowUrlModal(false);
                   setImportUrl('');
                 }}
-                className="p-1 rounded-lg text-white/40 hover:text-white/80 hover:bg-white/10 transition-colors"
+                className="p-1 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>

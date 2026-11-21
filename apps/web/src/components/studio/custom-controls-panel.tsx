@@ -33,23 +33,23 @@ export const CustomControlsPanel: React.FC = () => {
   const isOpen = expanded || isCustom;
 
   return (
-    <div className="bg-white/[0.04] border border-white/10 rounded-2xl overflow-hidden">
+    <div className="bg-card border border-border shadow-sm rounded-2xl overflow-hidden">
       {/* Header toggle */}
       <button
         type="button"
         onClick={() => setExpanded((prev) => !prev)}
         className={cn(
           'w-full flex items-center justify-between px-6 py-4 cursor-pointer transition-colors',
-          'hover:bg-white/[0.03]',
+          'hover:bg-muted/50',
         )}
       >
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-white/[0.06] flex items-center justify-center">
-            <Settings2 className="w-4 h-4 text-violet-400" />
+          <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center">
+            <Settings2 className="w-4 h-4 text-primary" />
           </div>
           <div className="text-left">
-            <span className="text-sm font-semibold text-white/90">Fine-Tune Controls</span>
-            <span className="block text-xs text-white/40">
+            <span className="text-sm font-semibold text-foreground">Fine-Tune Controls</span>
+            <span className="block text-xs text-muted-foreground">
               Quality, resolution, bitrate, format, and metadata
             </span>
           </div>
@@ -58,7 +58,7 @@ export const CustomControlsPanel: React.FC = () => {
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={prefersReducedMotion ? { duration: 0 } : { type: 'spring', stiffness: 300, damping: 25 }}
         >
-          <ChevronDown className="w-5 h-5 text-white/40" />
+          <ChevronDown className="w-5 h-5 text-muted-foreground" />
         </motion.div>
       </button>
 
@@ -114,8 +114,8 @@ export const CustomControlsPanel: React.FC = () => {
                   placeholder="Leave blank for automatic smart size"
                   className={cn(
                     'w-full h-11 px-3 rounded-xl text-sm font-mono',
-                    'bg-[var(--sk-surface-raised)] border border-[var(--sk-border)] text-white placeholder:text-white/30',
-                    'focus:outline-none focus:ring-2 focus:ring-[var(--sk-acc)]',
+                    'bg-muted border border-border text-foreground placeholder:text-muted-foreground',
+                    'focus:outline-none focus:ring-2 focus:ring-primary',
                     'transition-all',
                   )}
                 />
@@ -170,19 +170,19 @@ export const CustomControlsPanel: React.FC = () => {
 
               {/* Output Format */}
               <div className="space-y-2">
-                <label className="text-sm font-medium text-forge-text">Output Format</label>
+                <label className="text-sm font-medium text-foreground">Output Format</label>
                 <select
                   value={customOptions.outputFormat || ''}
                   onChange={(e) => updateCustomOptions({ outputFormat: e.target.value || undefined })}
                   className={cn(
                     'w-full h-10 px-3 rounded-xl text-sm',
-                    'bg-forge-bg-card border border-white/10 text-white',
-                    'focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/40',
+                    'bg-card border border-border text-foreground',
+                    'focus:outline-none focus:ring-2 focus:ring-primary',
                     'transition-all appearance-none cursor-pointer',
                   )}
                 >
                   {OUTPUT_FORMATS.map((f) => (
-                    <option key={f.value} value={f.value} className="bg-[#12121a]">
+                    <option key={f.value} value={f.value} className="bg-card text-foreground">
                       {f.label}
                     </option>
                   ))}
@@ -191,7 +191,7 @@ export const CustomControlsPanel: React.FC = () => {
 
               {/* Page Range */}
               <div className="space-y-2">
-                <label className="text-sm font-medium text-forge-text">Page Range</label>
+                <label className="text-sm font-medium text-foreground">Page Range</label>
                 <input
                   type="text"
                   value={customOptions.pageRange || ''}
@@ -199,8 +199,8 @@ export const CustomControlsPanel: React.FC = () => {
                   placeholder="e.g. 1-5, 8, 12-15"
                   className={cn(
                     'w-full h-10 px-3 rounded-xl text-sm font-mono',
-                    'bg-forge-bg-card border border-white/10 text-white placeholder:text-white/30',
-                    'focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/40',
+                    'bg-card border border-border text-foreground placeholder:text-muted-foreground',
+                    'focus:outline-none focus:ring-2 focus:ring-primary',
                     'transition-all',
                   )}
                 />

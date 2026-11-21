@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import { Navbar } from '@/components/layout/navbar';
-import { Footer } from '@/components/layout/footer';
 import { CommandPalette } from '@/components/layout/command-palette';
 import { StudioDropzone } from '@/components/studio/studio-dropzone';
 import { CompressionPresetsBar } from '@/components/studio/compression-presets-bar';
@@ -33,14 +32,14 @@ export default function StudioPage() {
         >
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-violet-500/10 via-pink-500/10 to-violet-500/10 border border-violet-500/30 backdrop-blur-md mb-4">
             <Sparkles className="w-3.5 h-3.5 text-pink-400" />
-            <span className="text-xs font-medium text-violet-200">
+            <span className="text-xs font-semibold text-primary">
               Compression Studio
             </span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mb-2">
+          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-foreground mb-2">
             Forge Your Files
           </h1>
-          <p className="text-sm text-gray-400 max-w-lg mx-auto">
+          <p className="text-sm text-muted-foreground max-w-lg mx-auto">
             Drop files, select a preset, fine-tune settings, and compress with
             Sakuga-powered precision. Up to 2 GB free.
           </p>
@@ -63,7 +62,7 @@ export default function StudioPage() {
           transition={{ duration: 0.5, delay: 0.15 }}
           className="mb-6"
         >
-          <h3 className="text-sm font-semibold text-white/60 mb-3">
+          <h3 className="text-sm font-semibold text-muted-foreground mb-3">
             Compression Presets
           </h3>
           <CompressionPresetsBar />
@@ -98,7 +97,6 @@ export default function StudioPage() {
         onClose={() => setComparisonItem(null)}
       />
 
-      <Footer />
       <CommandPalette
         isOpen={commandPaletteOpen}
         onClose={() => setCommandPaletteOpen(false)}

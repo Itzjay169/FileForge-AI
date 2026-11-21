@@ -70,9 +70,9 @@ export const BatchSummaryBar: React.FC = () => {
     <div
       className={cn(
         'fixed bottom-0 left-0 right-0 z-40',
-        'bg-[#0c0c14]/90 backdrop-blur-xl',
-        'border-t border-white/10',
-        'shadow-[0_-8px_30px_rgba(0,0,0,0.5)]',
+        'bg-card/95 backdrop-blur-xl',
+        'border-t border-border',
+        'shadow-[0_-8px_30px_rgba(0,0,0,0.15)]',
       )}
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -103,14 +103,14 @@ export const BatchSummaryBar: React.FC = () => {
 
             {stats.completed > 0 && (
               <>
-                <span className="text-xs text-white/20 hidden sm:inline">•</span>
-                <span className="text-xs text-white/50">
+                <span className="text-xs text-muted-foreground/40 hidden sm:inline">•</span>
+                <span className="text-xs text-muted-foreground">
                   {formatFileSize(stats.totalOriginalBytes)} →{' '}
-                  <span className="text-white/70">
+                  <span className="text-foreground font-medium">
                     {formatFileSize(stats.totalCompressedBytes)}
                   </span>
                 </span>
-                <span className="text-xs font-bold text-emerald-400">
+                <span className="text-xs font-bold text-emerald-500">
                   −{stats.savingsPercent}%
                 </span>
               </>
@@ -191,7 +191,7 @@ function StatChip({
     <span
       className={cn(
         'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium',
-        'bg-white/[0.06] border border-white/10',
+        'bg-muted border border-border',
         color,
       )}
     >

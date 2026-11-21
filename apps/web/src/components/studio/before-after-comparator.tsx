@@ -66,7 +66,7 @@ export const BeforeAfterComparator: React.FC<BeforeAfterComparatorProps> = ({
       label: 'Original Size',
       value: formatFileSize(item.sizeBytes),
       icon: <Maximize2 className="w-4 h-4" />,
-      color: 'text-white',
+      color: 'text-foreground font-medium',
     },
     {
       label: 'Output Size',
@@ -96,7 +96,7 @@ export const BeforeAfterComparator: React.FC<BeforeAfterComparatorProps> = ({
       label: 'SHA-256',
       value: result ? result.sha256Hash.slice(0, 16) + '…' : '—',
       icon: <Hash className="w-4 h-4" />,
-      color: 'text-white/60 font-mono',
+      color: 'text-muted-foreground font-mono',
     },
   ];
 
@@ -112,7 +112,7 @@ export const BeforeAfterComparator: React.FC<BeforeAfterComparatorProps> = ({
           onClick={onClose}
         >
           <motion.div
-            className="bg-[#12121a] border border-white/15 rounded-3xl p-6 max-w-3xl w-full shadow-2xl shadow-black/60"
+            className="bg-card border border-border rounded-3xl p-6 max-w-3xl w-full shadow-2xl"
             initial={
               prefersReducedMotion
                 ? { opacity: 0 }
@@ -134,10 +134,10 @@ export const BeforeAfterComparator: React.FC<BeforeAfterComparatorProps> = ({
                   <FileImage className="w-5 h-5 text-violet-400" />
                 </div>
                 <div>
-                  <h3 className="text-base font-semibold text-white">
+                  <h3 className="text-base font-semibold text-foreground">
                     Visual Comparison
                   </h3>
-                  <p className="text-xs text-white/40 truncate max-w-[300px]">
+                  <p className="text-xs text-muted-foreground truncate max-w-[300px]">
                     {item.originalName}
                   </p>
                 </div>
@@ -236,16 +236,16 @@ export const BeforeAfterComparator: React.FC<BeforeAfterComparatorProps> = ({
               {metrics.map((m) => (
                 <div
                   key={m.label}
-                  className="bg-white/[0.04] border border-white/10 rounded-xl p-3 flex items-start gap-2.5"
+                  className="bg-muted/50 border border-border rounded-xl p-3 flex items-start gap-2.5"
                 >
-                  <div className="w-7 h-7 rounded-lg bg-white/[0.06] flex items-center justify-center text-white/40 shrink-0">
+                  <div className="w-7 h-7 rounded-lg bg-muted flex items-center justify-center text-muted-foreground shrink-0">
                     {m.icon}
                   </div>
                   <div className="min-w-0">
-                    <p className="text-[11px] text-white/40 uppercase tracking-wider">
+                    <p className="text-[11px] text-muted-foreground uppercase tracking-wider">
                       {m.label}
                     </p>
-                    <p className={cn('text-sm truncate', m.color)}>{m.value}</p>
+                    <p className={cn('text-sm truncate font-medium', m.color)}>{m.value}</p>
                   </div>
                 </div>
               ))}

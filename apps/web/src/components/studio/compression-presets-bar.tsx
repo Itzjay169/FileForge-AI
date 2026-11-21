@@ -64,15 +64,15 @@ export const CompressionPresetsBar: React.FC = () => {
               className={cn(
                 'relative min-w-[140px] p-4 rounded-2xl border flex flex-col items-center gap-2 text-center cursor-pointer transition-all duration-200 shrink-0',
                 isActive
-                  ? 'bg-violet-500/10 border-violet-500/60 shadow-[0_0_20px_rgba(139,92,246,0.25)]'
-                  : 'bg-white/[0.04] border-white/10 hover:bg-white/[0.07] hover:border-white/20'
+                  ? 'bg-primary/10 border-primary shadow-[0_0_20px_rgba(139,92,246,0.25)]'
+                  : 'bg-card border-border hover:bg-muted/50 hover:border-primary/30'
               )}
             >
               {/* Active indicator underlay with layoutId */}
               {isActive && (
                 <motion.div
                   layoutId={prefersReducedMotion ? undefined : 'preset-active-indicator'}
-                  className="absolute inset-0 rounded-2xl border-2 border-violet-500/50 pointer-events-none"
+                  className="absolute inset-0 rounded-2xl border-2 border-primary pointer-events-none"
                   transition={{ type: 'spring', stiffness: 400, damping: 30 }}
                 />
               )}
@@ -81,8 +81,8 @@ export const CompressionPresetsBar: React.FC = () => {
                 className={cn(
                   'w-10 h-10 rounded-xl flex items-center justify-center transition-colors',
                   isActive
-                    ? 'bg-violet-500/20 text-violet-400'
-                    : 'bg-white/[0.06] text-white/60'
+                    ? 'bg-primary/20 text-primary'
+                    : 'bg-muted text-muted-foreground'
                 )}
               >
                 <Icon className="w-5 h-5" />
@@ -91,7 +91,7 @@ export const CompressionPresetsBar: React.FC = () => {
               <span
                 className={cn(
                   'text-sm font-semibold transition-colors whitespace-nowrap',
-                  isActive ? 'text-violet-300' : 'text-white/80'
+                  isActive ? 'text-primary font-bold' : 'text-foreground'
                 )}
               >
                 {def.label}
@@ -100,7 +100,7 @@ export const CompressionPresetsBar: React.FC = () => {
               <span
                 className={cn(
                   'text-[11px] leading-tight transition-colors line-clamp-2',
-                  isActive ? 'text-violet-300/70' : 'text-white/40'
+                  isActive ? 'text-primary/80 font-medium' : 'text-muted-foreground'
                 )}
               >
                 {def.description}

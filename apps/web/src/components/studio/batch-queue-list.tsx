@@ -101,8 +101,8 @@ function QueueCard({ item }: { item: QueueItem }) {
       exit={{ opacity: 0, x: -40, transition: { duration: 0.2 } }}
       transition={{ type: 'spring', damping: 25, stiffness: 300 }}
       className={cn(
-        'flex items-start gap-4 p-4 rounded-2xl transition-all',
-        'bg-white/[0.04] border border-white/10 hover:border-white/20',
+        'flex items-start gap-4 p-4 rounded-2xl transition-all shadow-sm',
+        'bg-card border border-border hover:border-primary/30',
         isCompleted && 'border-l-2 border-l-emerald-500',
         isFailed && 'border-l-2 border-l-rose-500',
       )}
@@ -112,10 +112,10 @@ function QueueCard({ item }: { item: QueueItem }) {
         className={cn(
           'flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center',
           isCompleted
-            ? 'bg-emerald-500/10 text-emerald-400'
+            ? 'bg-emerald-500/10 text-emerald-500'
             : isFailed
-            ? 'bg-rose-500/10 text-rose-400'
-            : 'bg-white/[0.06] text-white/60',
+            ? 'bg-rose-500/10 text-rose-500'
+            : 'bg-muted text-muted-foreground',
         )}
       >
         {React.createElement(getCategoryIcon(item.extension), { className: 'w-5 h-5' })}
@@ -126,10 +126,10 @@ function QueueCard({ item }: { item: QueueItem }) {
         {/* Name + status row */}
         <div className="flex items-center justify-between gap-3">
           <div className="flex items-center gap-2 min-w-0">
-            <span className="text-sm font-medium text-white truncate">
+            <span className="text-sm font-medium text-foreground truncate">
               {truncate(item.originalName, 32)}
             </span>
-            <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-white/[0.06] text-white/40 border border-white/10 uppercase shrink-0">
+            <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-muted text-muted-foreground border border-border uppercase shrink-0">
               .{item.extension}
             </span>
           </div>
@@ -137,13 +137,13 @@ function QueueCard({ item }: { item: QueueItem }) {
         </div>
 
         {/* Size + savings */}
-        <div className="flex items-center gap-3 text-xs text-white/40">
+        <div className="flex items-center gap-3 text-xs text-muted-foreground">
           <span>{formatFileSize(item.sizeBytes)}</span>
           {isCompleted && item.result && (
             <>
-              <span className="text-white/20">→</span>
-              <span className="text-white/60">{formatFileSize(item.result.outputSizeBytes)}</span>
-              <span className="font-bold text-emerald-400">
+              <span className="text-muted-foreground/40">→</span>
+              <span className="text-foreground font-medium">{formatFileSize(item.result.outputSizeBytes)}</span>
+              <span className="font-bold text-emerald-500">
                 −{item.result.savingsPercentage}%
               </span>
             </>
@@ -238,12 +238,12 @@ export const BatchQueueList: React.FC = () => {
   if (items.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-16 gap-4">
-        <div className="w-16 h-16 rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-center">
-          <FileQuestion className="w-7 h-7 text-white/20" />
+        <div className="w-16 h-16 rounded-2xl bg-card border border-border flex items-center justify-center shadow-sm">
+          <FileQuestion className="w-7 h-7 text-muted-foreground/40" />
         </div>
         <div className="text-center">
-          <p className="text-sm text-white/50 font-medium">No files in queue</p>
-          <p className="text-xs text-white/30 mt-1">
+          <p className="text-sm text-foreground font-medium">No files in queue</p>
+          <p className="text-xs text-muted-foreground mt-1">
             Drop files above to begin compressing
           </p>
         </div>
@@ -254,7 +254,7 @@ export const BatchQueueList: React.FC = () => {
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between mb-2">
-        <h3 className="text-sm font-semibold text-white/70">
+        <h3 className="text-sm font-semibold text-foreground">
           Queue ({items.length} file{items.length !== 1 ? 's' : ''})
         </h3>
       </div>

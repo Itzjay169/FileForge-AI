@@ -27,30 +27,30 @@ export const PricingSection: React.FC = () => {
             <span>[ACT 07 // STUDIO ACCESS TIERS]</span>
           </div>
 
-          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight uppercase font-sans">
+          <h2 className="text-3xl sm:text-5xl font-black text-foreground tracking-tight uppercase font-sans">
             Core Processing is Always Free
           </h2>
           
-          <p className="mt-4 text-sm sm:text-base text-[var(--sk-text-muted)] font-medium">
+          <p className="mt-4 text-sm sm:text-base text-muted-foreground font-medium">
             Never pay for everyday optimization. Upgrade only when you need massive multi-threaded batch queues, team workspaces, or dedicated GPU priority.
           </p>
 
-          <div className="mt-4 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-xs font-mono font-bold text-emerald-400">
+          <div className="mt-4 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-xs font-mono font-bold text-emerald-500">
             <span>🇮🇳 Indian Rupee (INR ₹) · Built & Localized for India & Global Creators</span>
           </div>
 
           {/* Billing Switcher with Real Sakuga VFX Toggle */}
-          <div className="mt-8 inline-flex items-center gap-3 p-3 rounded-2xl bg-[var(--sk-card)] border-2 border-[var(--sk-line)] shadow-[4px_6px_0_rgba(109,90,224,0.35)]">
-            <span className={`text-xs font-mono font-bold ${!isAnnual ? 'text-white' : 'text-[var(--sk-text-muted)]'}`}>
+          <div className="mt-8 inline-flex items-center gap-3 p-3 rounded-2xl bg-card border-2 border-border shadow-[4px_6px_0_rgba(109,90,224,0.35)]">
+            <span className={`text-xs font-mono font-bold ${!isAnnual ? 'text-foreground' : 'text-muted-foreground'}`}>
               Monthly
             </span>
             <ForgeToggle
               checked={isAnnual}
               onChange={setIsAnnual}
             />
-            <span className={`text-xs font-mono font-bold flex items-center gap-1.5 ${isAnnual ? 'text-[var(--sk-acc)]' : 'text-[var(--sk-text-muted)]'}`}>
+            <span className={`text-xs font-mono font-bold flex items-center gap-1.5 ${isAnnual ? 'text-primary' : 'text-muted-foreground'}`}>
               <span>Annual Billing</span>
-              <span className="px-1.5 py-0.2 rounded bg-pink-500/20 text-pink-400 border border-pink-500/40 text-[10px] font-black">
+              <span className="px-1.5 py-0.2 rounded bg-pink-500/20 text-pink-500 border border-pink-500/40 text-[10px] font-black">
                 SAVE 25%
               </span>
             </span>
@@ -71,51 +71,51 @@ export const PricingSection: React.FC = () => {
                 <div
                   className={`h-full rounded-3xl p-8 flex flex-col justify-between transition-all duration-300 relative border-2 ${
                     isPopular
-                      ? 'bg-[var(--sk-surface-raised)] border-[var(--sk-acc)] shadow-[8px_10px_0_rgba(255,95,162,0.45)] scale-[1.02] lg:-translate-y-2'
-                      : 'bg-[var(--sk-card)] border-[var(--sk-line)] shadow-[6px_8px_0_rgba(109,90,224,0.35)] hover:border-violet-400'
+                      ? 'bg-card border-primary shadow-[8px_10px_0_rgba(255,95,162,0.45)] scale-[1.02] lg:-translate-y-2'
+                      : 'bg-card border-border shadow-[6px_8px_0_rgba(109,90,224,0.35)] hover:border-primary/50'
                   }`}
                 >
                   {isPopular && (
-                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-none bg-[var(--sk-acc)] text-black text-[11px] font-black uppercase tracking-wider shadow-lg flex items-center gap-1.5 font-mono border-2 border-black">
-                      <Sparkles className="w-3.5 h-3.5 fill-black" />
+                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-none bg-primary text-primary-foreground text-[11px] font-black uppercase tracking-wider shadow-lg flex items-center gap-1.5 font-mono border-2 border-primary">
+                      <Sparkles className="w-3.5 h-3.5 fill-current" />
                       COMMENDED FOR CREATIVE TEAMS
                     </div>
                   )}
 
                   <div>
                     <div className="flex items-center justify-between mb-2">
-                      <h3 className="text-xl font-black text-white uppercase font-sans">{plan.name}</h3>
-                      {isPopular && <Crown className="w-5 h-5 text-amber-400" />}
+                      <h3 className="text-xl font-black text-foreground uppercase font-sans">{plan.name}</h3>
+                      {isPopular && <Crown className="w-5 h-5 text-amber-500" />}
                     </div>
 
-                    <p className="text-xs text-[var(--sk-text-muted)] mb-6 leading-relaxed min-h-[36px] font-mono">
+                    <p className="text-xs text-muted-foreground mb-6 leading-relaxed min-h-[36px] font-mono">
                       {plan.tagline}
                     </p>
 
                     <div className="flex items-baseline gap-1.5 mb-2">
-                      <span className="text-4xl sm:text-5xl font-black text-white font-mono">
+                      <span className="text-4xl sm:text-5xl font-black text-foreground font-mono">
                         {price === 0 ? '₹0' : `₹${price.toLocaleString('en-IN')}`}
                       </span>
-                      <span className="text-xs text-[var(--sk-text-muted)] font-mono">
+                      <span className="text-xs text-muted-foreground font-mono">
                         {inrData.monthly === 0 ? 'forever' : '/month'}
                       </span>
                     </div>
                     {isAnnual && inrData.monthly > 0 && (
-                      <p className="text-[11px] font-mono text-[var(--sk-acc)] mb-5 font-bold">
+                      <p className="text-[11px] font-mono text-primary mb-5 font-bold">
                         Billed annually (₹{inrData.yearly.toLocaleString('en-IN')}/yr)
                       </p>
                     )}
                     {!isAnnual && inrData.monthly > 0 && (
-                      <p className="text-[11px] font-mono text-gray-400 mb-5">
+                      <p className="text-[11px] font-mono text-muted-foreground mb-5">
                         Billed monthly in INR (₹)
                       </p>
                     )}
                     {inrData.monthly === 0 && <div className="mb-5" />}
 
-                    <div className="space-y-3 mb-8 pt-6 border-t-2 border-[var(--sk-border)]">
+                    <div className="space-y-3 mb-8 pt-6 border-t-2 border-border">
                       {plan.features.map((feat) => (
-                        <div key={feat} className="flex items-start gap-2.5 text-xs text-gray-300 font-medium">
-                          <Check className="w-4 h-4 text-[var(--sk-acc)] shrink-0 mt-0.5" />
+                        <div key={feat} className="flex items-start gap-2.5 text-xs text-foreground/80 font-medium">
+                          <Check className="w-4 h-4 text-primary shrink-0 mt-0.5" />
                           <span>{feat}</span>
                         </div>
                       ))}

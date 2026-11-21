@@ -55,7 +55,7 @@ export const LossyWarningDialog: React.FC<LossyWarningDialogProps> = ({
               : { opacity: 0, scale: 0.92, y: 16 }
           }
           transition={{ type: 'spring', damping: 25, stiffness: 350 }}
-          className="relative w-full max-w-lg bg-[#14141e] border-2 border-amber-500/40 rounded-3xl p-6 sm:p-7 shadow-2xl shadow-amber-950/40 z-10 overflow-hidden"
+          className="relative w-full max-w-lg bg-card border-2 border-amber-500/40 rounded-3xl p-6 sm:p-7 shadow-2xl z-10 overflow-hidden"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Top Anime Accent Stripe */}
@@ -64,7 +64,7 @@ export const LossyWarningDialog: React.FC<LossyWarningDialogProps> = ({
           {/* Close button */}
           <button
             onClick={onCancel}
-            className="absolute top-5 right-5 p-1.5 rounded-xl text-white/40 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+            className="absolute top-5 right-5 p-1.5 rounded-xl text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -81,19 +81,19 @@ export const LossyWarningDialog: React.FC<LossyWarningDialogProps> = ({
                   Compatibility Notice
                 </span>
               </div>
-              <h3 className="text-lg font-bold text-white mt-1 leading-tight">
+              <h3 className="text-lg font-bold text-foreground mt-1 leading-tight">
                 {item.lossWarningTitle || 'Potential Data & Fidelity Loss'}
               </h3>
             </div>
           </div>
 
           {/* Conversion Direction Pill */}
-          <div className="flex items-center justify-center gap-3 bg-white/[0.04] border border-white/10 rounded-2xl p-3 mb-5">
-            <span className="font-mono text-sm font-bold text-violet-300 uppercase px-2.5 py-1 rounded-lg bg-violet-500/15 border border-violet-500/20">
+          <div className="flex items-center justify-center gap-3 bg-muted border border-border rounded-2xl p-3 mb-5">
+            <span className="font-mono text-sm font-bold text-violet-500 uppercase px-2.5 py-1 rounded-lg bg-violet-500/15 border border-violet-500/20">
               .{item.sourceExtension}
             </span>
-            <ArrowRight className="w-4 h-4 text-white/40" />
-            <span className="font-mono text-sm font-bold text-amber-300 uppercase px-2.5 py-1 rounded-lg bg-amber-500/15 border border-amber-500/20">
+            <ArrowRight className="w-4 h-4 text-muted-foreground" />
+            <span className="font-mono text-sm font-bold text-amber-500 uppercase px-2.5 py-1 rounded-lg bg-amber-500/15 border border-amber-500/20">
               .{item.targetExtension}
             </span>
           </div>
@@ -101,13 +101,13 @@ export const LossyWarningDialog: React.FC<LossyWarningDialogProps> = ({
           {/* Lost Attributes Bullet List */}
           {item.lostAttributes && item.lostAttributes.length > 0 && (
             <div className="mb-5 space-y-2">
-              <span className="text-xs font-semibold text-white/70 uppercase tracking-wider">
+              <span className="text-xs font-semibold text-foreground uppercase tracking-wider">
                 Attributes affected during conversion:
               </span>
-              <div className="space-y-1.5 mt-1.5 bg-black/30 border border-white/5 rounded-xl p-3">
+              <div className="space-y-1.5 mt-1.5 bg-muted/60 border border-border rounded-xl p-3">
                 {item.lostAttributes.map((attr, i) => (
-                  <div key={i} className="flex items-center gap-2 text-xs text-amber-200/90">
-                    <ShieldAlert className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                  <div key={i} className="flex items-center gap-2 text-xs text-amber-600 dark:text-amber-300">
+                    <ShieldAlert className="w-3.5 h-3.5 text-amber-500 shrink-0" />
                     <span>{attr}</span>
                   </div>
                 ))}

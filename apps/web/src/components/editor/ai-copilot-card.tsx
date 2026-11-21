@@ -99,7 +99,7 @@ export const AiCopilotCard: React.FC<AiCopilotCardProps> = ({ file, onPlanExecut
   };
 
   return (
-    <div className="relative bg-gradient-to-b from-white/[0.06] to-white/[0.02] border border-violet-500/30 rounded-3xl p-6 sm:p-7 shadow-2xl shadow-violet-950/20 overflow-hidden">
+    <div className="relative bg-card border border-border rounded-3xl p-6 sm:p-7 shadow-2xl overflow-hidden">
       {/* Anime Energy Gradient Border Accent */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-violet-500 via-pink-500 to-cyan-400" />
 
@@ -111,17 +111,17 @@ export const AiCopilotCard: React.FC<AiCopilotCardProps> = ({ file, onPlanExecut
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h3 className="text-base font-bold text-white">AI File Assistant</h3>
-              <span className="text-[10px] font-mono uppercase bg-pink-500/15 text-pink-300 border border-pink-500/30 px-1.5 py-0.5 rounded font-bold">
+              <h3 className="text-base font-bold text-foreground">AI File Assistant</h3>
+              <span className="text-[10px] font-mono uppercase bg-pink-500/15 text-pink-500 border border-pink-500/30 px-1.5 py-0.5 rounded font-bold">
                 Copilot
               </span>
             </div>
-            <p className="text-xs text-white/40">Natural language optimization & transparent neural transforms</p>
+            <p className="text-xs text-muted-foreground">Natural language optimization & transparent neural transforms</p>
           </div>
         </div>
 
         {file && (
-          <span className="text-xs font-mono text-violet-300 bg-violet-500/10 border border-violet-500/20 px-2.5 py-1 rounded-xl truncate max-w-[200px]">
+          <span className="text-xs font-mono text-primary bg-violet-500/10 border border-violet-500/20 px-2.5 py-1 rounded-xl truncate max-w-[200px]">
             Target: {file.name}
           </span>
         )}
@@ -137,7 +137,7 @@ export const AiCopilotCard: React.FC<AiCopilotCardProps> = ({ file, onPlanExecut
               setQuery(prompt);
               handleGeneratePlan(prompt);
             }}
-            className="text-xs text-white/60 hover:text-white bg-white/[0.04] hover:bg-white/10 border border-white/10 rounded-xl px-3 py-1.5 transition-colors cursor-pointer"
+            className="text-xs text-muted-foreground hover:text-foreground bg-muted/50 hover:bg-muted border border-border rounded-xl px-3 py-1.5 transition-colors cursor-pointer"
           >
             &quot;{prompt}&quot;
           </button>
@@ -159,7 +159,7 @@ export const AiCopilotCard: React.FC<AiCopilotCardProps> = ({ file, onPlanExecut
                 ? `Ask AI what to do with ${file.name}...`
                 : 'Upload or select a file first, then enter prompt...'
             }
-            className="w-full h-12 pl-4 pr-10 bg-black/40 border border-white/15 rounded-2xl text-sm text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-violet-500/50"
+            className="w-full h-12 pl-4 pr-10 bg-muted/40 border border-border rounded-2xl text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-violet-500/50"
           />
         </div>
 
@@ -182,53 +182,53 @@ export const AiCopilotCard: React.FC<AiCopilotCardProps> = ({ file, onPlanExecut
             initial={prefersReduced ? { opacity: 0 } : { opacity: 0, y: 12, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={prefersReduced ? { opacity: 0 } : { opacity: 0, y: 8 }}
-            className="bg-[#12121e] border-2 border-violet-500/40 rounded-2xl p-5 shadow-xl space-y-4"
+            className="bg-card border-2 border-violet-500/40 rounded-2xl p-5 shadow-xl space-y-4"
           >
             {/* Title & Intent */}
             <div className="flex items-start justify-between gap-4">
               <div>
-                <span className="text-[10px] font-mono font-bold uppercase text-violet-400 bg-violet-500/10 px-2 py-0.5 rounded">
+                <span className="text-[10px] font-mono font-bold uppercase text-primary bg-violet-500/10 px-2 py-0.5 rounded">
                   {currentPlan.intent.replace('_', ' ')}
                 </span>
-                <h4 className="text-base font-bold text-white mt-1">{currentPlan.title}</h4>
+                <h4 className="text-base font-bold text-foreground mt-1">{currentPlan.title}</h4>
               </div>
 
               <div className="text-right shrink-0">
-                <span className="text-xs text-white/40 block">Projected Size</span>
-                <span className="text-sm font-mono font-bold text-emerald-400">
+                <span className="text-xs text-muted-foreground block">Projected Size</span>
+                <span className="text-sm font-mono font-bold text-emerald-500">
                   {currentPlan.estimatedOutputSizeFormatted}
                 </span>
               </div>
             </div>
 
             {/* AI Explanation */}
-            <p className="text-xs text-white/80 leading-relaxed bg-white/[0.03] p-3 rounded-xl border border-white/5">
+            <p className="text-xs text-foreground/90 leading-relaxed bg-muted/50 p-3 rounded-xl border border-border">
               {currentPlan.explanation}
             </p>
 
             {/* Settings Applied Table */}
             <div className="space-y-1">
-              <span className="text-[11px] font-bold text-white/50 uppercase tracking-wider">
+              <span className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider">
                 Configured Execution Settings:
               </span>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 pt-1 font-mono text-xs">
                 {Object.entries(currentPlan.appliedSettings).map(([key, value]) => (
-                  <div key={key} className="bg-black/30 border border-white/5 rounded-lg p-2">
-                    <span className="text-white/40 block text-[10px] truncate">{key}</span>
-                    <span className="text-white/90 truncate block">{String(value)}</span>
+                  <div key={key} className="bg-muted/60 border border-border rounded-lg p-2">
+                    <span className="text-muted-foreground block text-[10px] truncate">{key}</span>
+                    <span className="text-foreground truncate block font-medium">{String(value)}</span>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* Transparent AI Disclosure Notice */}
-            <div className="flex items-start gap-2.5 p-3 rounded-xl bg-pink-500/10 border border-pink-500/20 text-[11px] text-pink-200">
-              <ShieldCheck className="w-4 h-4 text-pink-400 shrink-0 mt-0.5" />
+            <div className="flex items-start gap-2.5 p-3 rounded-xl bg-pink-500/10 border border-pink-500/20 text-[11px] text-pink-600 dark:text-pink-200">
+              <ShieldCheck className="w-4 h-4 text-pink-500 shrink-0 mt-0.5" />
               <div>
                 <span className="font-bold block">
                   AI Disclosure Notice • {currentPlan.aiDisclosure.engine} ({currentPlan.aiDisclosure.model})
                 </span>
-                <span className="text-pink-200/80 mt-0.5 block">
+                <span className="text-pink-600/80 dark:text-pink-200/80 mt-0.5 block">
                   {currentPlan.aiDisclosure.disclosureText}
                 </span>
               </div>

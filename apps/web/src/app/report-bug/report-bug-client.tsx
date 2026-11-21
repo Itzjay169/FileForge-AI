@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import {
   Bug,
@@ -40,15 +40,12 @@ export function ReportBugClient() {
   const [stepsToReproduce, setStepsToReproduce] = useState('');
   const [expectedResult, setExpectedResult] = useState('');
   const [actualResult, setActualResult] = useState('');
-  const [browserInfo, setBrowserInfo] = useState('');
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const ua = navigator.userAgent;
-      const screenInfo = `${window.screen.width}x${window.screen.height} (dpr: ${window.devicePixelRatio})`;
-      setBrowserInfo(`${ua} [Screen: ${screenInfo}]`);
-    }
-  }, []);
+  const [browserInfo] = useState(() => {
+    if (typeof window === 'undefined') return '';
+    const ua = navigator.userAgent;
+    const screenInfo = `${window.screen.width}x${window.screen.height} (dpr: ${window.devicePixelRatio})`;
+    return `${ua} [Screen: ${screenInfo}]`;
+  });
   const [consent, setConsent] = useState(true);
   const [honeypot, setHoneypot] = useState('');
   const [feedbackRating, setFeedbackRating] = useState(5);

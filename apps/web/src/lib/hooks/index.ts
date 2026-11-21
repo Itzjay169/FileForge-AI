@@ -85,3 +85,64 @@ export function useCopyToClipboard() {
   }, []);
   return { copy, copied };
 }
+
+/** Hook to detect and track active theme state (light vs dark) across any component */
+export function useTheme() {
+  const [isDark, setIsDark] = useState<boolean>(false);
+  const [mounted, setMounted] = useState<boolean>(false);
+
+  useEffect(() => {
+    const checkIsDark = () => {
+      if (typeof document === 'undefined') return false;
+      return document.documentElement.classList.contains('dark');
+    };
+
+    const animFrame = requestAnimationFrame(() => {
+      setMounted(true);
+      setIsDark(checkIsDark());
+    });
+
+    const handleThemeChange = (e: Event) => {
+      const customEvent = e as CustomEvent<{ isDark: boolean }>;
+      if (typeof customEvent.detail?.isDark === 'boolean') {
+        setIsDark(customEvent.detail.isDark);
+      } else {
+        setIsDark(checkIsDark());
+      }
+    };
+
+    window.addEventListener('fileforge:themechange', handleThemeChange);
+
+    const observer = new MutationObserver(() => {
+      setIsDark(checkIsDark());
+    });
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class'],
+    });
+
+    return () => {
+      cancelAnimationFrame(animFrame);
+      window.removeEventListener('fileforge:themechange', handleThemeChange);
+      observer.disconnect();
+    };
+  }, []);
+
+  const toggleTheme = useCallback(() => {
+    const nextDark = !document.documentElement.classList.contains('dark');
+    if (nextDark) {
+      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+    }
+    try {
+      localStorage.setItem('fileforge-theme', nextDark ? 'dark' : 'light');
+    } catch {}
+    setIsDark(nextDark);
+    window.dispatchEvent(new CustomEvent('fileforge:themechange', { detail: { isDark: nextDark } }));
+  }, []);
+
+  return { isDark, theme: isDark ? 'dark' : 'light', toggleTheme, mounted };
+}

@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* ==========================================================================
    FileForge AI — Cinematic Creative File Studio Design Token System
    Inspired by Sakuga VFX principles: physical squash, spring overshoot,
@@ -7,6 +9,26 @@
    ========================================================================== */
 
 @theme {
+  --color-background: var(--color-bg);
+  --color-foreground: var(--color-text);
+  --color-card: var(--color-surface);
+  --color-card-foreground: var(--color-text);
+  --color-popover: var(--color-surface);
+  --color-popover-foreground: var(--color-text);
+  --color-primary: var(--color-primary);
+  --color-primary-foreground: var(--color-primary-fg);
+  --color-secondary: var(--color-surface-raised);
+  --color-secondary-foreground: var(--color-text);
+  --color-muted: var(--color-surface-raised);
+  --color-muted-foreground: var(--color-text-muted);
+  --color-accent: var(--color-accent);
+  --color-accent-foreground: #ffffff;
+  --color-destructive: var(--color-danger);
+  --color-destructive-foreground: #ffffff;
+  --color-border: var(--color-border);
+  --color-input: var(--color-border);
+  --color-ring: var(--color-primary);
+
   --color-studio-bg: var(--color-bg);
   --color-studio-surface: var(--color-surface);
   --color-studio-surface-raised: var(--color-surface-raised);
@@ -34,41 +56,113 @@
   --font-mono: var(--font-mono);
 }
 
-:root {
-  /* Default: Creative Studio Dark Mode */
-  --color-bg: #09090e;
-  --color-surface: #12121c;
-  --color-surface-raised: #1a1a28;
-  --color-surface-paper: #faf9f7;
-  --color-border: rgba(167, 139, 250, 0.12);
-  --color-border-hover: rgba(236, 72, 153, 0.35);
+:root,
+.light {
+  /* Light Mode Semantic Tokens */
+  --color-bg: #f7f5ff;
+  --color-surface: #ffffff;
+  --color-surface-raised: #f1effa;
+  --color-surface-paper: #ffffff;
+  --color-border: #e2d9fb;
+  --color-border-hover: #c4b5fd;
 
-  --color-text: #f5f4f0;
-  --color-text-muted: #9aa1b2;
-  --color-text-inverse: #0a0a0f;
+  --color-text: #1b1230;
+  --color-text-muted: #5b5470;
+  --color-text-inverse: #f6f4ff;
 
-  /* Primary Action: Lavender / Violet */
-  --color-primary: #8b5cf6;
-  --color-primary-hover: #7c3aed;
-  --color-primary-soft: rgba(139, 92, 246, 0.14);
-  --color-primary-glow: rgba(139, 92, 246, 0.45);
+  --color-primary: #7c3aed;
+  --color-primary-hover: #6d28d9;
+  --color-primary-fg: #ffffff;
+  --color-primary-soft: rgba(124, 58, 237, 0.1);
+  --color-primary-glow: rgba(124, 58, 237, 0.25);
 
-  /* Impact Accent: Vivid Pink */
   --color-accent: #ec4899;
   --color-accent-hover: #db2777;
-  --color-accent-soft: rgba(236, 72, 153, 0.14);
-  --color-accent-glow: rgba(236, 72, 153, 0.45);
+  --color-accent-soft: rgba(236, 72, 153, 0.12);
+  --color-accent-glow: rgba(236, 72, 153, 0.35);
 
-  /* Semantic State */
-  --color-success: #10b981;
-  --color-warning: #f59e0b;
-  --color-danger: #ef4444;
+  --color-success: #16a34a;
+  --color-warning: #d97706;
+  --color-danger: #dc2626;
+  --color-info: #0284c7;
+
+  /* Official Sakuga VFX Light Theme Tokens */
+  --sk-ink: #1b1230;
+  --sk-card: #ffffff;
+  --sk-pri: #7c3aed;
+  --sk-acc: #ec4899;
+  --sk-line: #a78bfa;
+  --sk-bg: #f7f5ff;
+  --sk-surface: #ffffff;
+  --sk-surface-raised: #ffffff;
+  --sk-border: #e2d9fb;
+  --sk-text: #1b1230;
+  --sk-text-muted: #5b5470;
+  --sk-success: #16a34a;
+  --sk-warning: #d97706;
+  --sk-danger: #dc2626;
+  --sk-glow: rgba(124, 58, 237, 0.18);
+
+  --sk-dim: #71698e;
+  --sk-soft: rgba(124, 58, 237, 0.15);
+  --sk-track: #e9e5f5;
+  --sk-btn-line: #7c3aed;
+  --sk-btn-sh: 3px 4px 0 rgba(124, 58, 237, 0.25);
+  --sk-alt-line: #b8b0d6;
+  --sk-alt-sh: 3px 4px 0 rgba(0, 0, 0, 0.08);
+  --sk-tick: #ec4899;
+  --sk-fill: #ec4899;
+  --sk-on-pri: #ffffff;
+
+  --shadow-card: 0 4px 20px -2px rgba(27, 18, 48, 0.08), 0 0 1px 1px rgba(226, 217, 251, 0.8);
+  --shadow-card-hover: 0 12px 32px -4px rgba(124, 58, 237, 0.15), 0 0 1px 1px rgba(124, 58, 237, 0.3);
+  --shadow-paper: 0 8px 30px rgba(27, 18, 48, 0.08), 0 2px 6px rgba(27, 18, 48, 0.04);
+  --shadow-glow: 0 0 30px -5px rgba(124, 58, 237, 0.25);
+  --shadow-impact-pink: 0 0 30px -5px rgba(236, 72, 153, 0.35);
+
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-pill: 9999px;
+
+  --motion-fast: 120ms;
+  --motion-base: 220ms;
+  --motion-slow: 380ms;
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-squash: cubic-bezier(0.2, 0.8, 0.2, 1.2);
+}
+
+.dark {
+  /* Dark Mode Semantic Tokens */
+  --color-bg: #0b0913;
+  --color-surface: #14121f;
+  --color-surface-raised: #1e1a2e;
+  --color-surface-paper: #171425;
+  --color-border: #322b4d;
+  --color-border-hover: rgba(255, 95, 162, 0.4);
+
+  --color-text: #f6f4ff;
+  --color-text-muted: #a49cc4;
+  --color-text-inverse: #0b0913;
+
+  --color-primary: #a78bfa;
+  --color-primary-hover: #c4b5fd;
+  --color-primary-fg: #0b0913;
+  --color-primary-soft: rgba(167, 139, 250, 0.18);
+  --color-primary-glow: rgba(167, 139, 250, 0.45);
+
+  --color-accent: #ff5fa2;
+  --color-accent-hover: #f43f5e;
+  --color-accent-soft: rgba(255, 95, 162, 0.18);
+  --color-accent-glow: rgba(255, 95, 162, 0.45);
+
+  --color-success: #4ade80;
+  --color-warning: #fbbf24;
+  --color-danger: #f87171;
   --color-info: #38bdf8;
-  --color-glow: rgba(167, 139, 250, 0.35);
 
-  /* ========================================================================
-     Official Sakuga VFX Design Tokens (FileForge AI Creative Studio Theme)
-     ======================================================================== */
+  /* Official Sakuga VFX Dark Theme Tokens */
   --sk-ink: #f4f1ff;
   --sk-card: #14121f;
   --sk-pri: #a78bfa;
@@ -96,76 +190,11 @@
   --sk-fill: #ff5fa2;
   --sk-on-pri: #0b0913;
 
-  /* Radii */
-  --radius-sm: 8px;
-  --radius-md: 16px;
-  --radius-lg: 24px;
-  --radius-pill: 9999px;
-
-  /* Shadows */
   --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.6), 0 0 1px 1px rgba(255, 255, 255, 0.05);
   --shadow-card-hover: 0 10px 32px -4px rgba(139, 92, 246, 0.2), 0 0 1px 1px rgba(167, 139, 250, 0.3);
   --shadow-paper: 0 8px 30px rgba(0, 0, 0, 0.35), 0 2px 6px rgba(0, 0, 0, 0.2);
   --shadow-glow: 0 0 35px -5px rgba(139, 92, 246, 0.45);
   --shadow-impact-pink: 0 0 35px -5px rgba(236, 72, 153, 0.55);
-
-  /* Motion Timing & Physics Constants */
-  --motion-fast: 120ms;
-  --motion-base: 220ms;
-  --motion-slow: 380ms;
-  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-squash: cubic-bezier(0.2, 0.8, 0.2, 1.2);
-}
-
-/* Light Mode Overrides */
-html.light {
-  --color-bg: #f5f4f0;
-  --color-surface: #ffffff;
-  --color-surface-raised: #eae8e1;
-  --color-surface-paper: #ffffff;
-  --color-border: rgba(139, 92, 246, 0.18);
-  --color-border-hover: rgba(236, 72, 153, 0.4);
-
-  --color-text: #111116;
-  --color-text-muted: #575a68;
-  --color-text-inverse: #f5f4f0;
-
-  --color-primary: #7c3aed;
-  --color-primary-hover: #6d28d9;
-  --color-primary-soft: rgba(124, 58, 237, 0.1);
-  --color-primary-glow: rgba(124, 58, 237, 0.25);
-
-  --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.08), 0 0 1px 1px rgba(0, 0, 0, 0.05);
-  --shadow-card-hover: 0 12px 36px -4px rgba(124, 58, 237, 0.18);
-
-  /* Sakuga VFX Light Theme Tokens */
-  --sk-ink: #14121f;
-  --sk-card: #ffffff;
-  --sk-pri: #8b5cf6;
-  --sk-acc: #ec4899;
-  --sk-line: #7c3aed;
-  --sk-bg: #f8f7fa;
-  --sk-surface: #ffffff;
-  --sk-surface-raised: #f1eff7;
-  --sk-border: #e2dff0;
-  --sk-text: #14121f;
-  --sk-text-muted: #6b6487;
-  --sk-success: #16a34a;
-  --sk-warning: #d97706;
-  --sk-danger: #dc2626;
-  --sk-glow: rgba(139, 92, 246, 0.25);
-
-  --sk-dim: #8e88ab;
-  --sk-soft: rgba(139, 92, 246, 0.2);
-  --sk-track: #e5e3f0;
-  --sk-btn-line: #7c3aed;
-  --sk-btn-sh: 4px 5px 0 rgba(124, 58, 237, 0.25);
-  --sk-alt-line: #c5bfdb;
-  --sk-alt-sh: 4px 5px 0 rgba(0, 0, 0, 0.08);
-  --sk-tick: #ec4899;
-  --sk-fill: #ec4899;
-  --sk-on-pri: #ffffff;
 }
 
 /* Base Body Setup */
@@ -308,66 +337,6 @@ code, pre, .font-mono {
   }
 }
 
-/* ==========================================================================
-   Global Theme Switching Support
-   Overrides hardcoded dark background and white text when html.light is active
-   ========================================================================== */
-html.light,
-html.light body {
-  background-color: var(--color-bg) !important;
-  color: var(--color-text) !important;
-}
-
-html.light .bg-\[\#0a0a0f\],
-html.light .bg-\[\#09090e\],
-html.light .bg-\[\#0b0913\] {
-  background-color: var(--color-bg) !important;
-  color: var(--color-text) !important;
-}
-
-html.light .text-\[\#f0eee9\],
-html.light .text-\[\#f5f4f0\] {
-  color: var(--color-text) !important;
-}
-
-html.light .bg-\[\#12121c\],
-html.light .bg-\[\#141420\],
-html.light .bg-\[\#14121f\],
-html.light .bg-\[\#171425\],
-html.light .bg-\[\#0e0c18\],
-html.light .bg-\[\#131122\] {
-  background-color: var(--color-surface) !important;
-  color: var(--color-text) !important;
-}
-
-html.light .bg-\[\#1a1a28\],
-html.light .bg-\[\#1e1a2e\],
-html.light .bg-\[\#181826\] {
-  background-color: var(--color-surface-raised) !important;
-}
-
-html.light .border-white\/10,
-html.light .border-white\/15,
-html.light .border-white\/20,
-html.light .border-white\/5 {
-  border-color: var(--color-border) !important;
-}
-
-html.light .bg-white\/5,
-html.light .bg-white\/10,
-html.light .bg-white\/\[0\.03\],
-html.light .bg-white\/\[0\.04\] {
-  background-color: rgba(139, 92, 246, 0.06) !important;
-}
-
-html.light .text-gray-300,
-html.light .text-gray-400 {
-  color: var(--color-text-muted) !important;
-}
-
-html.light .text-white {
-  color: var(--color-text) !important;
-}
 
 /* ==========================================================================
    Component Sizing & Proportion Normalization

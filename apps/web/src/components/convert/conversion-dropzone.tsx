@@ -145,7 +145,7 @@ export const ConversionDropzone: React.FC = () => {
   );
 
   return (
-    <div className="relative bg-gradient-to-b from-white/[0.06] to-white/[0.02] border border-white/15 rounded-3xl p-6 mb-6">
+    <div className="relative bg-card border border-border shadow-sm rounded-3xl p-6 mb-6">
       {/* Animated glow on dragover */}
       <AnimatePresence>
         {isDragOver && !prefersReduced && (
@@ -165,10 +165,10 @@ export const ConversionDropzone: React.FC = () => {
       </AnimatePresence>
 
       {/* Target Quick-Pills Selector */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5 pb-5 border-b border-white/10">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5 pb-5 border-b border-border">
         <div className="flex items-center gap-2">
           <Sparkles className="w-4 h-4 text-pink-400" />
-          <span className="text-xs font-semibold text-white/80">
+          <span className="text-xs font-semibold text-foreground">
             Convert All Files Into:
           </span>
         </div>
@@ -184,8 +184,8 @@ export const ConversionDropzone: React.FC = () => {
                 className={cn(
                   'px-2.5 py-1 rounded-lg text-xs font-mono font-bold uppercase transition-all cursor-pointer',
                   isSelected
-                    ? 'bg-violet-600 text-white shadow-md shadow-violet-500/30 border border-violet-400'
-                    : 'bg-white/[0.06] text-white/60 hover:text-white hover:bg-white/10 border border-white/5'
+                    ? 'bg-primary text-white shadow-md shadow-violet-500/30 border border-primary'
+                    : 'bg-muted text-muted-foreground hover:text-foreground hover:bg-muted/80 border border-border'
                 )}
               >
                 .{target}
@@ -210,8 +210,8 @@ export const ConversionDropzone: React.FC = () => {
         className={cn(
           'relative flex flex-col items-center justify-center gap-4 rounded-2xl px-6 py-10 cursor-pointer transition-colors duration-200 border-2 border-dashed',
           isDragOver
-            ? 'border-violet-400/60 bg-violet-500/5'
-            : 'border-white/20 hover:border-white/30'
+            ? 'border-primary bg-primary/5'
+            : 'border-border hover:border-primary/50'
         )}
       >
         <motion.div
@@ -222,13 +222,13 @@ export const ConversionDropzone: React.FC = () => {
         </motion.div>
 
         <div className="text-center space-y-1">
-          <p className="text-base font-semibold text-white">
+          <p className="text-base font-semibold text-foreground">
             Drop any file to convert, or{' '}
-            <span className="text-violet-400 underline underline-offset-4">
+            <span className="text-primary font-bold underline underline-offset-4">
               browse files
             </span>
           </p>
-          <p className="text-xs text-white/40">
+          <p className="text-xs text-muted-foreground">
             Automated matrix conversion between 100+ document, image, video, spreadsheet & 3D formats
           </p>
         </div>
@@ -292,20 +292,20 @@ export const ConversionDropzone: React.FC = () => {
       <AnimatePresence>
         {showUrlModal && (
           <motion.div
-            className="mt-4 p-4 rounded-2xl bg-white/[0.04] border border-white/10"
+            className="mt-4 p-4 rounded-2xl bg-card border border-border shadow-md"
             initial={prefersReduced ? {} : { opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={prefersReduced ? {} : { opacity: 0, y: 8 }}
             transition={{ duration: 0.2 }}
           >
             <div className="flex items-center justify-between mb-3">
-              <p className="text-sm font-medium text-white/80">Import from URL (SSRF Protected)</p>
+              <p className="text-sm font-medium text-foreground">Import from URL (SSRF Protected)</p>
               <button
                 onClick={() => {
                   setShowUrlModal(false);
                   setImportUrl('');
                 }}
-                className="p-1 rounded-lg text-white/40 hover:text-white"
+                className="p-1 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>

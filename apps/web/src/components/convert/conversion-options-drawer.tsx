@@ -34,21 +34,21 @@ export const ConversionOptionsDrawer: React.FC<ConversionOptionsDrawerProps> = (
     const isDocument = ['pdf', 'docx', 'txt', 'html'].includes(t);
 
   return (
-    <div className="bg-white/[0.04] border border-white/10 rounded-2xl overflow-hidden mb-6">
+    <div className="bg-card border border-border shadow-sm rounded-2xl overflow-hidden mb-6">
       <button
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
-        className="w-full flex items-center justify-between px-6 py-4 cursor-pointer hover:bg-white/[0.03] transition-colors"
+        className="w-full flex items-center justify-between px-6 py-4 cursor-pointer hover:bg-muted/50 transition-colors"
       >
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-violet-500/15 flex items-center justify-center text-violet-400">
+          <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
             <SlidersHorizontal className="w-4 h-4" />
           </div>
           <div className="text-left">
-            <span className="text-sm font-semibold text-white/90">
+            <span className="text-sm font-semibold text-foreground">
               Advanced Conversion Parameters
             </span>
-            <span className="block text-xs text-white/40">
+            <span className="block text-xs text-muted-foreground">
               Page range, orientation, custom naming, metadata, and quality
             </span>
           </div>
@@ -58,7 +58,7 @@ export const ConversionOptionsDrawer: React.FC<ConversionOptionsDrawerProps> = (
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={prefersReducedMotion ? { duration: 0 } : { type: 'spring', stiffness: 300, damping: 25 }}
         >
-          <ChevronDown className="w-5 h-5 text-white/40" />
+          <ChevronDown className="w-5 h-5 text-muted-foreground" />
         </motion.div>
       </button>
 
@@ -72,11 +72,11 @@ export const ConversionOptionsDrawer: React.FC<ConversionOptionsDrawerProps> = (
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
             className="overflow-hidden"
           >
-            <div className="px-6 pb-6 pt-2 grid grid-cols-1 md:grid-cols-2 gap-6 border-t border-white/5">
+            <div className="px-6 pb-6 pt-2 grid grid-cols-1 md:grid-cols-2 gap-6 border-t border-border">
               {/* Custom Output Name */}
               <div className="space-y-2">
-                <label className="text-xs font-semibold text-white/70 flex items-center gap-1.5">
-                  <Tag className="w-3.5 h-3.5 text-violet-400" />
+                <label className="text-xs font-semibold text-foreground flex items-center gap-1.5">
+                  <Tag className="w-3.5 h-3.5 text-primary" />
                   Custom Output File Name
                 </label>
                 <input
@@ -84,14 +84,14 @@ export const ConversionOptionsDrawer: React.FC<ConversionOptionsDrawerProps> = (
                   value={options.customOutputName || ''}
                   onChange={(e) => onChange({ customOutputName: e.target.value || undefined })}
                   placeholder="e.g. final-converted-document"
-                  className="w-full h-10 px-3 rounded-xl text-sm font-sans bg-forge-bg-card border border-white/10 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-violet-500/50"
+                  className="w-full h-10 px-3 rounded-xl text-sm font-sans bg-muted/50 border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
                 />
               </div>
 
               {/* Page Range (for Documents/PDF) */}
               <div className="space-y-2">
-                <label className="text-xs font-semibold text-white/70 flex items-center gap-1.5">
-                  <FileType className="w-3.5 h-3.5 text-pink-400" />
+                <label className="text-xs font-semibold text-foreground flex items-center gap-1.5">
+                  <FileType className="w-3.5 h-3.5 text-pink-500" />
                   Page Range (Documents & PDFs)
                 </label>
                 <input
@@ -99,7 +99,7 @@ export const ConversionOptionsDrawer: React.FC<ConversionOptionsDrawerProps> = (
                   value={options.pageRange || ''}
                   onChange={(e) => onChange({ pageRange: e.target.value || undefined })}
                   placeholder="e.g. 1-5, 8, 12-14"
-                  className="w-full h-10 px-3 rounded-xl text-sm font-mono bg-forge-bg-card border border-white/10 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-violet-500/50"
+                  className="w-full h-10 px-3 rounded-xl text-sm font-mono bg-muted/50 border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
                 />
               </div>
 
@@ -122,21 +122,21 @@ export const ConversionOptionsDrawer: React.FC<ConversionOptionsDrawerProps> = (
               {/* Orientation & Rotation (for Images) */}
               {isImage && (
                 <div className="space-y-2">
-                  <label className="text-xs font-semibold text-white/70 flex items-center gap-1.5">
-                    <RotateCw className="w-3.5 h-3.5 text-amber-400" />
+                  <label className="text-xs font-semibold text-foreground flex items-center gap-1.5">
+                    <RotateCw className="w-3.5 h-3.5 text-amber-500" />
                     Image Orientation
                   </label>
                   <select
                     value={options.orientation || '0'}
                     onChange={(e) => onChange({ orientation: (e.target.value as '0' | '90' | '180' | '270' | 'flip_h' | 'flip_v') || undefined })}
-                    className="w-full h-10 px-3 rounded-xl text-sm bg-forge-bg-card border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-violet-500/50 cursor-pointer"
+                    className="w-full h-10 px-3 rounded-xl text-sm bg-card border border-border text-foreground focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer"
                   >
-                    <option value="0" className="bg-[#12121a]">Original (0°)</option>
-                    <option value="90" className="bg-[#12121a]">Rotate 90° Clockwise</option>
-                    <option value="180" className="bg-[#12121a]">Rotate 180°</option>
-                    <option value="270" className="bg-[#12121a]">Rotate 270° (90° CCW)</option>
-                    <option value="flip_h" className="bg-[#12121a]">Flip Horizontal (Mirror)</option>
-                    <option value="flip_v" className="bg-[#12121a]">Flip Vertical</option>
+                    <option value="0" className="bg-card text-foreground">Original (0°)</option>
+                    <option value="90" className="bg-card text-foreground">Rotate 90° Clockwise</option>
+                    <option value="180" className="bg-card text-foreground">Rotate 180°</option>
+                    <option value="270" className="bg-card text-foreground">Rotate 270° (90° CCW)</option>
+                    <option value="flip_h" className="bg-card text-foreground">Flip Horizontal (Mirror)</option>
+                    <option value="flip_v" className="bg-card text-foreground">Flip Vertical</option>
                   </select>
                 </div>
               )}
@@ -144,8 +144,8 @@ export const ConversionOptionsDrawer: React.FC<ConversionOptionsDrawerProps> = (
               {/* Password Protection */}
               {isDocument && (
                 <div className="space-y-2">
-                  <label className="text-xs font-semibold text-white/70 flex items-center gap-1.5">
-                    <Lock className="w-3.5 h-3.5 text-cyan-400" />
+                  <label className="text-xs font-semibold text-foreground flex items-center gap-1.5">
+                    <Lock className="w-3.5 h-3.5 text-cyan-500" />
                     Document Password (Optional)
                   </label>
                   <input
@@ -153,7 +153,7 @@ export const ConversionOptionsDrawer: React.FC<ConversionOptionsDrawerProps> = (
                     value={options.password || ''}
                     onChange={(e) => onChange({ password: e.target.value || undefined })}
                     placeholder="Enter password to encrypt output"
-                    className="w-full h-10 px-3 rounded-xl text-sm bg-forge-bg-card border border-white/10 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-violet-500/50"
+                    className="w-full h-10 px-3 rounded-xl text-sm bg-muted/50 border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
                   />
                 </div>
               )}

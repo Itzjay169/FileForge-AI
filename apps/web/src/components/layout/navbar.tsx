@@ -72,7 +72,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCommandPalette }) => {
     { label: 'Studio', href: '/studio' },
     { label: 'Convert', href: '/convert' },
     { label: 'Editor & AI', href: '/editor' },
-    { label: 'Library', href: '/dashboard' },
+    { label: 'Library', href: '/library' },
     { label: 'Pricing', href: '/pricing' },
     { label: 'Formats', href: '/formats' },
     { label: 'About', href: '/about' },
